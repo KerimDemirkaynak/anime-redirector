@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Yönlendirici ve Engelleyici - Chrome Uzantısı</title>
-    <!-- FAVICON EKLENDİ -->
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Web%20Y%C3%B6nlendirici%20ve%20Engelleyici/icons/icon48.png?raw=true">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -73,7 +72,6 @@
             height: 128px;
             border-radius: 12px;
             flex-shrink: 0;
-            /* Yerel ikon yolu yerine artık gerçek URL kullanılıyor */
         }
         .extension-details {
             flex-grow: 1;
@@ -176,16 +174,17 @@
         .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
         .copy-btn.copied .icon { color: #238636; }
 
-        /* TEMA DEĞİŞTİRİCİ */
+        /* TEMA DEĞİŞTİRİCİ - KONUM GÜNCELLENDİ */
         .theme-switcher {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
+            position: fixed; /* Sayfaya sabitlendi */
+            top: 24px;       /* Yukarıya alındı */
+            right: 24px;     /* Sağ boşluk ayarlandı */
+            z-index: 1000;   /* Diğer elementlerin üstünde kalması için */
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 1px solid var(--border-color);
-            background-color: var(--bg-color);
+            background-color: var(--page-bg); /* Sayfa arkaplanı yerine kendi arkaplanı */
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -195,6 +194,7 @@
         }
         .theme-switcher:hover {
             border-color: var(--text-color);
+            transform: scale(1.1);
         }
         .theme-switcher .icon {
             width: 20px;
@@ -210,12 +210,12 @@
         /* Mobil Uyum */
         @media (max-width: 768px) {
             .container { margin: 1rem; }
-            .extension-header { flex-direction: column; text-align: center; padding-top: 60px; }
+            .extension-header { flex-direction: column; text-align: center; }
             .extension-icon { width: 96px; height: 96px; }
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
             .features { grid-template-columns: 1fr; }
-            .theme-switcher { top: 12px; right: 12px; }
+            .theme-switcher { top: 16px; right: 16px; width: 36px; height: 36px; }
         }
         
         /* FOOTER */
@@ -238,23 +238,23 @@
 </head>
 <body>
 
-    <div class="container">
-        <button class="theme-switcher" id="theme-toggle" title="Temayı Değiştir">
-            <svg id="moon-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            <svg id="sun-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        </button>
+    <button class="theme-switcher" id="theme-toggle" title="Temayı Değiştir">
+        <svg id="moon-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        <svg id="sun-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    </button>
 
+    <div class="container">
         <header class="extension-header">
-            <!-- İKON GÜNCELLENDİ -->
             <img src="https://raw.githubusercontent.com/KerimDemirkaynak/anime-redirector/refs/heads/main/Web%20Y%C3%B6nlendirici%20ve%20Engelleyici/icons/icon128.png" alt="Uzantı İkonu" class="extension-icon">
             <div class="extension-details">
                 <h1>Web Yönlendirici ve Engelleyici</h1>
                 <p class="subtitle">İnternet deneyiminizi temizler ve güvende tutar.</p>
             </div>
             <div class="extension-actions">
-                <a href="Web Yönlendirici ve Engelleyici.crx" class="add-to-chrome-btn" download>Chrome'a Ekle</a>
+                <!-- İNDİRME LİNKİ GÜNCELLENDİ -->
+                <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.0/Web.Yonlendirici.ve.Engelleyici.crx" class="add-to-chrome-btn" download>Chrome'a Ekle</a>
                 <div class="meta-info">
-                    <span>Sürüm 1.2</span> | <span>Güncelleme: Eki 2025</span>
+                    <span>Sürüm 2.0</span> | <span>Güncelleme: Eki 2025</span>
                 </div>
             </div>
         </header>
@@ -299,7 +299,6 @@
         </main>
         
         <footer class="footer">
-            <!-- DEPO LİNKİ GÜNCELLENDİ -->
             <p>Bu proje açık kaynaklıdır. Kodu <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub'da</a> inceleyebilirsiniz.</p>
         </footer>
     </div>
