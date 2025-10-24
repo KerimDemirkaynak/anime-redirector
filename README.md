@@ -1,57 +1,53 @@
-# TrAnimeİzle Yönlendirici Chrome Eklentisi
+# Web Yönlendirici ve Engelleyici Chrome Uzantısı
 
-Bu basit Chrome eklentisi, `www.tranimeizle.co` adresine yapılan tüm istekleri (ana sayfa, anime sayfaları, bölümler vb.) otomatik olarak `www.tranimeizle.top` adresindeki karşılıklarına yönlendirir.
+Bu proje, belirli web sitelerini engelleyen ve bazılarını yeni adreslerine yönlendiren basit ve etkili bir Chrome uzantısıdır. `declarativeNetRequest` API'si kullanılarak geliştirilmiştir, bu sayede tarayıcı performansını etkilemeden hızlı ve güvenli bir şekilde çalışır.
 
-## 🤔 Neden Gerekli?
+## 🚀 Özellikler
 
-Eğer `tranimeizle.co` adresini sık kullanıyorsanız ve artık `tranimeizle.top` adresini tercih ediyorsanız veya eski linklere tıkladığınızda otomatik olarak yeni siteye gitmek istiyorsanız bu eklenti işinizi kolaylaştırır. Tüm URL yapısını koruyarak yönlendirme yapar.
+- **Site Yönlendirme:** Eski veya değişen web sitesi adreslerini otomatik olarak güncel adreslerine yönlendirir.
+- **Site Engelleme:** İstenmeyen veya dikkat dağıtıcı web sitelerine erişimi engeller.
+- **Yüksek Performans:** `declarativeNetRequest` API'si sayesinde tarayıcıya ek yük bindirmeden, verimli bir şekilde çalışır.
+- **Kolay Kurulum:** Basit ve hızlı bir şekilde Chrome tarayıcınıza manuel olarak eklenebilir.
 
-**Örnek:**
-`https://www.tranimeizle.co/attack-on-titan-1-bolum-izle` adresine gitmeye çalıştığınızda otomatik olarak `https://www.tranimeizle.top/attack-on-titan-1-bolum-izle` adresine yönlendirilirsiniz.
+## 🛠️ Nasıl Çalışır?
 
-## ✨ Özellikler
+Uzantı, `rules.json` dosyasında tanımlanan kurallara göre çalışır. Bu kurallar, hangi sitelerin engelleneceğini ve hangilerinin yönlendirileceğini belirtir.
 
-*   **Otomatik Yönlendirme:** `www.tranimeizle.co` altındaki tüm URL'leri `www.tranimeizle.top` adresindeki karşılıklarına yönlendirir.
-*   **Performanslı:** Chrome'un modern `declarativeNetRequest` API'sini kullanarak hızlı ve verimli yönlendirme sağlar. Tarayıcıyı yavaşlatmaz.
-*   **Basit ve Hafif:** Sadece tek bir işlevi yerine getirir, gereksiz izin veya kaynak tüketimi yoktur.
+### Yönlendirme Kuralları:
 
-## 🚀 Kurulum
+- `vidmoly.to` → `https://vidmoly.net`
+- `animecix.net`, `anm.cx` → `https://animecix.tv`
+- `asyaanimeleri.com` → `https://asyaanimeleri.top`
+- `hianime.to` → `https://hianime.pe`
+- `turkanime.co` → `https://turkanime.tv`
 
-Bu eklenti (henüz) Chrome Web Mağazası'nda olmadığı için manuel olarak yüklemeniz gerekmektedir:
+### Engelleme Kuralları:
 
-1.  **Depoyu İndirin:**
-    *   Bu deponun sağ üst köşesindeki yeşil **`< > Code`** butonuna tıklayın.
-    *   **Download ZIP** seçeneğini seçin.
-    *   İndirdiğiniz ZIP dosyasını bilgisayarınızda uygun bir klasöre çıkarın (örn: `tranimeizle-yonlendirici`).
+Aşağıdaki alan adlarına ve alt alan adlarına yapılan tüm istekler engellenir:
 
-2.  **Chrome'a Yükleyin:**
-    *   Chrome tarayıcınızı açın.
-    *   Adres çubuğuna `chrome://extensions` yazın ve Enter'a basın.
-    *   Sağ üst köşedeki **Geliştirici modu** (Developer mode) anahtarını **açık** konuma getirin.
-    *   Sol üstte beliren **Paketlenmemiş öğe yükle** (Load unpacked) butonuna tıklayın.
-    *   Açılan pencerede, 1. adımda ZIP dosyasını çıkardığınız **klasörü** (örn: `tranimeizle-yonlendirici`) seçin ve **Klasör Seç** (Select Folder) butonuna tıklayın.
+- `chatango.com`
+- `anizmnet.chatango.com`
+- `st.chatango.com`
 
-3.  **Tamamlandı!** Eklenti şimdi Chrome eklentileri listenizde görünmeli ve aktif olmalıdır. Artık `tranimeizle.co` adreslerine gitmeye çalıştığınızda otomatik olarak `tranimeizle.top` adresine yönlendirileceksiniz.
+## ⚙️ Kurulum
 
-## 🛠️ Teknik Detaylar
+Bu uzantıyı manuel olarak Chrome tarayıcınıza kurmak için aşağıdaki adımları izleyin:
 
-Eklenti, Chrome'un `declarativeNetRequest` API'sini kullanarak ağ isteklerini yakalar ve belirtilen kurala göre (`rules.json` içinde tanımlanmıştır) yönlendirme işlemini gerçekleştirir. Bu yöntem, eski `webRequest` API'sine göre daha performanslı ve gizlilik odaklıdır.
+1.  Bu depoyu bilgisayarınıza `ZIP` olarak indirin ve dosyaları bir klasöre çıkarın veya `git clone` komutu ile klonlayın.
+2.  Chrome tarayıcınızı açın ve adres çubuğuna `chrome://extensions` yazarak **Uzantılar** sayfasına gidin.
+3.  Sağ üst köşedeki **Geliştirici modu**'nu etkinleştirin.
+4.  Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
+5.  Proje dosyalarının bulunduğu klasörü seçin.
 
-## 📁 Dosya Yapısı
+Uzantı başarıyla yüklenecek ve tarayıcınızın uzantılar listesinde etkin hale gelecektir.
 
-```
-/
-├── manifest.json     # Eklentinin temel yapılandırma ve izin dosyası
-├── rules.json        # Yönlendirme kuralını tanımlayan dosya
-├── icons/            # Eklenti ikonları (isteğe bağlı)
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
-└── README.md         # Bu dosya (Proje açıklaması)
-```
+## 📜 Teknik Detaylar
 
-## 📄 Lisans
+Bu uzantı, Chrome'un `declarativeNetRequest` API'sini kullanır. Bu API, ağ isteklerini programatik olarak engellemek veya değiştirmek için güçlü ve performansa duyarlı bir yol sağlar.
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+- **`manifest.json`**: Uzantının temel yapılandırmasını, adını, sürümünü, izinlerini ve kuralların yolunu tanımlar.
+- **`rules.json`**: Uzantının uygulayacağı tüm yönlendirme ve engelleme kurallarını içerir.
 
-Bu eklenti resmi bir TrAnimeİzle ürünü değildir ve site sahipleriyle herhangi bir ilişkisi bulunmamaktadır. Yalnızca kişisel kullanım kolaylığı sağlamak amacıyla geliştirilmiştir.
+## 🙏 Katkıda Bulunma
+
+Katkılarınız için her zaman açığız! Bir hatayı bildirmek, yeni bir özellik önermek veya mevcut kuralları güncellemek için lütfen bir "issue" açın veya "pull request" gönderin.
