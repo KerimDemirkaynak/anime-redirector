@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="icons/icon48.png" alt="Eklenti Simgesi">
+            <h1 data-i18n="popupHeader"></h1>
+        </div>
+        
+        <div class="settings-section">
+            <span data-i18n="popupToggleLabel"></span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggle-switch" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <p class="status"></p>
+
+        <div class="rules">
+            <h2 data-i18n="popupRulesHeader"></h2>
+            <ul>
+                <li><span class="domain">vidmoly.to ➔ vidmoly.net</span></li>
+                <li><span class="domain">chatango.com</span> <span class="status-blocked" data-i18n="ruleStatusBlocked"></span></li>
+                <li><span class="domain">animecix.net ➔ animecix.tv</span></li>
+                <li><span class="domain">asyaanimeleri.com ➔ asyaanimeleri.top</span></li>
+                <li><span class="domain">hianime.to ➔ hianime.pe</span></li>
+                <li><span class="domain">turkanime.co ➔ turkanime.tv</span></li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <span id="version-info"></span>
+    </footer>
+    <script src="popup.js"></script>
+</body>
+</html>

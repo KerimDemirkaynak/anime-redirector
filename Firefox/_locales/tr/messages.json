@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "Web Yönlendirici ve Engelleyici",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Belirli anime ve video sitelerini çalışan alan adlarına yönlendirir ve istenmeyen sohbet pencerelerini engeller.",
+    "description": "Description of the extension."
+  },
+  "popupTitle": {
+    "message": "Web Yönlendirici Durumu",
+    "description": "Title of the popup window."
+  },
+  "popupHeader": {
+    "message": "Web Yönlendirici",
+    "description": "Header text inside the popup."
+  },
+  "popupStatusActive": {
+    "message": "Eklenti aktif ve siteleri koruyor.",
+    "description": "Status message indicating the extension is active."
+  },
+  "popupRulesHeader": {
+    "message": "Yönetilen Siteler",
+    "description": "Header for the list of rules."
+  },
+  "popupToggleLabel": {
+    "message": "Eklenti Etkin",
+    "description": "Label for the master enable/disable switch."
+  },
+  "popupStatusInactive": {
+    "message": "Eklenti devre dışı bırakıldı.",
+    "description": "Status message indicating the extension is disabled."
+  },
+  "ruleStatusBlocked": {
+    "message": "(Engellendi)",
+    "description": "Status text for a blocked domain in the rules list."
+  }
+}

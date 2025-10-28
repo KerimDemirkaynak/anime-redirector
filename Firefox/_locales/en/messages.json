@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "Web Redirector and Blocker",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Redirects specific anime and video sites to their working domains and blocks unwanted chat windows.",
+    "description": "Description of the extension."
+  },
+  "popupTitle": {
+    "message": "Web Redirector Status",
+    "description": "Title of the popup window."
+  },
+  "popupHeader": {
+    "message": "Web Redirector",
+    "description": "Header text inside the popup."
+  },
+  "popupStatusActive": {
+    "message": "Extension is active and protecting sites.",
+    "description": "Status message indicating the extension is active."
+  },
+  "popupRulesHeader": {
+    "message": "Managed Sites",
+    "description": "Header for the list of rules."
+  },
+  "popupToggleLabel": {
+    "message": "Extension Active",
+    "description": "Label for the master enable/disable switch."
+  },
+  "popupStatusInactive": {
+    "message": "Extension is currently disabled.",
+    "description": "Status message indicating the extension is disabled."
+  },
+  "ruleStatusBlocked": {
+    "message": "(Blocked)",
+    "description": "Status text for a blocked domain in the rules list."
+  }
+}
