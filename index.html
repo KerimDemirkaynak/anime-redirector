@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Başlangıç dili tarayıcıya göre ayarlanacak -->
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -57,7 +58,6 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* UZANTI BAŞLIĞI */
         .extension-header {
             display: flex;
             align-items: center;
@@ -73,9 +73,7 @@
             border-radius: 12px;
             flex-shrink: 0;
         }
-        .extension-details {
-            flex-grow: 1;
-        }
+        .extension-details { flex-grow: 1; }
         .extension-details h1 {
             font-size: 28px;
             font-weight: 700;
@@ -83,13 +81,8 @@
             margin-bottom: 8px;
             transition: color 0.3s;
         }
-        .extension-details .subtitle {
-            font-size: 16px;
-        }
-        .extension-actions {
-            margin-left: auto;
-            text-align: right;
-        }
+        .extension-details .subtitle { font-size: 16px; }
+        .extension-actions { margin-left: auto; text-align: right; }
         .add-to-chrome-btn {
             display: inline-block;
             background-color: var(--blue-chrome);
@@ -103,16 +96,10 @@
             border: none;
             cursor: pointer;
         }
-        .add-to-chrome-btn:hover {
-            background-color: var(--blue-chrome-hover);
-        }
-        .meta-info {
-            font-size: 13px;
-            margin-top: 12px;
-        }
+        .add-to-chrome-btn:hover { background-color: var(--blue-chrome-hover); }
+        .meta-info { font-size: 13px; margin-top: 12px; }
         .meta-info span { margin: 0 8px; }
 
-        /* İÇERİK SEKMELERİ */
         .content-area { padding: 24px; }
         .tabs {
             display: flex;
@@ -140,24 +127,17 @@
             color: var(--blue-chrome);
             border-bottom-color: var(--blue-chrome);
         }
-        .tab-content {
-            display: none;
-            animation: contentFadeIn 0.4s;
-        }
+        .tab-content { display: none; animation: contentFadeIn 0.4s; }
         @keyframes contentFadeIn { from { opacity: 0; } to { opacity: 1; } }
         .tab-content.active { display: block; }
         
-        #overview h2, #installation h2 {
+        h2 {
             font-size: 20px;
             color: var(--heading-color);
             margin-bottom: 16px;
             transition: color 0.3s;
         }
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .feature-item { display: flex; align-items: start; gap: 12px; }
         .feature-item .icon { width: 24px; height: 24px; margin-top: 2px; }
         .feature-item p strong { display: block; color: var(--heading-color); transition: color 0.3s; }
@@ -174,17 +154,21 @@
         .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
         .copy-btn.copied .icon { color: #238636; }
 
-        /* TEMA DEĞİŞTİRİCİ - KONUM GÜNCELLENDİ */
-        .theme-switcher {
-            position: fixed; /* Sayfaya sabitlendi */
-            top: 24px;       /* Yukarıya alındı */
-            right: 24px;     /* Sağ boşluk ayarlandı */
-            z-index: 1000;   /* Diğer elementlerin üstünde kalması için */
+        /* ÜST SAĞ KONTROLLER */
+        .top-right-controls {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            gap: 12px;
+        }
+        .theme-switcher, .language-switcher button {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             border: 1px solid var(--border-color);
-            background-color: var(--page-bg); /* Sayfa arkaplanı yerine kendi arkaplanı */
+            background-color: var(--page-bg);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -192,7 +176,7 @@
             overflow: hidden;
             transition: all 0.3s;
         }
-        .theme-switcher:hover {
+        .theme-switcher:hover, .language-switcher button:hover {
             border-color: var(--text-color);
             transform: scale(1.1);
         }
@@ -206,8 +190,13 @@
         #sun-icon { transform: translateY(30px); opacity: 0; }
         [data-theme="dark"] #sun-icon { transform: translateY(0); opacity: 1; }
         [data-theme="dark"] #moon-icon { transform: translateY(-30px); opacity: 0; }
+        
+        /* DİL DEĞİŞTİRİCİ */
+        .language-switcher button { padding: 0; font-size: 16px; }
+        .language-switcher button.active { border-color: var(--blue-chrome); }
+        [lang="tr"], [lang="en"] { display: none; } /* Varsayılan olarak gizle */
 
-        /* Mobil Uyum */
+
         @media (max-width: 768px) {
             .container { margin: 1rem; }
             .extension-header { flex-direction: column; text-align: center; }
@@ -215,10 +204,10 @@
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
             .features { grid-template-columns: 1fr; }
-            .theme-switcher { top: 16px; right: 16px; width: 36px; height: 36px; }
+            .top-right-controls { top: 16px; right: 16px; gap: 8px; }
+            .theme-switcher, .language-switcher button { width: 36px; height: 36px; }
         }
         
-        /* FOOTER */
         .footer {
             text-align: center;
             padding: 24px;
@@ -231,85 +220,150 @@
             font-weight: 500;
             text-decoration: none;
         }
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <button class="theme-switcher" id="theme-toggle" title="Temayı Değiştir">
-        <svg id="moon-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-        <svg id="sun-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-    </button>
+    <div class="top-right-controls">
+        <div class="language-switcher">
+            <button id="lang-tr" title="Türkçe">🇹🇷</button>
+            <button id="lang-en" title="English">🇬🇧</button>
+        </div>
+        <button class="theme-switcher" id="theme-toggle">
+             <span lang="tr">Temayı Değiştir</span>
+             <span lang="en">Toggle Theme</span>
+            <svg id="moon-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="sun-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+    </div>
 
     <div class="container">
         <header class="extension-header">
             <img src="https://raw.githubusercontent.com/KerimDemirkaynak/anime-redirector/refs/heads/main/Web%20Y%C3%B6nlendirici%20ve%20Engelleyici/icons/icon128.png" alt="Uzantı İkonu" class="extension-icon">
             <div class="extension-details">
-                <h1>Web Yönlendirici ve Engelleyici</h1>
-                <p class="subtitle">İnternet deneyiminizi temizler ve güvende tutar.</p>
+                <h1>
+                    <span lang="tr">Web Yönlendirici ve Engelleyici</span>
+                    <span lang="en">Web Redirector and Blocker</span>
+                </h1>
+                <p class="subtitle">
+                    <span lang="tr">İnternet deneyiminizi temizler ve güvende tutar.</span>
+                    <span lang="en">Cleans up your browsing experience and keeps you safe.</span>
+                </p>
             </div>
             <div class="extension-actions">
-                <!-- İNDİRME LİNKİ GÜNCELLENDİ -->
-                <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.0/Web.Yonlendirici.ve.Engelleyici.crx" class="add-to-chrome-btn" download>Chrome'a Ekle</a>
+                <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.0/Web.Yonlendirici.ve.Engelleyici.crx" class="add-to-chrome-btn" download>
+                    <span lang="tr">Chrome'a Ekle</span>
+                    <span lang="en">Add to Chrome</span>
+                </a>
                 <div class="meta-info">
-                    <span>Sürüm 2.0</span> | <span>Güncelleme: Eki 2025</span>
+                    <span>
+                        <span lang="tr">Sürüm 2.0</span>
+                        <span lang="en">Version 2.0</span>
+                    </span> | 
+                    <span>
+                        <span lang="tr">Güncelleme: Eki 2025</span>
+                        <span lang="en">Updated: Oct 2025</span>
+                    </span>
                 </div>
             </div>
         </header>
 
         <main class="content-area">
             <div class="tabs">
-                <button class="tab-button active" data-target="overview">Genel Bakış</button>
-                <button class="tab-button" data-target="installation">Nasıl Kurulur?</button>
+                <button class="tab-button active" data-target="overview">
+                    <span lang="tr">Genel Bakış</span>
+                    <span lang="en">Overview</span>
+                </button>
+                <button class="tab-button" data-target="installation">
+                    <span lang="tr">Nasıl Kurulur?</span>
+                    <span lang="en">How to Install?</span>
+                </button>
             </div>
 
             <div id="overview" class="tab-content active">
-                <h2>Özellikler</h2>
+                <h2>
+                    <span lang="tr">Özellikler</span>
+                    <span lang="en">Features</span>
+                </h2>
                 <div class="features">
                     <div class="feature-item">
                         <svg class="icon" style="color: #238636;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                        <p><strong>Otomatik Yönlendirme</strong>Eski veya değişmiş site adreslerini (turkanime.co, animecix.net vb.) anında güncel ve doğru adreslerine yönlendirir.</p>
+                        <p>
+                            <strong>
+                                <span lang="tr">Otomatik Yönlendirme</span>
+                                <span lang="en">Automatic Redirection</span>
+                            </strong>
+                            <span lang="tr">Eski veya değişmiş site adreslerini (turkanime.co, animecix.net vb.) anında güncel ve doğru adreslerine yönlendirir.</span>
+                            <span lang="en">Instantly redirects old or changed site addresses (e.g., turkanime.co, animecix.net) to their current and correct URLs.</span>
+                        </p>
                     </div>
                     <div class="feature-item">
                         <svg class="icon" style="color: #d93025;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg>
-                        <p><strong>İstenmeyen İçerik Engelleme</strong>Sayfalara gömülü, dikkat dağıtan ve gereksiz olan Chatango sohbet pencerelerini tamamen engeller.</p>
+                        <p>
+                            <strong>
+                                <span lang="tr">İstenmeyen İçerik Engelleme</span>
+                                <span lang="en">Unwanted Content Blocking</span>
+                            </strong>
+                            <span lang="tr">Sayfalara gömülü, dikkat dağıtan ve gereksiz olan Chatango sohbet pencerelerini tamamen engeller.</span>
+                            <span lang="en">Completely blocks distracting and unnecessary embedded Chatango chat windows on pages.</span>
+                        </p>
                     </div>
                 </div>
             </div>
 
             <div id="installation" class="tab-content">
-                <h2>Kurulum Adımları</h2>
+                <h2>
+                    <span lang="tr">Kurulum Adımları</span>
+                    <span lang="en">Installation Steps</span>
+                </h2>
                 <ol>
-                    <li>"Chrome'a Ekle" düğmesine tıklayarak <code>.crx</code> uzantı dosyasını indirin.</li>
-                    <li>Chrome'da yeni sekme açın ve bu adresi kopyalayıp yapıştırın:
+                    <li>
+                        <span lang="tr">"Chrome'a Ekle" düğmesine tıklayarak <code>.crx</code> uzantı dosyasını indirin.</span>
+                        <span lang="en">Click the "Add to Chrome" button to download the <code>.crx</code> extension file.</span>
+                    </li>
+                    <li>
+                        <span lang="tr">Chrome'da yeni sekme açın ve bu adresi kopyalayıp yapıştırın:</span>
+                        <span lang="en">Open a new tab in Chrome and copy-paste this address:</span>
                         <div class="copy-wrapper">
                             <code id="extension-url">chrome://extensions</code>
-                            <button class="copy-btn" id="copy-button" title="Kopyala">
+                            <button class="copy-btn" id="copy-button">
+                                <span lang="tr">Kopyala</span>
+                                <span lang="en">Copy</span>
                                 <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                             </button>
                         </div>
                     </li>
-                    <li>Sayfanın sağ üst köşesindeki <strong>Geliştirici modu</strong> anahtarını aktif hale getirin.</li>
-                    <li>İndirdiğiniz <code>.crx</code> dosyasını bu sayfaya sürükleyip bırakın.</li>
-                    <li>Çıkan pencerede "Uzantıyı ekle" diyerek kurulumu onaylayın. Hepsi bu kadar!</li>
+                    <li>
+                        <span lang="tr">Sayfanın sağ üst köşesindeki <strong>Geliştirici modu</strong> anahtarını aktif hale getirin.</span>
+                        <span lang="en">Enable the <strong>Developer mode</strong> toggle in the top-right corner of the page.</span>
+                    </li>
+                    <li>
+                        <span lang="tr">İndirdiğiniz <code>.crx</code> dosyasını bu sayfaya sürükleyip bırakın.</span>
+                        <span lang="en">Drag and drop the downloaded <code>.crx</code> file onto this page.</span>
+                    </li>
+                    <li>
+                        <span lang="tr">Çıkan pencerede "Uzantıyı ekle" diyerek kurulumu onaylayın. Hepsi bu kadar!</span>
+                        <span lang="en">In the pop-up window, confirm the installation by clicking "Add extension". That's all!</span>
+                    </li>
                 </ol>
             </div>
         </main>
         
         <footer class="footer">
-            <p>Bu proje açık kaynaklıdır. Kodu <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub'da</a> inceleyebilirsiniz.</p>
+            <p>
+                <span lang="tr">Bu proje açık kaynaklıdır. Kodu <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub'da</a> inceleyebilirsiniz.</span>
+                <span lang="en">This project is open-source. You can review the code on <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub</a>.</span>
+            </p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- TEMA DEĞİŞTİRİCİ ---
             const themeToggle = document.getElementById('theme-toggle');
             const getThemePreference = () => {
-                if (localStorage.getItem('theme')) {
-                    return localStorage.getItem('theme');
-                }
+                if (localStorage.getItem('theme')) return localStorage.getItem('theme');
                 return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             };
             const setTheme = (theme) => {
@@ -318,11 +372,55 @@
             };
             themeToggle.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                setTheme(newTheme);
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
             });
             setTheme(getThemePreference());
 
+            // --- DİL DEĞİŞTİRİCİ ---
+            const langButtons = {
+                tr: document.getElementById('lang-tr'),
+                en: document.getElementById('lang-en')
+            };
+
+            const setLanguage = (lang) => {
+                document.documentElement.lang = lang;
+                localStorage.setItem('language', lang);
+                
+                // Tüm dil etiketlerini yönet
+                document.querySelectorAll('[lang]').forEach(el => {
+                    el.style.display = (el.lang === lang) ? '' : 'none';
+                });
+
+                // Aktif butonu ayarla
+                Object.values(langButtons).forEach(btn => btn.classList.remove('active'));
+                if (langButtons[lang]) {
+                    langButtons[lang].classList.add('active');
+                }
+                
+                // Başlık gibi dil-spesifik özellikleri güncelle
+                updatePageTitle(lang);
+            };
+
+            const getLanguagePreference = () => {
+                if (localStorage.getItem('language')) return localStorage.getItem('language');
+                const browserLang = navigator.language.split('-')[0];
+                return (browserLang === 'tr') ? 'tr' : 'en'; // Varsayılan İngilizce
+            };
+            
+            const updatePageTitle = (lang) => {
+                 const titles = {
+                    tr: 'Web Yönlendirici ve Engelleyici - Chrome Uzantısı',
+                    en: 'Web Redirector and Blocker - Chrome Extension'
+                };
+                document.title = titles[lang];
+            }
+
+            langButtons.tr.addEventListener('click', () => setLanguage('tr'));
+            langButtons.en.addEventListener('click', () => setLanguage('en'));
+            setLanguage(getLanguagePreference());
+
+
+            // --- SEKMELER ---
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabButtons.forEach(button => {
@@ -337,17 +435,20 @@
                 });
             });
 
+            // --- KOPYALA BUTONU ---
             const copyButton = document.getElementById('copy-button');
             const urlToCopy = document.getElementById('extension-url').innerText;
-            const copyIcon = copyButton.innerHTML;
+            const originalCopyHTML = copyButton.innerHTML;
             const checkIcon = `<svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
             copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(urlToCopy).then(() => {
                     copyButton.innerHTML = checkIcon;
                     copyButton.classList.add('copied');
                     setTimeout(() => {
-                        copyButton.innerHTML = copyIcon;
+                        copyButton.innerHTML = originalCopyHTML;
                         copyButton.classList.remove('copied');
+                        // Dil değişikliğinden sonra metinlerin doğru görünmesi için yeniden ayarla
+                        setLanguage(document.documentElement.lang);
                     }, 2000);
                 });
             });
