@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<!-- Başlangıç dili JavaScript tarafından ayarlanacak -->
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Başlık da JavaScript ile değişecek -->
     <title>Web Yönlendirici ve Engelleyici - Chrome Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Web%20Y%C3%B6nlendirici%20ve%20Engelleyici/icons/icon48.png?raw=true">
     <style>
@@ -161,9 +159,11 @@
             right: 24px;
             z-index: 1000;
             display: flex;
+            align-items: center;
             gap: 12px;
         }
-        .theme-switcher, .language-switcher button {
+
+        .theme-switcher {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -175,8 +175,9 @@
             justify-content: center;
             overflow: hidden;
             transition: all 0.3s;
+            flex-shrink: 0;
         }
-        .theme-switcher:hover, .language-switcher button:hover {
+        .theme-switcher:hover {
             border-color: var(--text-color);
             transform: scale(1.1);
         }
@@ -191,10 +192,49 @@
         [data-theme="dark"] #sun-icon { transform: translateY(0); opacity: 1; }
         [data-theme="dark"] #moon-icon { transform: translateY(-30px); opacity: 0; }
         
-        .language-switcher button { padding: 0; font-size: 16px; }
-        .language-switcher button.active { border-color: var(--blue-chrome); }
+        /* --- YENİ VE MODERN DİL DEĞİŞTİRİCİ STİLLERİ --- */
+        .language-switcher {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 50px; /* Tamamen yuvarlak kenarlar */
+            padding: 4px;
+            height: 40px;
+            width: 88px; /* İki butonun sığacağı genişlik */
+            transition: all 0.3s;
+        }
 
-        /* SORUNLU CSS KURALI BURADAN KALDIRILDI. ARTIK JS KONTROL EDECEK. */
+        .language-switcher .glider {
+            position: absolute;
+            top: 4px;
+            height: 30px; /* Kapsayıcıdan biraz daha küçük */
+            width: 40px;  /* Tek bir buton genişliğinde */
+            background-color: var(--blue-chrome);
+            border-radius: 50px;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Yumuşak kayma efekti */
+        }
+
+        .language-switcher.lang-en-active .glider {
+            transform: translateX(40px); /* İngilizce seçiliyken sağa kay */
+        }
+        
+        .language-switcher button {
+            flex: 1;
+            height: 100%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1; /* Glider'ın üstünde kalması için */
+            transition: transform 0.2s;
+        }
+
+        .language-switcher button:hover {
+            transform: scale(1.1);
+        }
+
 
         @media (max-width: 768px) {
             .container { margin: 1rem; }
@@ -204,7 +244,10 @@
             .extension-actions { margin-left: 0; text-align: center; }
             .features { grid-template-columns: 1fr; }
             .top-right-controls { top: 16px; right: 16px; gap: 8px; }
-            .theme-switcher, .language-switcher button { width: 36px; height: 36px; }
+            .theme-switcher { width: 36px; height: 36px; }
+            .language-switcher { height: 36px; width: 80px; }
+            .language-switcher .glider { height: 28px; width: 36px; }
+            .language-switcher.lang-en-active .glider { transform: translateX(36px); }
         }
         
         .footer {
@@ -225,7 +268,8 @@
 <body>
 
     <div class="top-right-controls">
-        <div class="language-switcher">
+        <div class="language-switcher" id="language-switcher">
+            <div class="glider"></div>
             <button id="lang-tr" title="Türkçe">🇹🇷</button>
             <button id="lang-en" title="English">🇬🇧</button>
         </div>
@@ -255,8 +299,8 @@
                 </a>
                 <div class="meta-info">
                     <span>
-                        <span lang="tr">Sürüm 2.0</span>
-                        <span lang="en">Version 2.0</span>
+                        <span lang="tr">Sürüm 1.5</span>
+                        <span lang="en">Version 1.5</span>
                     </span> | 
                     <span>
                         <span lang="tr">Güncelleme: Eki 2025</span>
@@ -372,6 +416,7 @@
             setTheme(getThemePreference());
 
             // --- DİL YÖNETİMİ ---
+            const langSwitcher = document.getElementById('language-switcher');
             const langButtons = {
                 tr: document.getElementById('lang-tr'),
                 en: document.getElementById('lang-en')
@@ -384,9 +429,11 @@
                     el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
                 });
 
-                Object.values(langButtons).forEach(btn => btn.classList.remove('active'));
-                if (langButtons[lang]) {
-                    langButtons[lang].classList.add('active');
+                // Kayan animasyon için kapsayıcıya class ekle/kaldır
+                if (lang === 'en') {
+                    langSwitcher.classList.add('lang-en-active');
+                } else {
+                    langSwitcher.classList.remove('lang-en-active');
                 }
                 
                 updatePageTitle(lang);
