@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<!-- Başlangıç dili tarayıcıya göre ayarlanacak -->
+<!-- Başlangıç dili JavaScript tarafından ayarlanacak -->
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Başlık da JavaScript ile değişecek -->
     <title>Web Yönlendirici ve Engelleyici - Chrome Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Web%20Y%C3%B6nlendirici%20ve%20Engelleyici/icons/icon48.png?raw=true">
     <style>
@@ -154,7 +155,6 @@
         .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
         .copy-btn.copied .icon { color: #238636; }
 
-        /* ÜST SAĞ KONTROLLER */
         .top-right-controls {
             position: fixed;
             top: 24px;
@@ -191,11 +191,10 @@
         [data-theme="dark"] #sun-icon { transform: translateY(0); opacity: 1; }
         [data-theme="dark"] #moon-icon { transform: translateY(-30px); opacity: 0; }
         
-        /* DİL DEĞİŞTİRİCİ */
         .language-switcher button { padding: 0; font-size: 16px; }
         .language-switcher button.active { border-color: var(--blue-chrome); }
-        [lang="tr"], [lang="en"] { display: none; } /* Varsayılan olarak gizle */
 
+        /* SORUNLU CSS KURALI BURADAN KALDIRILDI. ARTIK JS KONTROL EDECEK. */
 
         @media (max-width: 768px) {
             .container { margin: 1rem; }
@@ -230,9 +229,7 @@
             <button id="lang-tr" title="Türkçe">🇹🇷</button>
             <button id="lang-en" title="English">🇬🇧</button>
         </div>
-        <button class="theme-switcher" id="theme-toggle">
-             <span lang="tr">Temayı Değiştir</span>
-             <span lang="en">Toggle Theme</span>
+        <button class="theme-switcher" id="theme-toggle" title="Temayı Değiştir">
             <svg id="moon-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             <svg id="sun-icon" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         </button>
@@ -277,7 +274,7 @@
                 </button>
                 <button class="tab-button" data-target="installation">
                     <span lang="tr">Nasıl Kurulur?</span>
-                    <span lang="en">How to Install?</span>
+                    <span lang="en">How to Install</span>
                 </button>
             </div>
 
@@ -327,9 +324,7 @@
                         <span lang="en">Open a new tab in Chrome and copy-paste this address:</span>
                         <div class="copy-wrapper">
                             <code id="extension-url">chrome://extensions</code>
-                            <button class="copy-btn" id="copy-button">
-                                <span lang="tr">Kopyala</span>
-                                <span lang="en">Copy</span>
+                            <button class="copy-btn" id="copy-button" title="Kopyala">
                                 <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                             </button>
                         </div>
@@ -360,7 +355,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- TEMA DEĞİŞTİRİCİ ---
+            // --- TEMA YÖNETİMİ ---
             const themeToggle = document.getElementById('theme-toggle');
             const getThemePreference = () => {
                 if (localStorage.getItem('theme')) return localStorage.getItem('theme');
@@ -376,37 +371,32 @@
             });
             setTheme(getThemePreference());
 
-            // --- DİL DEĞİŞTİRİCİ ---
+            // --- DİL YÖNETİMİ ---
             const langButtons = {
                 tr: document.getElementById('lang-tr'),
                 en: document.getElementById('lang-en')
             };
-
             const setLanguage = (lang) => {
                 document.documentElement.lang = lang;
                 localStorage.setItem('language', lang);
                 
-                // Tüm dil etiketlerini yönet
                 document.querySelectorAll('[lang]').forEach(el => {
-                    el.style.display = (el.lang === lang) ? '' : 'none';
+                    el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
                 });
 
-                // Aktif butonu ayarla
                 Object.values(langButtons).forEach(btn => btn.classList.remove('active'));
                 if (langButtons[lang]) {
                     langButtons[lang].classList.add('active');
                 }
                 
-                // Başlık gibi dil-spesifik özellikleri güncelle
                 updatePageTitle(lang);
             };
-
             const getLanguagePreference = () => {
-                if (localStorage.getItem('language')) return localStorage.getItem('language');
+                const savedLang = localStorage.getItem('language');
+                if (savedLang) return savedLang;
                 const browserLang = navigator.language.split('-')[0];
-                return (browserLang === 'tr') ? 'tr' : 'en'; // Varsayılan İngilizce
+                return (browserLang === 'tr') ? 'tr' : 'en';
             };
-            
             const updatePageTitle = (lang) => {
                  const titles = {
                     tr: 'Web Yönlendirici ve Engelleyici - Chrome Uzantısı',
@@ -414,13 +404,11 @@
                 };
                 document.title = titles[lang];
             }
-
             langButtons.tr.addEventListener('click', () => setLanguage('tr'));
             langButtons.en.addEventListener('click', () => setLanguage('en'));
             setLanguage(getLanguagePreference());
 
-
-            // --- SEKMELER ---
+            // --- SEKME YÖNETİMİ ---
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabButtons.forEach(button => {
@@ -438,17 +426,15 @@
             // --- KOPYALA BUTONU ---
             const copyButton = document.getElementById('copy-button');
             const urlToCopy = document.getElementById('extension-url').innerText;
-            const originalCopyHTML = copyButton.innerHTML;
-            const checkIcon = `<svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            const originalCopyIcon = copyButton.innerHTML;
+            const checkIcon = `<svg class="icon" style="color: #238636;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
             copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(urlToCopy).then(() => {
                     copyButton.innerHTML = checkIcon;
                     copyButton.classList.add('copied');
                     setTimeout(() => {
-                        copyButton.innerHTML = originalCopyHTML;
+                        copyButton.innerHTML = originalCopyIcon;
                         copyButton.classList.remove('copied');
-                        // Dil değişikliğinden sonra metinlerin doğru görünmesi için yeniden ayarla
-                        setLanguage(document.documentElement.lang);
                     }, 2000);
                 });
             });
