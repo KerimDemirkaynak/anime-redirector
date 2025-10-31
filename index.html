@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Yönlendirici ve Engelleyici - Chrome Uzantısı</title>
+    <title>Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Chrome/icons/icon48.png?raw=true">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -17,7 +17,9 @@
             --blue-chrome-hover: #1765cc;
             --border-color: #e0e0e0;
             --header-border: #dadce0;
-            --button-text-color: #ffffff; /* Genellikle beyaz */
+            --button-text-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-color-hover: rgba(0, 0, 0, 0.15);
         }
 
         [data-theme="dark"] {
@@ -29,10 +31,14 @@
             --blue-chrome-hover: #79c0ff;
             --border-color: #30363d;
             --header-border: #30363d;
-            --button-text-color: #0d1117; /* Koyu tema için metin rengi */
+            --button-text-color: #0d1117;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-color-hover: rgba(0, 0, 0, 0.4);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Roboto', sans-serif;
@@ -48,12 +54,13 @@
             margin: 2rem auto;
             background-color: var(--page-bg);
             border: 1px solid var(--header-border);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             opacity: 0;
             animation: fadeIn 0.5s 0.1s ease-out forwards;
             position: relative;
             transition: background-color 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 12px var(--shadow-color);
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
@@ -69,15 +76,35 @@
         .extension-icon {
             width: 128px;
             height: 128px;
-            border-radius: 12px;
+            border-radius: 16px;
             flex-shrink: 0;
+            box-shadow: 0 2px 6px var(--shadow-color);
         }
         .extension-details { flex-grow: 1; }
         .extension-details h1 { font-size: 28px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; transition: color 0.3s; }
         .extension-details .subtitle { font-size: 16px; }
         .extension-actions { margin-left: auto; text-align: right; }
-        .add-to-chrome-btn { display: inline-block; background-color: var(--blue-chrome); color: var(--button-text-color); padding: 12px 24px; font-size: 15px; font-weight: 500; text-decoration: none; border-radius: 6px; transition: background-color 0.2s, color 0.3s; border: none; cursor: pointer; }
-        .add-to-chrome-btn:hover { background-color: var(--blue-chrome-hover); }
+        
+        .action-btn { 
+            display: inline-block; 
+            background-color: var(--blue-chrome); 
+            color: var(--button-text-color); 
+            padding: 12px 24px; 
+            font-size: 15px; 
+            font-weight: 500; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            transition: background-color 0.2s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+            border: none; 
+            cursor: pointer;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        .action-btn:hover { 
+            background-color: var(--blue-chrome-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow-color-hover);
+        }
+        
         .meta-info { font-size: 13px; margin-top: 12px; }
         .meta-info span { margin: 0 8px; }
 
@@ -87,39 +114,48 @@
         .tab-button:hover { background-color: rgba(128, 128, 128, 0.1); border-radius: 6px 6px 0 0; }
         .tab-button.active { color: var(--blue-chrome); border-bottom-color: var(--blue-chrome); }
         .tab-content { display: none; animation: contentFadeIn 0.4s; }
-        @keyframes contentFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes contentFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .tab-content.active { display: block; }
         
-        h2 { font-size: 20px; color: var(--heading-color); margin-bottom: 16px; transition: color 0.3s; }
+        h2 { font-size: 20px; color: var(--heading-color); margin-bottom: 16px; transition: color 0.3s; border-left: 4px solid var(--blue-chrome); padding-left: 12px; }
         .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .feature-item { display: flex; align-items: start; gap: 12px; }
-        .feature-item .icon { width: 24px; height: 24px; margin-top: 2px; }
+        .feature-item .icon { width: 24px; height: 24px; margin-top: 2px; flex-shrink: 0; }
         .feature-item p strong { display: block; color: var(--heading-color); transition: color 0.3s; }
 
-        #installation ol { list-style-position: inside; padding-left: 0; }
-        #installation li { margin-bottom: 16px; }
+        #installation ol { list-style-position: inside; padding-left: 0; counter-reset: step; }
+        #installation li { margin-bottom: 16px; list-style: none; position: relative; padding-left: 30px; }
+        #installation li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 22px;
+            height: 22px;
+            background-color: var(--blue-chrome);
+            color: var(--button-text-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         .copy-wrapper { display: flex; align-items: center; background-color: var(--bg-color); padding: 8px 12px; border-radius: 6px; margin-top: 8px; border: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
         .copy-wrapper code { font-family: monospace; flex-grow: 1; }
         .copy-btn { background: none; border: none; cursor: pointer; }
         .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
         .copy-btn.copied .icon { color: #238636; }
 
-        .top-right-controls { position: fixed; top: 24px; right: 24px; z-index: 1000; display: flex; align-items: center; gap: 12px; }
+        .top-right-controls { position: fixed; top: 24px; right: 24px; z-index: 1001; display: flex; align-items: center; gap: 12px; }
         
         .theme-switcher {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border-color);
-            background-color: var(--page-bg);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: all 0.3s;
-            flex-shrink: 0;
+            position: relative; width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border-color); background-color: var(--page-bg);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; transition: all 0.3s; flex-shrink: 0;
         }
         .theme-switcher:hover { border-color: var(--text-color); transform: scale(1.1); }
         .theme-switcher .icon { width: 20px; height: 20px; color: var(--text-color); position: absolute; transition: transform 0.4s ease, opacity 0.4s ease; }
@@ -127,46 +163,66 @@
         [data-theme="dark"] #sun-icon { transform: translateY(0); opacity: 1; }
         [data-theme="dark"] #moon-icon { transform: translateY(-30px); opacity: 0; }
         
-        /* --- YENİ VE DAHA MODERN DİL DEĞİŞTİRİCİ --- */
         .language-switcher {
-            position: relative;
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 4px;
-            height: 40px;
-            transition: background-color 0.3s, border-color 0.3s;
+            position: relative; display: flex; align-items: center;
+            background-color: var(--bg-color); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 4px; height: 40px; transition: background-color 0.3s, border-color 0.3s;
         }
         .language-switcher .glider {
-            position: absolute;
-            height: 30px;
-            width: 40px;
-            background-color: var(--blue-chrome);
-            border-radius: 16px;
+            position: absolute; height: 30px; width: 40px;
+            background-color: var(--blue-chrome); border-radius: 16px;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
         }
         .language-switcher.lang-en-active .glider { transform: translateX(44px); }
-        
         .lang-btn {
-            width: 44px;
-            height: 100%;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            width: 44px; height: 100%; background: none; border: none; cursor: pointer;
+            z-index: 1; font-size: 14px; font-weight: 500; transition: color 0.3s ease;
         }
         #lang-tr { color: var(--button-text-color); }
         #lang-en { color: var(--text-color); }
         .language-switcher.lang-en-active #lang-tr { color: var(--text-color); }
         .language-switcher.lang-en-active #lang-en { color: var(--button-text-color); }
-        
 
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content {
+            background-color: var(--page-bg);
+            padding: 24px; border-radius: 12px;
+            width: 90%; max-width: 500px;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95);
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+        .modal-overlay.show .modal-content { transform: scale(1); }
+        .modal-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none; cursor: pointer;
+            font-size: 28px; color: var(--text-color);
+            line-height: 1;
+        }
+        .modal-close:hover { color: var(--heading-color); }
+        .modal-content h2 { border-left: none; padding-left: 0; text-align: center; margin-bottom: 24px; }
+        .browser-options { display: flex; gap: 20px; justify-content: center; }
+        .browser-option { text-align: center; flex: 1; }
+        .browser-logo {
+            width: 80px; height: 80px;
+            margin: 0 auto 16px;
+            transition: transform 0.2s ease;
+        }
+        .browser-option a:hover .browser-logo { transform: scale(1.1); }
+        
         @media (max-width: 768px) {
             .container { margin: 1rem; }
             .extension-header { flex-direction: column; text-align: center; }
@@ -175,11 +231,11 @@
             .extension-actions { margin-left: 0; text-align: center; }
             .features { grid-template-columns: 1fr; }
             .top-right-controls { top: 16px; right: 16px; gap: 8px; }
-            .theme-switcher { width: 36px; height: 36px; }
-            .language-switcher { height: 36px; border-radius: 18px; }
+            .theme-switcher, .language-switcher { width: 36px; height: 36px; border-radius: 18px; }
             .language-switcher .glider { height: 28px; width: 36px; border-radius: 14px; }
             .lang-btn { width: 38px; }
             .language-switcher.lang-en-active .glider { transform: translateX(38px); }
+            .browser-options { flex-direction: column; }
         }
         
         .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); transition: border-color 0.3s; }
@@ -215,10 +271,10 @@
                 </p>
             </div>
             <div class="extension-actions">
-                <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.5/Chrome.crx" class="add-to-chrome-btn" download>
-                    <span lang="tr">Chrome'a Ekle</span>
-                    <span lang="en">Add to Chrome</span>
-                </a>
+                <button id="open-modal-btn" class="action-btn">
+                    <span lang="tr">Tarayıcıya Ekle</span>
+                    <span lang="en">Add to Browser</span>
+                </button>
                 <div class="meta-info">
                     <span>
                         <span lang="tr">Sürüm 1.5</span>
@@ -239,8 +295,8 @@
                     <span lang="en">Overview</span>
                 </button>
                 <button class="tab-button" data-target="installation">
-                    <span lang="tr">Nasıl Kurulur?</span>
-                    <span lang="en">How to Install</span>
+                    <span lang="tr">Nasıl Kurulur? (Chrome)</span>
+                    <span lang="en">How to Install (Chrome)</span>
                 </button>
             </div>
 
@@ -277,13 +333,13 @@
 
             <div id="installation" class="tab-content">
                 <h2>
-                    <span lang="tr">Kurulum Adımları</span>
-                    <span lang="en">Installation Steps</span>
+                    <span lang="tr">Chrome için Manuel Kurulum Adımları</span>
+                    <span lang="en">Manual Installation Steps for Chrome</span>
                 </h2>
                 <ol>
                     <li>
-                        <span lang="tr">"Chrome'a Ekle" düğmesine tıklayarak <code>.crx</code> uzantı dosyasını indirin.</span>
-                        <span lang="en">Click the "Add to Chrome" button to download the <code>.crx</code> extension file.</span>
+                        <span lang="tr">Yukarıdaki "Tarayıcıya Ekle" düğmesine tıklayıp Chrome'u seçerek <code>.crx</code> uzantı dosyasını indirin.</span>
+                        <span lang="en">Click the "Add to Browser" button above and choose Chrome to download the <code>.crx</code> extension file.</span>
                     </li>
                     <li>
                         <span lang="tr">Chrome'da yeni sekme açın ve bu adresi kopyalayıp yapıştırın:</span>
@@ -319,8 +375,42 @@
         </footer>
     </div>
 
+    <!-- ADD BROWSER MODAL -->
+    <div id="browser-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close" title="Kapat">&times;</button>
+            <h2>
+                <span lang="tr">Bir tarayıcı seçin</span>
+                <span lang="en">Choose a browser</span>
+            </h2>
+            <div class="browser-options">
+                <div class="browser-option">
+                    <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.5/Chrome.crx" download>
+                        <svg class="browser-logo" viewBox="0 0 128 128" role="img" aria-label="Google Chrome Logo"><path fill="#4385F6" d="M64,128A64,64,0,1,1,128,64,64.07,64.07,0,0,1,64,128ZM64,4A60,60,0,1,0,124,64,60.07,60.07,0,0,0,64,4Z"/><path fill="#4385F6" d="M64,99a35,35,0,1,1,35-35A35,35,0,0,1,64,99ZM64,33a31,31,0,1,0,31,31A31,31,0,0,0,64,33Z"/><path fill="#EA4435" d="M64,4A60,60,0,0,0,39.26,108.74L49,91.33a35.06,35.06,0,0,1,30-58.07,34.82,34.82,0,0,1,23.33,8.71L114,25.3A60,60,0,0,0,64,4Z"/><path fill="#FABC05" d="M108.74,88.74,91.33,79a35.06,35.06,0,0,1-58.07-30,34.82,34.82,0,0,1,8.71-23.33L25.3,14A60,60,0,0,0,108.74,88.74Z"/><path fill="#34A853" d="M22,64A35,35,0,0,1,88.74,49l-12,20.67A13,13,0,1,0,56,86.06V64H38.06A35.31,35.31,0,0,1,22,64Z"/></svg>
+                        <span class="action-btn">
+                            <span lang="tr">Chrome'a Ekle</span>
+                            <span lang="en">Add to Chrome</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="browser-option">
+                    <a href="https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/" target="_blank" rel="noopener noreferrer">
+                        <svg class="browser-logo" viewBox="0 0 512 512" role="img" aria-label="Mozilla Firefox Logo"><path d="M495.43,250.62c-.22-8.38-1.57-16.79-4.07-25.07-2-6.52-4.48-12.87-7.38-19-4.32-9.14-9.48-17.84-15.39-25.92-2.88-3.92-5.94-7.75-9.18-11.45-3-3.48-6.19-6.84-9.52-10.07-13-12.63-28-23.77-44.53-33.16-16.63-9.45-34.6-17-53.53-22.37-14.2-4-28.79-6.8-43.5-8.17-14.23-1.32-28.56-1.32-42.84,0-14.71,1.37-29.3,4.17-43.5,8.17-18.93,5.37-36.9,12.92-53.53,22.37-16.5,9.39-31.5,20.53-44.53,33.16-3.33,3.23-6.52,6.59-9.52,10.07-3.23,3.7-6.3,7.53-9.18,11.45-5.91,8.08-11.07,16.78-15.39,25.92-2.9,6.13-5.38,12.48-7.38,19-2.5,8.28-3.85,16.69-4.07,25.07.22,8.38,1.57,16.79,4.07,25.07,2,6.52,4.48,12.87,7.38,19,4.32,9.14,9.48,17.84,15.39,25.92,2.88,3.92,5.94,7.75,9.18,11.45,3,3.48,6.19,6.84,9.52,10.07,13,12.63,28,23.77,44.53,33.16,16.63,9.45,34.6,17,53.53,22.37,14.2,4,28.79,6.8,43.5,8.17,14.23,1.32,28.56,1.32,42.84,0,14.71-1.37,29.3-4.17,43.5-8.17,18.93-5.37,36.9-12.92,53.53-22.37,16.5-9.39,31.5-20.53,44.53-33.16,3.33-3.23,6.52-6.59,9.52-10.07,3.23-3.7,6.3-7.53,9.18-11.45,5.91-8.08,11.07-16.78,15.39-25.92,2.9-6.13,5.38-12.48,7.38-19,2.5-8.28,3.85-16.69,4.07-25.07" fill="#ff9400"></path><path d="M294,229.42c22.37,10.33,35,26.5,35,46.51,0,29.23-26.68,54.21-61,54.21-13.8,0-26.5-4.2-36.5-11.49-16.1-11.75-26.85-28.53-31.5-47.28-4.2-17.43-1.84-33.18,7.34-45.74,8.12-10.9,20-17.65,33.16-19.49,15.68-2.18,30.4,2,43.5,13.25" fill="#ffd000"></path><path d="M291.68,142.27c-2.43-3.1-5-6.07-7.73-8.89-13-13.43-30.83-21.73-50.45-21.73-13.88,0-27.18,3.5-39,10-16.5,9-30,22.46-38.86,39.18-8.28,15.42-10.74,32.74-7.14,49.81,3,14.23,9.75,27.1,19.41,37.38,12.78,13.68,29,22.68,46.72,25.84,1.05.19,2.1.33,3.15.44,4.28.45,8.56.24,12.82-.67,16-3.4,29.6-12.46,38.65-25.6,5.32-7.75,8.23-16.5,8.71-25.6,1.48-28.85-14.4-53.52-37-69.76" fill="#00539f"></path></svg>
+                        <span class="action-btn">
+                            <span lang="tr">Firefox'a Ekle</span>
+                            <span lang="en">Add to Firefox</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const docElement = document.documentElement;
+
             // --- TEMA YÖNETİMİ ---
             const themeToggle = document.getElementById('theme-toggle');
             const getThemePreference = () => {
@@ -328,11 +418,11 @@
                 return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             };
             const setTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
+                docElement.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
             };
             themeToggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const currentTheme = docElement.getAttribute('data-theme');
                 setTheme(currentTheme === 'dark' ? 'light' : 'dark');
             });
             setTheme(getThemePreference());
@@ -340,19 +430,14 @@
             // --- DİL YÖNETİMİ ---
             const langSwitcher = document.getElementById('language-switcher');
             const setLanguage = (lang) => {
-                document.documentElement.lang = lang;
+                docElement.lang = lang;
                 localStorage.setItem('language', lang);
                 
                 document.querySelectorAll('[lang]').forEach(el => {
                     el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
                 });
 
-                if (lang === 'en') {
-                    langSwitcher.classList.add('lang-en-active');
-                } else {
-                    langSwitcher.classList.remove('lang-en-active');
-                }
-                
+                langSwitcher.classList.toggle('lang-en-active', lang === 'en');
                 updatePageTitle(lang);
             };
             const getLanguagePreference = () => {
@@ -363,14 +448,14 @@
             };
             const updatePageTitle = (lang) => {
                  const titles = {
-                    tr: 'Web Yönlendirici ve Engelleyici - Chrome Uzantısı',
-                    en: 'Web Redirector and Blocker - Chrome Extension'
+                    tr: 'Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı',
+                    en: 'Web Redirector and Blocker - Browser Extension'
                 };
                 document.title = titles[lang];
             }
             document.getElementById('lang-tr').addEventListener('click', () => setLanguage('tr'));
             document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
-            setLanguage(getLanguagePreference());
+            
 
             // --- SEKME YÖNETİMİ ---
             const tabButtons = document.querySelectorAll('.tab-button');
@@ -402,6 +487,25 @@
                     }, 2000);
                 });
             });
+            
+            // --- MODAL YÖNETİMİ ---
+            const modal = document.getElementById('browser-modal');
+            const openModalBtn = document.getElementById('open-modal-btn');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+
+            const openModal = () => modal.classList.add('show');
+            const closeModal = () => modal.classList.remove('show');
+
+            openModalBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // --- İLK YÜKLEME ---
+            setLanguage(getLanguagePreference());
         });
     </script>
 </body>
