@@ -59,7 +59,8 @@
         }
 
         .container {
-            max-width: 960px;
+            /* --- DÜZELTME: Geniş ekranlar için maksimum genişlik artırıldı --- */
+            max-width: 1140px; 
             margin: 2rem auto;
             background-color: var(--page-bg);
             border: 1px solid var(--header-border);
@@ -73,7 +74,6 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
         
-        /* 2. YENİ KONTROL BUTONLARI STİLİ */
         .settings-controls {
             position: absolute;
             top: 15px;
@@ -110,7 +110,6 @@
             font-size: 1rem;
         }
 
-
         .extension-header {
             display: flex;
             align-items: center;
@@ -119,7 +118,7 @@
             flex-wrap: wrap;
             gap: 20px;
             transition: border-color 0.3s;
-            padding-top: 80px; /* Butonlar için yer aç */
+            padding-top: 80px;
         }
         .extension-icon {
             width: 128px;
@@ -177,7 +176,6 @@
         .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
         .copy-btn.copied .icon { color: #238636; }
 
-        /* 3. MODAL (POPUP) STİLLERİ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6); z-index: 1000;
@@ -365,57 +363,44 @@
         document.addEventListener('DOMContentLoaded', () => {
             const docElement = document.documentElement;
             const body = document.body;
-
-            // --- KONTROL BUTONLARI ---
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
             const themeIcon = themeSwitcher.querySelector('i');
 
-            // --- TEMA YÖNETİMİ ---
             const applyTheme = (theme) => {
                 body.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
                 themeIcon.className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
             };
+
+            const applyLanguage = (lang) => {
+                docElement.lang = lang;
+                localStorage.setItem('language', lang);
+                document.querySelectorAll('[lang]').forEach(el => {
+                    el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
+                });
+                langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
+                themeSwitcher.title = lang === 'tr' ? 'Temayı Değiştir' : 'Switch Theme';
+                langSwitcher.title = lang === 'tr' ? 'Change Language' : 'Dili Değiştir';
+                updatePageTitle(lang);
+            };
+
+            const updatePageTitle = (lang) => {
+                document.title = lang === 'tr' 
+                    ? 'Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı' 
+                    : 'Web Redirector and Blocker - Browser Extension';
+            };
+
             themeSwitcher.addEventListener('click', () => {
                 const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(newTheme);
             });
 
-            // --- DİL YÖNETİMİ ---
-            const applyLanguage = (lang) => {
-                docElement.lang = lang;
-                localStorage.setItem('language', lang);
-                
-                document.querySelectorAll('[lang]').forEach(el => {
-                    el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
-                });
-
-                langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
-                
-                if (lang === 'tr') {
-                    themeSwitcher.title = 'Temayı Değiştir';
-                    langSwitcher.title = 'Change Language';
-                } else {
-                    themeSwitcher.title = 'Switch Theme';
-                    langSwitcher.title = 'Dili Değiştir';
-                }
-                updatePageTitle(lang);
-            };
             langSwitcher.addEventListener('click', () => {
                 const newLang = localStorage.getItem('language') === 'tr' ? 'en' : 'tr';
                 applyLanguage(newLang);
-            });
-            
-            const updatePageTitle = (lang) => {
-                 const titles = {
-                    tr: 'Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı',
-                    en: 'Web Redirector and Blocker - Browser Extension'
-                };
-                document.title = titles[lang];
-            }
-            
-            // --- SEKME YÖNETİMİ ---
+});
+
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabButtons.forEach(button => {
@@ -430,23 +415,23 @@
                 });
             });
 
-            // --- KOPYALA BUTONU ---
             const copyButton = document.getElementById('copy-button');
-            const urlToCopy = document.getElementById('extension-url').innerText;
-            const originalCopyIcon = copyButton.innerHTML;
-            const checkIcon = `<svg class="icon" style="color: #238636;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-            copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(urlToCopy).then(() => {
-                    copyButton.innerHTML = checkIcon;
-                    copyButton.classList.add('copied');
-                    setTimeout(() => {
-                        copyButton.innerHTML = originalCopyIcon;
-                        copyButton.classList.remove('copied');
-                    }, 2000);
+            if (copyButton) {
+                const urlToCopy = document.getElementById('extension-url').innerText;
+                const originalCopyIcon = copyButton.innerHTML;
+                const checkIcon = `<svg class="icon" style="color: #238636;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                copyButton.addEventListener('click', () => {
+                    navigator.clipboard.writeText(urlToCopy).then(() => {
+                        copyButton.innerHTML = checkIcon;
+                        copyButton.classList.add('copied');
+                        setTimeout(() => {
+                            copyButton.innerHTML = originalCopyIcon;
+                            copyButton.classList.remove('copied');
+                        }, 2000);
+                    });
                 });
-            });
+            }
             
-            // --- MODAL YÖNETİMİ ---
             const modal = document.getElementById('browser-modal');
             const openModalBtn = document.getElementById('open-modal-btn');
             const closeModalBtn = document.getElementById('modal-close-btn');
@@ -460,7 +445,7 @@
                 if (event.target === modal) closeModal();
             });
 
-            // --- İLK YÜKLEME ---
+            // --- SAYFA İLK YÜKLENDİĞİNDE ÇALIŞACAK KODLAR ---
             const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
             const browserLang = navigator.language.split('-')[0];
             const savedLang = localStorage.getItem('language') || (browserLang === 'tr' ? 'tr' : 'en');
