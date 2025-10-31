@@ -15,34 +15,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* 1. TEMA VE RENK DEĞİŞKENLERİ */
         :root {
-            --bg-color: #f6f7f8;
-            --page-bg: #ffffff;
-            --text-color: #5f6368;
-            --heading-color: #202124;
-            --blue-chrome: #1a73e8;
-            --blue-chrome-hover: #1765cc;
-            --border-color: #e0e0e0;
-            --header-border: #dadce0;
-            --button-text-color: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --shadow-color-hover: rgba(0, 0, 0, 0.15);
+            --bg-color: #f6f7f8; --page-bg: #ffffff; --text-color: #5f6368;
+            --heading-color: #202124; --blue-chrome: #1a73e8; --blue-chrome-hover: #1765cc;
+            --border-color: #e0e0e0; --header-border: #dadce0; --button-text-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1); --shadow-color-hover: rgba(0, 0, 0, 0.15);
             --controls-bg: rgba(255, 255, 255, 0.7);
         }
 
         [data-theme="dark"] {
-            --bg-color: #0d1117;
-            --page-bg: #161b22;
-            --text-color: #8b949e;
-            --heading-color: #c9d1d9;
-            --blue-chrome: #58a6ff;
-            --blue-chrome-hover: #79c0ff;
-            --border-color: #30363d;
-            --header-border: #30363d;
-            --button-text-color: #0d1117;
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --shadow-color-hover: rgba(0, 0, 0, 0.4);
+            --bg-color: #0d1117; --page-bg: #161b22; --text-color: #8b949e;
+            --heading-color: #c9d1d9; --blue-chrome: #58a6ff; --blue-chrome-hover: #79c0ff;
+            --border-color: #30363d; --header-border: #30363d; --button-text-color: #0d1117;
+            --shadow-color: rgba(0, 0, 0, 0.3); --shadow-color-hover: rgba(0, 0, 0, 0.4);
             --controls-bg: rgba(30, 42, 56, 0.7);
         }
         
@@ -50,86 +35,49 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif; background-color: var(--bg-color);
+            color: var(--text-color); line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            /* --- DÜZELTME: Geniş ekranlar için maksimum genişlik artırıldı --- */
-            max-width: 1140px; 
-            margin: 2rem auto;
-            background-color: var(--page-bg);
-            border: 1px solid var(--header-border);
-            border-radius: 12px;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 0.5s 0.1s ease-out forwards;
-            position: relative;
-            transition: background-color 0.3s, border-color 0.3s;
+            max-width: 1140px; margin: 2rem auto; background-color: var(--page-bg);
+            border: 1px solid var(--header-border); border-radius: 12px;
+            overflow: hidden; opacity: 0; animation: fadeIn 0.5s 0.1s ease-out forwards;
+            position: relative; transition: background-color 0.3s, border-color 0.3s;
             box-shadow: 0 4px 12px var(--shadow-color);
         }
         @keyframes fadeIn { to { opacity: 1; } }
         
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 24px; border-bottom: 1px solid var(--header-border);
+        }
+        .header-title {
+            font-size: 1.1rem; font-weight: 500; color: var(--heading-color);
+        }
         .settings-controls {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 10;
-            display: flex;
-            gap: 8px;
-            background-color: var(--controls-bg);
-            backdrop-filter: blur(5px);
-            padding: 8px;
-            border-radius: 50px;
-            border: 1px solid var(--border-color);
+            display: flex; gap: 8px;
         }
         .control-button {
-            background-color: transparent;
-            border: none;
-            color: var(--text-color);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+            background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color);
+            width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: all 0.2s;
         }
-        .control-button:hover {
-            background-color: var(--border-color);
-            transform: scale(1.1);
-        }
-        #lang-switcher {
-            font-weight: 700;
-            font-size: 1rem;
-        }
+        .control-button:hover { background-color: var(--border-color); transform: scale(1.1); }
+        #lang-switcher { font-weight: 700; font-size: 1rem; }
 
         .extension-header {
-            display: flex;
-            align-items: center;
-            padding: 24px;
-            border-bottom: 1px solid var(--header-border);
-            flex-wrap: wrap;
-            gap: 20px;
-            transition: border-color 0.3s;
-            padding-top: 80px;
+            display: flex; align-items: center; padding: 24px; flex-wrap: wrap; gap: 24px;
         }
         .extension-icon {
-            width: 128px;
-            height: 128px;
-            border-radius: 16px;
-            flex-shrink: 0;
+            width: 128px; height: 128px; border-radius: 16px; flex-shrink: 0;
             box-shadow: 0 2px 6px var(--shadow-color);
         }
         .extension-details { flex-grow: 1; }
-        .extension-details h1 { font-size: 28px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; transition: color 0.3s; }
-        .extension-details .subtitle { font-size: 16px; }
+        .extension-details h1 { font-size: 28px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; }
         .extension-actions { margin-left: auto; text-align: right; }
         
         .action-btn { 
@@ -138,16 +86,13 @@
             border-radius: 6px; transition: all 0.2s; border: none; cursor: pointer;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
-        .action-btn:hover { 
-            background-color: var(--blue-chrome-hover); transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow-color-hover);
-        }
+        .action-btn:hover { background-color: var(--blue-chrome-hover); transform: translateY(-2px); box-shadow: 0 4px 8px var(--shadow-color-hover); }
         
         .meta-info { font-size: 13px; margin-top: 12px; }
         .meta-info span { margin: 0 8px; }
 
         .content-area { padding: 24px; }
-        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 24px; transition: border-color 0.3s; }
+        .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
         .tab-button { padding: 12px 16px; cursor: pointer; border: none; background: none; color: var(--text-color); font-size: 15px; font-weight: 500; border-bottom: 3px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
         .tab-button:hover { background-color: rgba(128, 128, 128, 0.1); border-radius: 6px 6px 0 0; }
         .tab-button.active { color: var(--blue-chrome); border-bottom-color: var(--blue-chrome); }
@@ -155,68 +100,56 @@
         @keyframes contentFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .tab-content.active { display: block; }
         
-        h2 { font-size: 20px; color: var(--heading-color); margin-bottom: 16px; transition: color 0.3s; border-left: 4px solid var(--blue-chrome); padding-left: 12px; }
-        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        h2 { font-size: 20px; color: var(--heading-color); margin-bottom: 20px; border-left: 4px solid var(--blue-chrome); padding-left: 12px; }
+        h3 { font-size: 18px; color: var(--heading-color); margin-top: 24px; margin-bottom: 12px; }
+
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .feature-item { display: flex; align-items: start; gap: 12px; }
         .feature-item .icon { width: 24px; height: 24px; margin-top: 2px; flex-shrink: 0; }
-        .feature-item p strong { display: block; color: var(--heading-color); transition: color 0.3s; }
+        .feature-item p strong { display: block; color: var(--heading-color); }
+        
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px; }
+        .detail-item strong { display: block; color: var(--heading-color); margin-bottom: 4px; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 15px; font-size: 13px; }
 
-        #installation ol { list-style-position: inside; padding-left: 0; counter-reset: step; }
-        #installation li { margin-bottom: 16px; list-style: none; position: relative; padding-left: 30px; }
-        #installation li::before {
-            counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0;
-            width: 22px; height: 22px; background-color: var(--blue-chrome); color: var(--button-text-color);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 700;
-        }
+        .permissions-list { list-style: none; padding-left: 0; }
+        .permissions-list li { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 15px; margin-bottom: 8px; }
 
-        .copy-wrapper { display: flex; align-items: center; background-color: var(--bg-color); padding: 8px 12px; border-radius: 6px; margin-top: 8px; border: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
-        .copy-wrapper code { font-family: monospace; flex-grow: 1; }
-        .copy-btn { background: none; border: none; cursor: pointer; }
-        .copy-btn .icon { width: 18px; height: 18px; color: var(--text-color); }
-        .copy-btn.copied .icon { color: #238636; }
+        .gallery { text-align: center; }
+        .gallery figure { display: inline-block; margin: 0; }
+        .gallery img { max-width: 100%; border-radius: 8px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .gallery figcaption { font-size: 14px; color: var(--text-color); margin-top: 10px; }
 
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); z-index: 1000;
-            display: none; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); 
+            z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content {
-            background-color: var(--page-bg); padding: 24px; border-radius: 12px;
-            width: 90%; max-width: 500px; position: relative;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            transform: scale(0.95); transition: transform 0.3s ease, background-color 0.3s;
+            background-color: var(--page-bg); padding: 24px; border-radius: 12px; width: 90%; max-width: 500px;
+            position: relative; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: all 0.3s;
         }
         .modal-overlay.show .modal-content { transform: scale(1); }
-        .modal-close {
-            position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer;
-            font-size: 28px; color: var(--text-color); line-height: 1;
-        }
-        .modal-close:hover { color: var(--heading-color); }
+        .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer; font-size: 28px; color: var(--text-color); }
         .modal-content h2 { border-left: none; padding-left: 0; text-align: center; margin-bottom: 24px; }
         .browser-options { display: flex; gap: 20px; justify-content: center; }
         .browser-option { text-align: center; flex: 1; }
-        .browser-logo {
-            width: 80px; height: 80px;
-            margin: 0 auto 16px;
-            transition: transform 0.2s ease;
-        }
+        .browser-logo { width: 80px; height: 80px; margin: 0 auto 16px; transition: transform 0.2s ease; }
         .browser-option a:hover .browser-logo { transform: scale(1.1); }
         
         @media (max-width: 768px) {
             .container { margin: 1rem; }
-            .settings-controls { top: 10px; right: 10px; }
+            .top-bar { padding: 8px 16px; }
+            .header-title { font-size: 1rem; }
             .extension-header { flex-direction: column; text-align: center; }
             .extension-icon { width: 96px; height: 96px; }
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
-            .features { grid-template-columns: 1fr; }
-            .browser-options { flex-direction: column; }
+            .browser-options { flex-direction: column; } /* MOBİL DÜZELTME */
         }
         
-        .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); transition: border-color 0.3s; }
+        .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); }
         .footer a { color: var(--blue-chrome); font-weight: 500; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
     </style>
@@ -224,120 +157,126 @@
 <body data-theme="dark">
 
     <div class="container">
-        <div class="settings-controls">
-            <button id="theme-switcher" class="control-button"><i class="fa-solid fa-sun"></i></button>
-            <button id="lang-switcher" class="control-button">EN</button>
+        <div class="top-bar">
+            <div class="header-title">
+                <span lang="tr">Uzantı Mağazası</span>
+                <span lang="en">Extension Store</span>
+            </div>
+            <div class="settings-controls">
+                <button id="theme-switcher" class="control-button"><i class="fa-solid fa-sun"></i></button>
+                <button id="lang-switcher" class="control-button">EN</button>
+            </div>
         </div>
 
         <header class="extension-header">
             <img src="https://raw.githubusercontent.com/KerimDemirkaynak/anime-redirector/refs/heads/main/Chrome/icons/icon128.png" alt="Uzantı İkonu" class="extension-icon">
             <div class="extension-details">
-                <h1>
-                    <span lang="tr">Web Yönlendirici ve Engelleyici</span>
-                    <span lang="en">Web Redirector and Blocker</span>
-                </h1>
-                <p class="subtitle">
-                    <span lang="tr">İnternet deneyiminizi temizler ve güvende tutar.</span>
-                    <span lang="en">Cleans up your browsing experience and keeps you safe.</span>
-                </p>
+                <h1><span lang="tr">Web Yönlendirici ve Engelleyici</span><span lang="en">Web Redirector and Blocker</span></h1>
+                <p class="subtitle"><span lang="tr">geliştiren: Kerim Demirkaynak</span><span lang="en">by Kerim Demirkaynak</span></p>
             </div>
             <div class="extension-actions">
-                <button id="open-modal-btn" class="action-btn">
-                    <span lang="tr">Tarayıcıya Ekle</span>
-                    <span lang="en">Add to Browser</span>
-                </button>
+                <button id="open-modal-btn" class="action-btn"><span lang="tr">Tarayıcıya Ekle</span><span lang="en">Add to Browser</span></button>
                 <div class="meta-info">
-                    <span>
-                        <span lang="tr">Sürüm 1.5</span>
-                        <span lang="en">Version 1.5</span>
-                    </span> | 
-                    <span>
-                        <span lang="tr">Güncelleme: Eki 2025</span>
-                        <span lang="en">Updated: Oct 2025</span>
-                    </span>
+                    <span><span lang="tr">Sürüm 1.5</span><span lang="en">Version 1.5</span></span> | 
+                    <span><span lang="tr">Güncelleme: Eki 2025</span><span lang="en">Updated: Oct 2025</span></span>
                 </div>
             </div>
         </header>
 
         <main class="content-area">
             <div class="tabs">
-                <button class="tab-button active" data-target="overview">
-                    <span lang="tr">Genel Bakış</span>
-                    <span lang="en">Overview</span>
-                </button>
-                <button class="tab-button" data-target="installation">
-                    <span lang="tr">Nasıl Kurulur? (Chrome)</span>
-                    <span lang="en">How to Install (Chrome)</span>
-                </button>
+                <button class="tab-button active" data-target="overview"><span lang="tr">Genel Bakış</span><span lang="en">Overview</span></button>
+                <button class="tab-button" data-target="screenshots"><span lang="tr">Ekran Görüntüleri</span><span lang="en">Screenshots</span></button>
+                <button class="tab-button" data-target="details"><span lang="tr">Detaylar</span><span lang="en">Details</span></button>
             </div>
 
             <div id="overview" class="tab-content active">
-                <h2>
-                    <span lang="tr">Özellikler</span>
-                    <span lang="en">Features</span>
-                </h2>
+                <h2><span lang="tr">Bu Uzantı Hakkında</span><span lang="en">About This Extension</span></h2>
+                <p>
+                    <span lang="tr">Eski veya Türkiye’de erişime engellenen anime ve video sitelerini otomatik olarak yeni ve çalışan adreslerine yönlendirir. Ayrıca rahatsız edici sohbet kutularını gizleyerek daha temiz bir izleme deneyimi sunar. Yer imlerinizi güncel tutun ve kesintisiz izleme keyfini yaşayın!</span>
+                    <span lang="en">Automatically redirects old or inaccessible anime and video sites in Turkey to their new, working addresses. It also provides a cleaner viewing experience by hiding intrusive chat boxes. Keep your bookmarks up-to-date and enjoy uninterrupted streaming!</span>
+                </p>
+                <h3 lang="tr">Özellikler</h3><h3 lang="en">Features</h3>
                 <div class="features">
                     <div class="feature-item">
                         <svg class="icon" style="color: #238636;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                        <p>
-                            <strong><span lang="tr">Otomatik Yönlendirme</span><span lang="en">Automatic Redirection</span></strong>
-                            <span lang="tr">Eski veya değişmiş site adreslerini (turkanime.co, animecix.net vb.) anında güncel ve doğru adreslerine yönlendirir.</span>
-                            <span lang="en">Instantly redirects old or changed site addresses (e.g., turkanime.co, animecix.net) to their current and correct URLs.</span>
-                        </p>
+                        <p><strong><span lang="tr">Otomatik Yönlendirme</span><span lang="en">Automatic Redirection</span></strong>
+                           <span lang="tr">Engellenen ya da adresi değişen siteleri anında güncel adreslerine yönlendirir.</span>
+                           <span lang="en">Instantly redirects blocked or changed site addresses to their current URLs.</span></p>
                     </div>
                     <div class="feature-item">
                         <svg class="icon" style="color: #d93025;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg>
-                        <p>
-                            <strong><span lang="tr">İstenmeyen İçerik Engelleme</span><span lang="en">Unwanted Content Blocking</span></strong>
-                            <span lang="tr">Sayfalara gömülü, dikkat dağıtan ve gereksiz olan Chatango sohbet pencerelerini tamamen engeller.</span>
-                            <span lang="en">Completely blocks distracting and unnecessary embedded Chatango chat windows on pages.</span>
-                        </p>
+                        <p><strong><span lang="tr">İstenmeyen İçerik Engelleme</span><span lang="en">Unwanted Content Blocking</span></strong>
+                           <span lang="tr">Sayfalara gömülü, dikkat dağıtan sohbet pencerelerini tamamen engeller.</span>
+                           <span lang="en">Completely blocks distracting embedded chat windows on pages.</span></p>
                     </div>
                 </div>
             </div>
+            
+            <div id="screenshots" class="tab-content">
+                <h2><span lang="tr">Ekran Görüntüleri</span><span lang="en">Screenshots</span></h2>
+                <div class="gallery">
+                    <figure>
+                        <img src="https://addons.mozilla.org/user-media/previews/thumbs/338/338779.jpg" alt="Firefox uzantı kullanıcı arayüzü">
+                        <figcaption>
+                            <span lang="tr">Firefox kullanıcı arayüzü</span>
+                            <span lang="en">Firefox user interface</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
 
-            <div id="installation" class="tab-content">
-                <h2><span lang="tr">Chrome için Manuel Kurulum Adımları</span><span lang="en">Manual Installation Steps for Chrome</span></h2>
-                <ol>
-                    <li>
-                        <span lang="tr">Yukarıdaki "Tarayıcıya Ekle" düğmesine tıklayıp Chrome'u seçerek <code>.crx</code> uzantı dosyasını indirin.</span>
-                        <span lang="en">Click the "Add to Browser" button above and choose Chrome to download the <code>.crx</code> extension file.</span>
-                    </li>
-                    <li>
-                        <span lang="tr">Chrome'da yeni sekme açın ve bu adresi kopyalayıp yapıştırın:</span>
-                        <span lang="en">Open a new tab in Chrome and copy-paste this address:</span>
-                        <div class="copy-wrapper">
-                            <code id="extension-url">chrome://extensions</code>
-                            <button class="copy-btn" id="copy-button" title="Kopyala">
-                                <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            </button>
+            <div id="details" class="tab-content">
+                <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong>
+                        <span>1.5</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong>
+                        <span><span lang="tr">3 gün önce (28 Eki 2025)</span><span lang="en">3 days ago (Oct 28, 2025)</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong>
+                        <span>23.1 KB</span>
+                    </div>
+                     <div class="detail-item">
+                        <strong><span lang="tr">Lisans</span><span lang="en">License</span></strong>
+                        <span>MIT License</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong>
+                        <span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong>
+                        <div class="tags-container">
+                            <span class="tag">content blocker</span>
+                            <span class="tag">privacy</span>
+                            <span class="tag">search</span>
                         </div>
-                    </li>
-                    <li>
-                        <span lang="tr">Sayfanın sağ üst köşesindeki <strong>Geliştirici modu</strong> anahtarını aktif hale getirin.</span>
-                        <span lang="en">Enable the <strong>Developer mode</strong> toggle in the top-right corner of the page.</span>
-                    </li>
-                    <li>
-                        <span lang="tr">İndirdiğiniz <code>.crx</code> dosyasını bu sayfaya sürükleyip bırakın.</span>
-                        <span lang="en">Drag and drop the downloaded <code>.crx</code> file onto this page.</span>
-                    </li>
-                    <li>
-                        <span lang="tr">Çıkan pencerede "Uzantıyı ekle" diyerek kurulumu onaylayın. Hepsi bu kadar!</span>
-                        <span lang="en">In the pop-up window, confirm the installation by clicking "Add extension". That's all!</span>
-                    </li>
-                </ol>
+                    </div>
+                </div>
+
+                <h3><span lang="tr">İzinler ve Veriler</span><span lang="en">Permissions and Data</span></h3>
+                <strong><span lang="tr">Gerekli İzinler:</span><span lang="en">Required Permissions:</span></strong>
+                <ul class="permissions-list">
+                    <li><span lang="tr">Herhangi bir sayfadaki içeriği engelleme</span><span lang="en">Block content on any page</span></li>
+                </ul>
+                <strong style="margin-top: 16px; display: block;"><span lang="tr">İsteğe Bağlı İzinler:</span><span lang="en">Optional Permissions:</span></strong>
+                <ul class="permissions-list">
+                    <li><span lang="tr">vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co ve ilgili alan adlarındaki verilerinize erişme</span><span lang="en">Access your data on vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co and related domains</span></li>
+                </ul>
             </div>
         </main>
         
         <footer class="footer">
-            <p>
-                <span lang="tr">Bu proje açık kaynaklıdır. Kodu <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub'da</a> inceleyebilirsiniz.</span>
-                <span lang="en">This project is open-source. You can review the code on <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub</a>.</span>
-            </p>
+            <p><span lang="tr">Bu proje açık kaynaklıdır. Kodu <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub'da</a> inceleyebilirsiniz.</span>
+               <span lang="en">This project is open-source. You can review the code on <a href="https://github.com/KerimDemirkaynak/anime-redirector" target="_blank" rel="noopener noreferrer">GitHub</a>.</span></p>
         </footer>
     </div>
 
-    <!-- TARAYICI EKLEME MODALI -->
     <div id="browser-modal" class="modal-overlay">
         <div class="modal-content">
             <button id="modal-close-btn" class="modal-close" title="Kapat">&times;</button>
@@ -399,12 +338,13 @@
             langSwitcher.addEventListener('click', () => {
                 const newLang = localStorage.getItem('language') === 'tr' ? 'en' : 'tr';
                 applyLanguage(newLang);
-});
+            });
 
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const target = button.getAttribute('data-target');
@@ -415,30 +355,11 @@
                 });
             });
 
-            const copyButton = document.getElementById('copy-button');
-            if (copyButton) {
-                const urlToCopy = document.getElementById('extension-url').innerText;
-                const originalCopyIcon = copyButton.innerHTML;
-                const checkIcon = `<svg class="icon" style="color: #238636;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-                copyButton.addEventListener('click', () => {
-                    navigator.clipboard.writeText(urlToCopy).then(() => {
-                        copyButton.innerHTML = checkIcon;
-                        copyButton.classList.add('copied');
-                        setTimeout(() => {
-                            copyButton.innerHTML = originalCopyIcon;
-                            copyButton.classList.remove('copied');
-                        }, 2000);
-                    });
-                });
-            }
-            
             const modal = document.getElementById('browser-modal');
             const openModalBtn = document.getElementById('open-modal-btn');
             const closeModalBtn = document.getElementById('modal-close-btn');
-
             const openModal = () => modal.classList.add('show');
             const closeModal = () => modal.classList.remove('show');
-
             openModalBtn.addEventListener('click', openModal);
             closeModalBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (event) => {
