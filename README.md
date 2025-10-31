@@ -1,53 +1,90 @@
-# Web Yönlendirici ve Engelleyici Chrome Uzantısı
+# 🌐 Web Yönlendirici ve Engelleyici  
+### (Chromium & Firefox tabanlı tüm tarayıcılar için)
 
-Bu proje, belirli web sitelerini engelleyen ve bazılarını yeni adreslerine yönlendiren basit ve etkili bir Chrome uzantısıdır. `declarativeNetRequest` API'si kullanılarak geliştirilmiştir, bu sayede tarayıcı performansını etkilemeden hızlı ve güvenli bir şekilde çalışır.
+Bu proje, belirli web sitelerini engelleyen ve bazılarını yeni adreslerine yönlendiren basit ve etkili bir **tarayıcı uzantısıdır**.  
+`declarativeNetRequest` API'si kullanılarak geliştirilmiştir; bu sayede tarayıcı performansını etkilemeden hızlı ve güvenli bir şekilde çalışır.
+
+---
+
+## 🧩 Desteklenen Tarayıcılar
+
+| Tür | Tarayıcılar | Kurulum |
+|------|--------------|-----------|
+| **Chromium tabanlı** | Chrome, Edge, Brave, Opera, Vivaldi, Arc, vs. | Manuel yükleme |
+| **Firefox tabanlı** | Firefox, Waterfox, LibreWolf, Tor Browser, vs. | Mağaza üzerinden yükleme |
+
+👉 [Firefox için indir](https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/)
+
+---
 
 ## 🚀 Özellikler
 
-- **Site Yönlendirme:** Eski veya değişen web sitesi adreslerini otomatik olarak güncel adreslerine yönlendirir.
-- **Site Engelleme:** İstenmeyen veya dikkat dağıtıcı web sitelerine erişimi engeller.
-- **Yüksek Performans:** `declarativeNetRequest` API'si sayesinde tarayıcıya ek yük bindirmeden, verimli bir şekilde çalışır.
-- **Kolay Kurulum:** Basit ve hızlı bir şekilde Chrome tarayıcınıza manuel olarak eklenebilir.
+- **Site Yönlendirme:** Eski veya değişen web sitesi adreslerini otomatik olarak güncel adreslerine yönlendirir.  
+- **Site Engelleme:** İstenmeyen veya dikkat dağıtıcı web sitelerine erişimi engeller.  
+- **Yüksek Performans:** `declarativeNetRequest` API'si sayesinde tarayıcıya ek yük bindirmeden, verimli bir şekilde çalışır.  
+- **Tam Uyumluluk:** Tüm Chromium **ve** tüm Firefox tabanlı tarayıcılarda çalışır.  
+- **Kolay Kurulum:** Chromium tabanlılarda manuel, Firefox tabanlılarda mağaza üzerinden kurulum imkânı.
+
+---
 
 ## 🛠️ Nasıl Çalışır?
 
-Uzantı, `rules.json` dosyasında tanımlanan kurallara göre çalışır. Bu kurallar, hangi sitelerin engelleneceğini ve hangilerinin yönlendirileceğini belirtir.
+Uzantı, `rules.json` dosyasında tanımlanan kurallara göre çalışır.  
+Bu kurallar, hangi sitelerin engelleneceğini ve hangilerinin yönlendirileceğini belirtir.
 
-### Yönlendirme Kuralları:
+### 🔁 Yönlendirme Kuralları
 
-- `vidmoly.to` → `https://vidmoly.net`
-- `animecix.net`, `anm.cx` → `https://animecix.tv`
-- `asyaanimeleri.com` → `https://asyaanimeleri.top`
-- `hianime.to` → `https://hianime.pe`
-- `turkanime.co` → `https://turkanime.tv`
+| Eski Adresler | Yeni Adres |
+|----------------|------------|
+| `vidmoly.to` | `https://vidmoly.net` |
+| `animecix.net`, `anm.cx` | `https://animecix.tv` |
+| `asyaanimeleri.com` | `https://asyaanimeleri.top` |
+| `hianime.to` | `https://hianime.pe` |
+| `turkanime.co` | `https://turkanime.tv` |
 
-### Engelleme Kuralları:
+### 🚫 Engelleme Kuralları
 
 Aşağıdaki alan adlarına ve alt alan adlarına yapılan tüm istekler engellenir:
 
-- `chatango.com`
-- `anizmnet.chatango.com`
-- `st.chatango.com`
+chatango.com
+anizmnet.chatango.com
+st.chatango.com
+
+---
 
 ## ⚙️ Kurulum
 
-Bu uzantıyı manuel olarak Chrome tarayıcınıza kurmak için aşağıdaki adımları izleyin:
+### 🔹 Chromium tabanlı tarayıcılar (Chrome, Edge, Brave, Opera, Vivaldi vb.)
 
-1.  Bu depoyu bilgisayarınıza `ZIP` olarak indirin ve dosyaları bir klasöre çıkarın veya `git clone` komutu ile klonlayın.
-2.  Chrome tarayıcınızı açın ve adres çubuğuna `chrome://extensions` yazarak **Uzantılar** sayfasına gidin.
-3.  Sağ üst köşedeki **Geliştirici modu**'nu etkinleştirin.
-4.  Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
-5.  Proje dosyalarının bulunduğu klasörü seçin.
+1. `ZIP` dosyasını indirin ve çıkarın.  
+2. Tarayıcınızda `chrome://extensions` (veya eşdeğeri) adresine gidin.  
+3. Sağ üstteki **Geliştirici modu**’nu etkinleştirin.  
+4. **Paketlenmemiş öğe yükle** seçeneğiyle proje klasörünü yükleyin.  
 
-Uzantı başarıyla yüklenecek ve tarayıcınızın uzantılar listesinde etkin hale gelecektir.
+### 🔹 Firefox tabanlı tarayıcılar (Firefox, Tor, Waterfox vb.)
+
+1. Aşağıdaki bağlantıdan yükleyin:  
+   👉 [Firefox için Web Yönlendirici ve Engelleyici](https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/)  
+2. Android veya masaüstü fark etmeksizin, yükleme tamamlandıktan sonra otomatik olarak etkinleşir.
+
+---
 
 ## 📜 Teknik Detaylar
 
-Bu uzantı, Chrome'un `declarativeNetRequest` API'sini kullanır. Bu API, ağ isteklerini programatik olarak engellemek veya değiştirmek için güçlü ve performansa duyarlı bir yol sağlar.
+Uzantı, hem Chromium hem de Firefox tabanlı tarayıcıların desteklediği `declarativeNetRequest` sistemini kullanır.  
 
-- **`manifest.json`**: Uzantının temel yapılandırmasını, adını, sürümünü, izinlerini ve kuralların yolunu tanımlar.
-- **`rules.json`**: Uzantının uygulayacağı tüm yönlendirme ve engelleme kurallarını içerir.
+- **`manifest.json`** → Uzantının temel yapılandırmasını, adını, sürümünü ve izinlerini tanımlar.  
+- **`rules.json`** → Tüm yönlendirme ve engelleme kurallarını içerir.  
 
-## 🙏 Katkıda Bulunma
+---
 
-Katkılarınız için her zaman açığız! Bir hatayı bildirmek, yeni bir özellik önermek veya mevcut kuralları güncellemek için lütfen bir "issue" açın veya "pull request" gönderin.
+## 🤝 Katkıda Bulunma
+
+Katkılar her zaman memnuniyetle karşılanır!  
+Bir hata bildirmek, yeni bir yönlendirme eklemek veya mevcut kuralları güncellemek için bir **issue** açabilir ya da **pull request** gönderebilirsiniz.
+
+---
+
+## 📄 Lisans
+
+Bu proje MIT Lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakabilirsiniz.
