@@ -17,8 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
             statusText.textContent = browser.i18n.getMessage('popupStatusInactive');
             statusText.classList.add('inactive');
         }
-        // Kural listesini gizle/göster
-        rulesContainer.style.display = isEnabled ? 'block' : 'none';
+
+        // --- EN ÖNEMLİ DEĞİŞİKLİK ---
+        // Kural listesini DOM'dan kaldırmak yerine CSS sınıfı ile pasif hale getir.
+        // Bu sayede pencere boyutu sabit kalır.
+        rulesContainer.classList.toggle('disabled', !isEnabled);
+
         // Switch'in durumunu ayarla
         toggleSwitch.checked = isEnabled;
     }
