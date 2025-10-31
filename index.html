@@ -19,16 +19,14 @@
             --bg-color: #f6f7f8; --page-bg: #ffffff; --text-color: #5f6368;
             --heading-color: #202124; --blue-chrome: #1a73e8; --blue-chrome-hover: #1765cc;
             --border-color: #e0e0e0; --header-border: #dadce0; --button-text-color: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1); --shadow-color-hover: rgba(0, 0, 0, 0.15);
-            --controls-bg: rgba(255, 255, 255, 0.7);
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="dark"] {
             --bg-color: #0d1117; --page-bg: #161b22; --text-color: #8b949e;
             --heading-color: #c9d1d9; --blue-chrome: #58a6ff; --blue-chrome-hover: #79c0ff;
             --border-color: #30363d; --header-border: #30363d; --button-text-color: #0d1117;
-            --shadow-color: rgba(0, 0, 0, 0.3); --shadow-color-hover: rgba(0, 0, 0, 0.4);
-            --controls-bg: rgba(30, 42, 56, 0.7);
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,20 +52,24 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 24px; border-bottom: 1px solid var(--header-border);
         }
-        .header-title {
-            font-size: 1.1rem; font-weight: 500; color: var(--heading-color);
-        }
+        .header-title { font-size: 1.1rem; font-weight: 500; color: var(--heading-color); }
+        
+        /* --- YENİ "HAP" STİLİ KONTROL BUTONLARI --- */
         .settings-controls {
-            display: flex; gap: 8px;
+            display: flex; border: 1px solid var(--border-color);
+            border-radius: 50px; overflow: hidden;
         }
         .control-button {
-            background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color);
-            width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+            background-color: transparent; border: none; color: var(--text-color);
+            width: 42px; height: 38px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; transition: all 0.2s;
+            font-size: 1.1rem; transition: background-color 0.2s, color 0.2s;
         }
-        .control-button:hover { background-color: var(--border-color); transform: scale(1.1); }
-        #lang-switcher { font-weight: 700; font-size: 1rem; }
+        .control-button:hover { background-color: var(--border-color); }
+        #lang-switcher {
+            font-weight: 700; font-size: 1rem;
+            border-left: 1px solid var(--border-color);
+        }
 
         .extension-header {
             display: flex; align-items: center; padding: 24px; flex-wrap: wrap; gap: 24px;
@@ -86,10 +88,9 @@
             border-radius: 6px; transition: all 0.2s; border: none; cursor: pointer;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
-        .action-btn:hover { background-color: var(--blue-chrome-hover); transform: translateY(-2px); box-shadow: 0 4px 8px var(--shadow-color-hover); }
+        .action-btn:hover { background-color: var(--blue-chrome-hover); transform: translateY(-2px); }
         
         .meta-info { font-size: 13px; margin-top: 12px; }
-        .meta-info span { margin: 0 8px; }
 
         .content-area { padding: 24px; }
         .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
@@ -118,7 +119,7 @@
 
         .gallery { text-align: center; }
         .gallery figure { display: inline-block; margin: 0; }
-        .gallery img { max-width: 100%; border-radius: 8px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .gallery img { max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-color); border: 1px solid var(--border-color); }
         .gallery figcaption { font-size: 14px; color: var(--text-color); margin-top: 10px; }
 
         .modal-overlay {
@@ -133,20 +134,22 @@
         .modal-overlay.show .modal-content { transform: scale(1); }
         .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer; font-size: 28px; color: var(--text-color); }
         .modal-content h2 { border-left: none; padding-left: 0; text-align: center; margin-bottom: 24px; }
-        .browser-options { display: flex; gap: 20px; justify-content: center; }
-        .browser-option { text-align: center; flex: 1; }
-        .browser-logo { width: 80px; height: 80px; margin: 0 auto 16px; transition: transform 0.2s ease; }
+        .browser-options { display: flex; gap: 30px; justify-content: center; } /* Artırılmış boşluk */
+        .browser-option a { text-decoration: none; }
+        .browser-option .browser-logo { width: 80px; height: 80px; margin: 0 auto 16px; transition: transform 0.2s ease; }
         .browser-option a:hover .browser-logo { transform: scale(1.1); }
         
         @media (max-width: 768px) {
             .container { margin: 1rem; }
             .top-bar { padding: 8px 16px; }
-            .header-title { font-size: 1rem; }
+            .header-title { display: none; } /* Mobilde başlık gizlendi, sadece butonlar kaldı */
             .extension-header { flex-direction: column; text-align: center; }
             .extension-icon { width: 96px; height: 96px; }
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
-            .browser-options { flex-direction: column; } /* MOBİL DÜZELTME */
+            /* --- MOBİL MODAL DÜZELTMESİ --- */
+            .browser-options { flex-direction: column; align-items: center; } 
+            .browser-option a { display: flex; flex-direction: column; align-items: center; }
         }
         
         .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); }
@@ -218,10 +221,7 @@
                 <div class="gallery">
                     <figure>
                         <img src="https://addons.mozilla.org/user-media/previews/thumbs/338/338779.jpg" alt="Firefox uzantı kullanıcı arayüzü">
-                        <figcaption>
-                            <span lang="tr">Firefox kullanıcı arayüzü</span>
-                            <span lang="en">Firefox user interface</span>
-                        </figcaption>
+                        <figcaption><span lang="tr">Firefox kullanıcı arayüzü</span><span lang="en">Firefox user interface</span></figcaption>
                     </figure>
                 </div>
             </div>
@@ -229,45 +229,19 @@
             <div id="details" class="tab-content">
                 <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
                 <div class="details-grid">
-                    <div class="detail-item">
-                        <strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong>
-                        <span>1.5</span>
-                    </div>
-                    <div class="detail-item">
-                        <strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong>
-                        <span><span lang="tr">3 gün önce (28 Eki 2025)</span><span lang="en">3 days ago (Oct 28, 2025)</span></span>
-                    </div>
-                    <div class="detail-item">
-                        <strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong>
-                        <span>23.1 KB</span>
-                    </div>
-                     <div class="detail-item">
-                        <strong><span lang="tr">Lisans</span><span lang="en">License</span></strong>
-                        <span>MIT License</span>
-                    </div>
-                    <div class="detail-item">
-                        <strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong>
-                        <span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span>
-                    </div>
-                    <div class="detail-item">
-                        <strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong>
-                        <div class="tags-container">
-                            <span class="tag">content blocker</span>
-                            <span class="tag">privacy</span>
-                            <span class="tag">search</span>
-                        </div>
-                    </div>
+                    <div class="detail-item"><strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong><span>1.5</span></div>
+                    <div class="detail-item"><strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong><span><span lang="tr">3 gün önce (28 Eki 2025)</span><span lang="en">3 days ago (Oct 28, 2025)</span></span></div>
+                    <div class="detail-item"><strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong><span>23.1 KB</span></div>
+                    <div class="detail-item"><strong><span lang="tr">Lisans</span><span lang="en">License</span></strong><span>MIT License</span></div>
+                    <div class="detail-item"><strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong><span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span></div>
+                    <div class="detail-item"><strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong><div class="tags-container"><span class="tag">content blocker</span><span class="tag">privacy</span><span class="tag">search</span></div></div>
                 </div>
 
                 <h3><span lang="tr">İzinler ve Veriler</span><span lang="en">Permissions and Data</span></h3>
                 <strong><span lang="tr">Gerekli İzinler:</span><span lang="en">Required Permissions:</span></strong>
-                <ul class="permissions-list">
-                    <li><span lang="tr">Herhangi bir sayfadaki içeriği engelleme</span><span lang="en">Block content on any page</span></li>
-                </ul>
+                <ul class="permissions-list"><li><span lang="tr">Herhangi bir sayfadaki içeriği engelleme</span><span lang="en">Block content on any page</span></li></ul>
                 <strong style="margin-top: 16px; display: block;"><span lang="tr">İsteğe Bağlı İzinler:</span><span lang="en">Optional Permissions:</span></strong>
-                <ul class="permissions-list">
-                    <li><span lang="tr">vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co ve ilgili alan adlarındaki verilerinize erişme</span><span lang="en">Access your data on vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co and related domains</span></li>
-                </ul>
+                <ul class="permissions-list"><li><span lang="tr">vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co ve ilgili alan adlarındaki verilerinize erişme</span><span lang="en">Access your data on vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co and related domains</span></li></ul>
             </div>
         </main>
         
@@ -289,7 +263,7 @@
                     </a>
                 </div>
                 <div class="browser-option">
-                    <a href="https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/" target="_blank" rel="noopener noreferrer">
+                    <a id="firefox-link" href="https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/" target="_blank" rel="noopener noreferrer">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox Logo" class="browser-logo">
                         <span class="action-btn"><span lang="tr">Firefox'a Ekle</span><span lang="en">Add to Firefox</span></span>
                     </a>
@@ -305,6 +279,7 @@
             const themeSwitcher = document.getElementById('theme-switcher');
             const langSwitcher = document.getElementById('lang-switcher');
             const themeIcon = themeSwitcher.querySelector('i');
+            const firefoxLink = document.getElementById('firefox-link');
 
             const applyTheme = (theme) => {
                 body.setAttribute('data-theme', theme);
@@ -321,6 +296,13 @@
                 langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
                 themeSwitcher.title = lang === 'tr' ? 'Temayı Değiştir' : 'Switch Theme';
                 langSwitcher.title = lang === 'tr' ? 'Change Language' : 'Dili Değiştir';
+                
+                // --- DİLE DUYARLI FIREFOX BAĞLANTISI ---
+                if (lang === 'tr') {
+                    firefoxLink.href = 'https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/';
+                } else {
+                    firefoxLink.href = 'https://addons.mozilla.org/en/android/addon/web-redirector-and-blocker/';
+                }
                 updatePageTitle(lang);
             };
 
