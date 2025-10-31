@@ -1,0 +1,201 @@
+:root {
+    /* Renk Paleti (Aynı kaldı) */
+    --bg-color: #202124;
+    --primary-text-color: #e8eaed;
+    --secondary-text-color: #bdc1c6;
+    --border-color: #3c4043;
+    --accent-color: #8ab4f8;
+    --status-bg-color: #1e3d2a;
+    --status-text-color: #81c995;
+    --list-bg-hover: #303134;
+    --footer-bg-color: #292a2d;
+    --blocked-color: #f28b82; /* Engellendi rengi için yeni değişken */
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px; /* Genel font boyutunu biraz küçülttük */
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    width: 350px; /* Sabit ama ideal bir genişlik verelim */
+    box-sizing: border-box;
+}
+
+.container {
+    padding: 16px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.header img {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+}
+
+.header h1 {
+    font-size: 18px; /* Başlık boyutu ayarlandı */
+    font-weight: 500;
+    margin: 0;
+}
+
+.status {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--status-text-color);
+    background-color: var(--status-bg-color);
+    padding: 10px;
+    margin: 0 0 16px 0; /* Ayarlamalar yapıldı */
+    border-radius: 8px;
+    text-align: center;
+}
+
+.rules {
+    margin-top: 16px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.rules.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.rules h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary-text-color);
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.rules ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    color: var(--secondary-text-color);
+}
+
+/* --- YENİ LİSTE STİLLERİ --- */
+
+.rules li {
+    padding: 12px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color); /* Her eleman arasına ince bir çizgi */
+}
+
+.rules li:last-child {
+    border-bottom: none; /* Son elemanın alt çizgisini kaldır */
+}
+
+.rules li:hover {
+    background-color: var(--list-bg-hover);
+}
+
+.rule-details {
+    display: flex;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    white-space: nowrap; /* Satırların kırılmasını engeller */
+}
+
+.domain-source {
+    color: var(--primary-text-color);
+}
+
+.arrow {
+    margin: 0 8px;
+    color: var(--secondary-text-color);
+}
+
+.domain-target {
+    color: #81c995; /* Yönlendirilen hedefi yeşil yapalım */
+}
+
+.status-blocked {
+    color: var(--blocked-color);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* --- FOOTER VE AYARLAR BÖLÜMÜ (Değişiklik yok, sadece kopyalandı) --- */
+
+footer {
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--secondary-text-color);
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--footer-bg-color);
+}
+
+.settings-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: var(--footer-bg-color);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #5f6368;
+    transition: .4s;
+    border-radius: 28px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+.status.inactive {
+    color: #ff8a80;
+    background-color: #4d2c2a;
+}
