@@ -6,12 +6,10 @@
     <title>Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Chrome/icons/icon48.png?raw=true">
     
-    <!-- Google Fonts: Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome (Ikonlar için) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
@@ -54,7 +52,6 @@
         }
         .header-title { font-size: 1.1rem; font-weight: 500; color: var(--heading-color); }
         
-        /* --- YENİ "HAP" STİLİ KONTROL BUTONLARI --- */
         .settings-controls {
             display: flex; border: 1px solid var(--border-color);
             border-radius: 50px; overflow: hidden;
@@ -80,8 +77,13 @@
         }
         .extension-details { flex-grow: 1; }
         .extension-details h1 { font-size: 28px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; }
+        .developer-link {
+            color: var(--text-color); font-weight: 500; text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .developer-link:hover { color: var(--blue-chrome); text-decoration: underline; }
+
         .extension-actions { margin-left: auto; text-align: right; }
-        
         .action-btn { 
             display: inline-block; background-color: var(--blue-chrome); color: var(--button-text-color); 
             padding: 12px 24px; font-size: 15px; font-weight: 500; text-decoration: none; 
@@ -106,50 +108,53 @@
 
         .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .feature-item { display: flex; align-items: start; gap: 12px; }
-        .feature-item .icon { width: 24px; height: 24px; margin-top: 2px; flex-shrink: 0; }
         .feature-item p strong { display: block; color: var(--heading-color); }
         
         .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px; }
-        .detail-item strong { display: block; color: var(--heading-color); margin-bottom: 4px; }
-        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 15px; font-size: 13px; }
-
-        .permissions-list { list-style: none; padding-left: 0; }
-        .permissions-list li { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 15px; margin-bottom: 8px; }
-
+        
         .gallery { text-align: center; }
-        .gallery figure { display: inline-block; margin: 0; }
         .gallery img { max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-color); border: 1px solid var(--border-color); }
-        .gallery figcaption { font-size: 14px; color: var(--text-color); margin-top: 10px; }
 
+        /* --- MODAL (POPUP) DÜZENLEMELERİ --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); 
             z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content {
-            background-color: var(--page-bg); padding: 24px; border-radius: 12px; width: 90%; max-width: 500px;
+            background-color: var(--page-bg); padding: 32px; border-radius: 12px; width: 90%; max-width: 500px;
             position: relative; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); transform: scale(0.95); transition: all 0.3s;
         }
         .modal-overlay.show .modal-content { transform: scale(1); }
         .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer; font-size: 28px; color: var(--text-color); }
         .modal-content h2 { border-left: none; padding-left: 0; text-align: center; margin-bottom: 24px; }
-        .browser-options { display: flex; gap: 30px; justify-content: center; } /* Artırılmış boşluk */
-        .browser-option a { text-decoration: none; }
-        .browser-option .browser-logo { width: 80px; height: 80px; margin: 0 auto 16px; transition: transform 0.2s ease; }
+        .browser-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Masaüstü için iki sütun */
+            gap: 20px;
+            align-items: start;
+        }
+        .browser-option a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .browser-logo { width: 80px; height: 80px; transition: transform 0.2s ease; }
         .browser-option a:hover .browser-logo { transform: scale(1.1); }
         
         @media (max-width: 768px) {
             .container { margin: 1rem; }
             .top-bar { padding: 8px 16px; }
-            .header-title { display: none; } /* Mobilde başlık gizlendi, sadece butonlar kaldı */
+            .header-title { display: none; }
             .extension-header { flex-direction: column; text-align: center; }
-            .extension-icon { width: 96px; height: 96px; }
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
-            /* --- MOBİL MODAL DÜZELTMESİ --- */
-            .browser-options { flex-direction: column; align-items: center; } 
-            .browser-option a { display: flex; flex-direction: column; align-items: center; }
+            .browser-options {
+                grid-template-columns: 1fr; /* Mobil için tek sütun */
+                gap: 30px;
+            }
         }
         
         .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); }
@@ -175,7 +180,10 @@
             <img src="https://raw.githubusercontent.com/KerimDemirkaynak/anime-redirector/refs/heads/main/Chrome/icons/icon128.png" alt="Uzantı İkonu" class="extension-icon">
             <div class="extension-details">
                 <h1><span lang="tr">Web Yönlendirici ve Engelleyici</span><span lang="en">Web Redirector and Blocker</span></h1>
-                <p class="subtitle"><span lang="tr">geliştiren: Kerim Demirkaynak</span><span lang="en">by Kerim Demirkaynak</span></p>
+                <p class="subtitle">
+                    <span lang="tr">geliştiren: <a class="developer-link" href="https://addons.mozilla.org/tr/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
+                    <span lang="en">by <a class="developer-link" href="https://addons.mozilla.org/en/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
+                </p>
             </div>
             <div class="extension-actions">
                 <button id="open-modal-btn" class="action-btn"><span lang="tr">Tarayıcıya Ekle</span><span lang="en">Add to Browser</span></button>
@@ -197,18 +205,18 @@
                 <h2><span lang="tr">Bu Uzantı Hakkında</span><span lang="en">About This Extension</span></h2>
                 <p>
                     <span lang="tr">Eski veya Türkiye’de erişime engellenen anime ve video sitelerini otomatik olarak yeni ve çalışan adreslerine yönlendirir. Ayrıca rahatsız edici sohbet kutularını gizleyerek daha temiz bir izleme deneyimi sunar. Yer imlerinizi güncel tutun ve kesintisiz izleme keyfini yaşayın!</span>
-                    <span lang="en">Automatically redirects old or inaccessible anime and video sites in Turkey to their new, working addresses. It also provides a cleaner viewing experience by hiding intrusive chat boxes. Keep your bookmarks up-to-date and enjoy uninterrupted streaming!</span>
+                    <span lang="en">Automatically redirects old or inaccessible anime and video sites to their new, working addresses. It also provides a cleaner viewing experience by hiding intrusive chat boxes. Keep your bookmarks up-to-date and enjoy uninterrupted streaming!</span>
                 </p>
                 <h3 lang="tr">Özellikler</h3><h3 lang="en">Features</h3>
                 <div class="features">
                     <div class="feature-item">
-                        <svg class="icon" style="color: #238636;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                        <svg class="icon" style="color: #238636; width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
                         <p><strong><span lang="tr">Otomatik Yönlendirme</span><span lang="en">Automatic Redirection</span></strong>
                            <span lang="tr">Engellenen ya da adresi değişen siteleri anında güncel adreslerine yönlendirir.</span>
                            <span lang="en">Instantly redirects blocked or changed site addresses to their current URLs.</span></p>
                     </div>
                     <div class="feature-item">
-                        <svg class="icon" style="color: #d93025;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg>
+                        <svg class="icon" style="color: #d93025; width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px;" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg>
                         <p><strong><span lang="tr">İstenmeyen İçerik Engelleme</span><span lang="en">Unwanted Content Blocking</span></strong>
                            <span lang="tr">Sayfalara gömülü, dikkat dağıtan sohbet pencerelerini tamamen engeller.</span>
                            <span lang="en">Completely blocks distracting embedded chat windows on pages.</span></p>
@@ -227,21 +235,13 @@
             </div>
 
             <div id="details" class="tab-content">
-                <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
+                 <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
                 <div class="details-grid">
                     <div class="detail-item"><strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong><span>1.5</span></div>
                     <div class="detail-item"><strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong><span><span lang="tr">3 gün önce (28 Eki 2025)</span><span lang="en">3 days ago (Oct 28, 2025)</span></span></div>
                     <div class="detail-item"><strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong><span>23.1 KB</span></div>
                     <div class="detail-item"><strong><span lang="tr">Lisans</span><span lang="en">License</span></strong><span>MIT License</span></div>
-                    <div class="detail-item"><strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong><span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span></div>
-                    <div class="detail-item"><strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong><div class="tags-container"><span class="tag">content blocker</span><span class="tag">privacy</span><span class="tag">search</span></div></div>
                 </div>
-
-                <h3><span lang="tr">İzinler ve Veriler</span><span lang="en">Permissions and Data</span></h3>
-                <strong><span lang="tr">Gerekli İzinler:</span><span lang="en">Required Permissions:</span></strong>
-                <ul class="permissions-list"><li><span lang="tr">Herhangi bir sayfadaki içeriği engelleme</span><span lang="en">Block content on any page</span></li></ul>
-                <strong style="margin-top: 16px; display: block;"><span lang="tr">İsteğe Bağlı İzinler:</span><span lang="en">Optional Permissions:</span></strong>
-                <ul class="permissions-list"><li><span lang="tr">vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co ve ilgili alan adlarındaki verilerinize erişme</span><span lang="en">Access your data on vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co and related domains</span></li></ul>
             </div>
         </main>
         
@@ -280,6 +280,8 @@
             const langSwitcher = document.getElementById('lang-switcher');
             const themeIcon = themeSwitcher.querySelector('i');
             const firefoxLink = document.getElementById('firefox-link');
+            const devLinkTr = document.querySelector('a[href*="/tr/firefox/user/"]');
+            const devLinkEn = document.querySelector('a[href*="/en/firefox/user/"]');
 
             const applyTheme = (theme) => {
                 body.setAttribute('data-theme', theme);
@@ -296,16 +298,9 @@
                 langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
                 themeSwitcher.title = lang === 'tr' ? 'Temayı Değiştir' : 'Switch Theme';
                 langSwitcher.title = lang === 'tr' ? 'Change Language' : 'Dili Değiştir';
-                
-                // --- DİLE DUYARLI FIREFOX BAĞLANTISI ---
-                if (lang === 'tr') {
-                    firefoxLink.href = 'https://addons.mozilla.org/tr/android/addon/web-redirector-and-blocker/';
-                } else {
-                    firefoxLink.href = 'https://addons.mozilla.org/en/android/addon/web-redirector-and-blocker/';
-                }
                 updatePageTitle(lang);
             };
-
+            
             const updatePageTitle = (lang) => {
                 document.title = lang === 'tr' 
                     ? 'Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı' 
@@ -348,7 +343,6 @@
                 if (event.target === modal) closeModal();
             });
 
-            // --- SAYFA İLK YÜKLENDİĞİNDE ÇALIŞACAK KODLAR ---
             const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
             const browserLang = navigator.language.split('-')[0];
             const savedLang = localStorage.getItem('language') || (browserLang === 'tr' ? 'tr' : 'en');
