@@ -14,7 +14,7 @@
     "condition": {
       "requestDomains": ["vidmoly.to"],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   },
@@ -31,7 +31,7 @@
         "st.chatango.com"
       ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   },
@@ -50,7 +50,7 @@
     "condition": {
       "requestDomains": ["animecix.net", "anm.cx"],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   },
@@ -69,7 +69,7 @@
     "condition": {
       "requestDomains": ["asyaanimeleri.com"],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   },
@@ -88,7 +88,7 @@
     "condition": {
       "requestDomains": ["hianime.to"],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   },
@@ -107,7 +107,7 @@
     "condition": {
       "requestDomains": ["turkanime.co"],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
+        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
       ]
     }
   }
