@@ -6,6 +6,22 @@
     <title>Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Chrome/icons/icon48.png?raw=true">
     
+    <!-- SEO ve Sosyal Medya Meta Etiketleri -->
+    <meta name="description" content="Eski veya engellenen anime ve video sitelerini otomatik olarak çalışan adreslerine yönlendiren ve rahatsız edici sohbet pencerelerini engelleyen tarayıcı uzantısı.">
+    
+    <!-- Open Graph (Facebook, LinkedIn vb.) -->
+    <meta property="og:title" content="Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı">
+    <meta property="og:description" content="Eski veya engellenen anime ve video sitelerini otomatik olarak çalışan adreslerine yönlendiren ve rahatsız edici sohbet pencerelerini engelleyen tarayıcı uzantısı.">
+    <meta property="og:image" content="https://addons.mozilla.org/user-media/previews/thumbs/338/338779.jpg">
+    <meta property="og:url" content="https://kerimdemirkaynak.github.io/anime-redirector/"> <!-- DEĞİŞTİRİN: Sitenizin tam URL'si -->
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı">
+    <meta name="twitter:description" content="Eski veya engellenen anime ve video sitelerini otomatik olarak çalışan adreslerine yönlendiren ve rahatsız edici sohbet pencerelerini engelleyen tarayıcı uzantısı.">
+    <meta name="twitter:image" content="https://addons.mozilla.org/user-media/previews/thumbs/338/338779.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -63,24 +79,15 @@
             font-size: 1.1rem; transition: background-color 0.2s, color 0.2s;
         }
         .control-button:hover { background-color: var(--border-color); }
-        #lang-switcher {
-            font-weight: 700; font-size: 1rem;
-            border-left: 1px solid var(--border-color);
-        }
+        #lang-switcher { font-weight: 700; font-size: 1rem; border-left: 1px solid var(--border-color); }
 
         .extension-header {
             display: flex; align-items: center; padding: 24px; flex-wrap: wrap; gap: 24px;
         }
-        .extension-icon {
-            width: 128px; height: 128px; border-radius: 16px; flex-shrink: 0;
-            box-shadow: 0 2px 6px var(--shadow-color);
-        }
+        .extension-icon { width: 128px; height: 128px; border-radius: 16px; flex-shrink: 0; box-shadow: 0 2px 6px var(--shadow-color); }
         .extension-details { flex-grow: 1; }
         .extension-details h1 { font-size: 28px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; }
-        .developer-link {
-            color: var(--text-color); font-weight: 500; text-decoration: none;
-            transition: color 0.2s ease;
-        }
+        .developer-link { color: var(--text-color); font-weight: 500; text-decoration: none; transition: color 0.2s ease; }
         .developer-link:hover { color: var(--blue-chrome); text-decoration: underline; }
 
         .extension-actions { margin-left: auto; text-align: right; }
@@ -111,11 +118,15 @@
         .feature-item p strong { display: block; color: var(--heading-color); }
         
         .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px; }
+        .detail-item strong { display: block; color: var(--heading-color); margin-bottom: 4px; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 15px; font-size: 13px; }
+        .permissions-list { list-style: none; padding-left: 0; }
+        .permissions-list li { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 15px; margin-bottom: 8px; }
         
         .gallery { text-align: center; }
         .gallery img { max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-color); border: 1px solid var(--border-color); }
 
-        /* --- MODAL (POPUP) DÜZENLEMELERİ --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); 
             z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
@@ -128,33 +139,18 @@
         .modal-overlay.show .modal-content { transform: scale(1); }
         .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer; font-size: 28px; color: var(--text-color); }
         .modal-content h2 { border-left: none; padding-left: 0; text-align: center; margin-bottom: 24px; }
-        .browser-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Masaüstü için iki sütun */
-            gap: 20px;
-            align-items: start;
-        }
-        .browser-option a {
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
+        .browser-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+        .browser-option a { text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 16px; }
         .browser-logo { width: 80px; height: 80px; transition: transform 0.2s ease; }
         .browser-option a:hover .browser-logo { transform: scale(1.1); }
         
         @media (max-width: 768px) {
             .container { margin: 1rem; }
             .top-bar { padding: 8px 16px; }
-            .header-title { display: none; }
             .extension-header { flex-direction: column; text-align: center; }
             .extension-details h1 { font-size: 24px; }
             .extension-actions { margin-left: 0; text-align: center; }
-            .browser-options {
-                grid-template-columns: 1fr; /* Mobil için tek sütun */
-                gap: 30px;
-            }
+            .browser-options { grid-template-columns: 1fr; gap: 30px; }
         }
         
         .footer { text-align: center; padding: 24px; font-size: 14px; border-top: 1px solid var(--header-border); }
@@ -181,8 +177,8 @@
             <div class="extension-details">
                 <h1><span lang="tr">Web Yönlendirici ve Engelleyici</span><span lang="en">Web Redirector and Blocker</span></h1>
                 <p class="subtitle">
-                    <span lang="tr">geliştiren: <a class="developer-link" href="https://addons.mozilla.org/tr/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
-                    <span lang="en">by <a class="developer-link" href="https://addons.mozilla.org/en/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
+                    <span lang="tr">geliştiren: <a id="dev-link-tr" class="developer-link" href="https://addons.mozilla.org/tr/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
+                    <span lang="en">by <a id="dev-link-en" class="developer-link" href="https://addons.mozilla.org/en/firefox/user/19546792/" target="_blank" rel="noopener noreferrer">Kerim Demirkaynak</a></span>
                 </p>
             </div>
             <div class="extension-actions">
@@ -235,13 +231,20 @@
             </div>
 
             <div id="details" class="tab-content">
-                 <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
+                <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
                 <div class="details-grid">
                     <div class="detail-item"><strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong><span>1.5</span></div>
                     <div class="detail-item"><strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong><span><span lang="tr">3 gün önce (28 Eki 2025)</span><span lang="en">3 days ago (Oct 28, 2025)</span></span></div>
                     <div class="detail-item"><strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong><span>23.1 KB</span></div>
                     <div class="detail-item"><strong><span lang="tr">Lisans</span><span lang="en">License</span></strong><span>MIT License</span></div>
+                    <div class="detail-item"><strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong><span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span></div>
+                    <div class="detail-item"><strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong><div class="tags-container"><span class="tag">content blocker</span><span class="tag">privacy</span><span class="tag">search</span></div></div>
                 </div>
+                <h3><span lang="tr">İzinler ve Veriler</span><span lang="en">Permissions and Data</span></h3>
+                <strong><span lang="tr">Gerekli İzinler:</span><span lang="en">Required Permissions:</span></strong>
+                <ul class="permissions-list"><li><span lang="tr">Herhangi bir sayfadaki içeriği engelleme</span><span lang="en">Block content on any page</span></li></ul>
+                <strong style="margin-top: 16px; display: block;"><span lang="tr">İsteğe Bağlı İzinler:</span><span lang="en">Optional Permissions:</span></strong>
+                <ul class="permissions-list"><li><span lang="tr">vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co ve ilgili alan adlarındaki verilerinize erişme</span><span lang="en">Access your data on vidmoly.to, chatango.com, animecix.net, asyaanimeleri.com, hianime.to, turkanime.co and related domains</span></li></ul>
             </div>
         </main>
         
@@ -280,8 +283,8 @@
             const langSwitcher = document.getElementById('lang-switcher');
             const themeIcon = themeSwitcher.querySelector('i');
             const firefoxLink = document.getElementById('firefox-link');
-            const devLinkTr = document.querySelector('a[href*="/tr/firefox/user/"]');
-            const devLinkEn = document.querySelector('a[href*="/en/firefox/user/"]');
+            const devLinkTr = document.getElementById('dev-link-tr');
+            const devLinkEn = document.getElementById('dev-link-en');
 
             const applyTheme = (theme) => {
                 body.setAttribute('data-theme', theme);
@@ -293,11 +296,20 @@
                 docElement.lang = lang;
                 localStorage.setItem('language', lang);
                 document.querySelectorAll('[lang]').forEach(el => {
-                    el.style.display = (el.getAttribute('lang') === lang) ? '' : 'none';
+                    const isParentSpan = el.parentElement.tagName === 'SPAN' && el.parentElement.getAttribute('lang');
+                    if (!isParentSpan) {
+                         el.style.display = (el.getAttribute('lang') === lang) ? '' : 'inline';
+                    }
                 });
+                
                 langSwitcher.textContent = lang === 'tr' ? 'EN' : 'TR';
                 themeSwitcher.title = lang === 'tr' ? 'Temayı Değiştir' : 'Switch Theme';
                 langSwitcher.title = lang === 'tr' ? 'Change Language' : 'Dili Değiştir';
+                
+                firefoxLink.href = `https://addons.mozilla.org/${lang}/android/addon/web-redirector-and-blocker/`;
+                devLinkTr.href = `https://addons.mozilla.org/${lang}/firefox/user/19546792/`;
+                devLinkEn.href = `https://addons.mozilla.org/${lang}/firefox/user/19546792/`;
+
                 updatePageTitle(lang);
             };
             
