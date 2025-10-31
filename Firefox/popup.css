@@ -17,12 +17,14 @@ body {
     margin: 0;
     background-color: var(--bg-color);
     color: var(--primary-text-color);
-    min-width: 320px;
-    max-width: 360px;
+    /* Sabit genişlikler kaldırıldı, böylece her ekrana uyum sağlar */
+    width: 100%;
 }
 
 .container {
     padding: 20px;
+    /* Padding'in genişlik hesaplamasını bozmamasını sağlar */
+    box-sizing: border-box;
 }
 
 .header {
@@ -57,6 +59,14 @@ body {
 
 .rules {
     margin-top: 20px;
+    /* Geçiş efekti eklendi */
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Pencerenin küçülmesini engelleyen yeni sınıf */
+.rules.disabled {
+    opacity: 0.4;
+    pointer-events: none; /* Tıklanmasını engeller */
 }
 
 .rules h2 {
