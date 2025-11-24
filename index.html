@@ -6,7 +6,6 @@
     <title>Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı</title>
     <link rel="icon" type="image/png" href="https://github.com/KerimDemirkaynak/anime-redirector/blob/main/Chrome/icons/icon48.png?raw=true">
     
-    <!-- SEO ve Sosyal Medya Meta Etiketleri -->
     <meta name="description" content="Eski veya engellenen anime ve video sitelerini otomatik olarak çalışan adreslerine yönlendiren ve rahatsız edici sohbet pencerelerini engelleyen tarayıcı uzantısı.">
     <meta property="og:title" content="Web Yönlendirici ve Engelleyici - Tarayıcı Uzantısı">
     <meta property="og:description" content="Eski veya engellenen anime ve video sitelerini otomatik olarak çalışan adreslerine yönlendiren ve rahatsız edici sohbet pencerelerini engelleyen tarayıcı uzantısı.">
@@ -162,8 +161,14 @@
             <div class="extension-actions">
                 <button id="open-modal-btn" class="action-btn"><span lang="tr">Tarayıcıya Ekle</span><span lang="en">Add to Browser</span></button>
                 <div class="meta-info">
-                    <span><span lang="tr">Sürüm 1.7</span><span lang="en">Version 1.7</span></span> | 
-                    <span><span lang="tr">Güncelleme: Kasım 2025</span><span lang="en">Updated: Nov 2025</span></span>
+                    <span>
+                        <span lang="tr">Sürüm <span class="dynamic-version">...</span></span>
+                        <span lang="en">Version <span class="dynamic-version">...</span></span>
+                    </span> | 
+                    <span>
+                        <span lang="tr">Güncelleme: <span id="dynamic-date-tr">...</span></span>
+                        <span lang="en">Updated: <span id="dynamic-date-en">...</span></span>
+                    </span>
                 </div>
             </div>
         </header>
@@ -211,9 +216,16 @@
             <div id="details" class="tab-content">
                 <h2><span lang="tr">Uzantı Detayları</span><span lang="en">Extension Details</span></h2>
                 <div class="details-grid">
-                    <div class="detail-item"><strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong><span>1.7</span></div>
-                    <div class="detail-item"><strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong><span><span lang="tr">31 Eki 2025</span><span lang="en">Oct 31, 2025</span></span></div>
-                    <div class="detail-item"><strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong><span>23.1 KB</span></div>
+                    <div class="detail-item"><strong><span lang="tr">Sürüm</span><span lang="en">Version</span></strong><span class="dynamic-version">...</span></div>
+                    <div class="detail-item">
+                        <strong><span lang="tr">Son Güncelleme</span><span lang="en">Last Update</span></strong>
+                        <span>
+                            <span lang="tr" id="dynamic-full-date-tr">...</span>
+                            <span lang="en" id="dynamic-full-date-en">...</span>
+                        </span>
+                    </div>
+                    <div class="detail-item"><strong><span lang="tr">Boyut</span><span lang="en">Size</span></strong><span id="dynamic-size">...</span></div>
+                    
                     <div class="detail-item"><strong><span lang="tr">Lisans</span><span lang="en">License</span></strong><span>MIT License</span></div>
                     <div class="detail-item"><strong><span lang="tr">Kategoriler</span><span lang="en">Categories</span></strong><span><span lang="tr">Gizlilik ve Güvenlik</span><span lang="en">Privacy & Security</span></span></div>
                     <div class="detail-item"><strong><span lang="tr">Etiketler</span><span lang="en">Tags</span></strong><div class="tags-container"><span class="tag">content blocker</span><span class="tag">privacy</span><span class="tag">search</span></div></div>
@@ -237,21 +249,19 @@
             <button id="modal-close-btn" class="modal-close" title="Kapat">&times;</button>
             <h2><span lang="tr">Bir tarayıcı seçin</span><span lang="en">Choose a browser</span></h2>
             <div class="browser-options">
-                <!-- === DEĞİŞİKLİK BAŞLANGICI === -->
                 <div class="browser-option">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Google_Chrome_icon_%28March_2011%29.svg" alt="Chrome Logo" class="browser-logo">
                     <div class="chrome-downloads">
-                        <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.7/Chrome.zip" class="action-btn" download>
-                            <span lang="tr">Sürüm 1.7 (zip)</span>
-                            <span lang="en">Version 1.7 (zip)</span>
+                        <a id="link-zip" href="#" class="action-btn" download>
+                            <span lang="tr">Sürüm <span class="dynamic-version">...</span> (zip)</span>
+                            <span lang="en">Version <span class="dynamic-version">...</span> (zip)</span>
                         </a>
-                        <a href="https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.7/Chrome.crx" class="action-btn" download>
-                             <span lang="tr">Sürüm 1.7 (crx)</span>
-                             <span lang="en">Version 1.7 (crx)</span>
+                        <a id="link-crx" href="#" class="action-btn" download>
+                             <span lang="tr">Sürüm <span class="dynamic-version">...</span> (crx)</span>
+                             <span lang="en">Version <span class="dynamic-version">...</span> (crx)</span>
                         </a>
                     </div>
                 </div>
-                <!-- === DEĞİŞİKLİK SONU === -->
                 <div class="browser-option">
                     <a id="firefox-link" href="#" target="_blank" rel="noopener noreferrer">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox Logo" class="browser-logo">
@@ -270,6 +280,50 @@
             const langSwitcher = document.getElementById('lang-switcher');
             const themeIcon = themeSwitcher.querySelector('i');
             const firefoxLink = document.getElementById('firefox-link');
+
+            // --- YENİ EKLENEN KISIM: Veri Çekme Fonksiyonu ---
+            const loadDynamicData = async () => {
+                try {
+                    // Cache'i atlatmak için timestamp ekledik
+                    const response = await fetch(`data.json?t=${new Date().getTime()}`);
+                    if (!response.ok) throw new Error('Veri dosyası bulunamadı');
+                    const data = await response.json();
+
+                    // 1. Tüm Sürüm Numaralarını Güncelle (Header ve Modal dahil)
+                    document.querySelectorAll('.dynamic-version').forEach(el => {
+                        el.textContent = data.version;
+                    });
+
+                    // 2. Header Tarihleri
+                    const dateTr = document.getElementById('dynamic-date-tr');
+                    const dateEn = document.getElementById('dynamic-date-en');
+                    if (dateTr) dateTr.textContent = data.updateDate.tr;
+                    if (dateEn) dateEn.textContent = data.updateDate.en;
+
+                    // 3. Detaylar Sayfasındaki Tarihler
+                    const fullDateTr = document.getElementById('dynamic-full-date-tr');
+                    const fullDateEn = document.getElementById('dynamic-full-date-en');
+                    if (fullDateTr) fullDateTr.textContent = data.updateDate.fullDateTr;
+                    if (fullDateEn) fullDateEn.textContent = data.updateDate.fullDateEn;
+
+                    // 4. Dosya Boyutu
+                    const sizeEl = document.getElementById('dynamic-size');
+                    if (sizeEl) sizeEl.textContent = data.size;
+
+                    // 5. İndirme Linkleri
+                    const zipLink = document.getElementById('link-zip');
+                    const crxLink = document.getElementById('link-crx');
+                    if (zipLink) zipLink.href = data.downloads.chromeZip;
+                    if (crxLink) crxLink.href = data.downloads.chromeCrx;
+
+                } catch (error) {
+                    console.error('Veri yüklenemedi:', error);
+                }
+            };
+            
+            // Fonksiyonu çalıştır
+            loadDynamicData();
+            // --- YENİ EKLENEN KISIM SONU ---
 
             const applyTheme = (theme) => {
                 body.setAttribute('data-theme', theme);
@@ -302,7 +356,7 @@
             themeSwitcher.addEventListener('click', () => {
                 const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(newTheme);
-});
+            });
 
             langSwitcher.addEventListener('click', () => {
                 const newLang = localStorage.getItem('language') === 'tr' ? 'en' : 'tr';
