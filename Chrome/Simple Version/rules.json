@@ -4,35 +4,20 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "vidmoly.net"
-        }
-      }
+      "redirect": { "transform": { "scheme": "https", "host": "vidmoly.net" }}
     },
     "condition": {
       "requestDomains": ["vidmoly.to"],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   },
   {
     "id": 2,
     "priority": 1,
-    "action": {
-      "type": "block"
-    },
+    "action": { "type": "block" },
     "condition": {
-      "requestDomains": [
-        "chatango.com",
-        "anizmnet.chatango.com",
-        "st.chatango.com"
-      ],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "requestDomains": ["chatango.com", "anizmnet.chatango.com", "st.chatango.com"],
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   },
   {
@@ -40,18 +25,11 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "animecix.tv"
-        }
-      }
+      "redirect": { "transform": { "scheme": "https", "host": "animecix.tv" }}
     },
     "condition": {
       "requestDomains": ["animecix.net", "anm.cx"],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   },
   {
@@ -59,18 +37,11 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "asyaanimeleri.top"
-        }
-      }
+      "redirect": { "transform": { "scheme": "https", "host": "asyaanimeleri.top" }}
     },
     "condition": {
       "requestDomains": ["asyaanimeleri.com"],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   },
   {
@@ -78,18 +49,11 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "hianime.pe"
-        }
-      }
+      "redirect": { "transform": { "scheme": "https", "host": "hianime.pe" }}
     },
     "condition": {
       "requestDomains": ["hianime.to"],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   },
   {
@@ -97,18 +61,35 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "turkanime.tv"
-        }
-      }
+      "redirect": { "transform": { "scheme": "https", "host": "turkanime.tv" }}
     },
     "condition": {
       "requestDomains": ["turkanime.co"],
-      "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"
-      ]
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": { "transform": { "scheme": "https", "host": "anizm.net" }}
+    },
+    "condition": {
+      "requestDomains": ["anizle.com"],
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": { "transform": { "scheme": "https", "host": "tranimeizle.io" }}
+    },
+    "condition": {
+      "requestDomains": ["tranimeizle.co"],
+      "resourceTypes": ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]
     }
   }
 ]
