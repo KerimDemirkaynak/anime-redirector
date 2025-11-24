@@ -1,11 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Web Yönlendirici ve Engelleyici",
-  "version": "1.5",
+  "version": "1.7",
   "description": "Belirli web sitelerini yönlendirir ve engeller.",
-  "permissions": [
-    "declarativeNetRequest"
-  ],
+  "permissions": ["declarativeNetRequest"],
   "host_permissions": [
     "*://*.vidmoly.to/*",
     "*://*.chatango.com/*",
@@ -15,7 +13,9 @@
     "*://*.anm.cx/*",
     "*://*.asyaanimeleri.com/*",
     "*://*.hianime.to/*",
-    "*://*.turkanime.co/*"
+    "*://*.turkanime.co/*",
+    "*://*.anizle.com/*",
+    "*://*.tranimeizle.co/*"
   ],
   "declarative_net_request": {
     "rule_resources": [
