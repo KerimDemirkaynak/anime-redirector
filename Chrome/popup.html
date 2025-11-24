@@ -1,80 +1,187 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="popup.css">
+
     <title>Web Redirector Status</title>
+
 </head>
+
 <body>
+
     <div class="container">
+
         <div class="header">
+
             <img src="icons/icon48.png" alt="Extension Icon">
+
             <h1>Web Redirector</h1>
+
         </div>
+
         
+
         <div class="settings-section">
+
             <span>Extension Active</span>
+
             <label class="toggle-switch">
+
                 <input type="checkbox" id="toggle-switch" checked>
+
                 <span class="slider"></span>
+
             </label>
+
         </div>
+
+
 
         <p class="status"></p>
 
+
+
         <div class="rules">
+
             <h2>Managed Sites</h2>
+
             <ul>
+
                 <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">vidmoly.to</span>
+
                         <span class="arrow">→</span>
+
                         <span class="domain-target">vidmoly.net</span>
+
                     </span>
+
                 </li>
+
                 <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">chatango.com</span>
+
                     </span>
+
                     <span class="status-blocked">(Blocked)</span>
+
                 </li>
+
                 <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">animecix.net</span>
+
                         <span class="arrow">→</span>
+
                         <span class="domain-target">animecix.tv</span>
+
                     </span>
+
                 </li>
+
                 <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">asyaanimeleri.com</span>
+
                         <span class="arrow">→</span>
+
                         <span class="domain-target">asyaanimeleri.top</span>
+
                     </span>
+
                 </li>
+
                  <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">hianime.to</span>
+
                         <span class="arrow">→</span>
+
                         <span class="domain-target">hianime.pe</span>
+
                     </span>
+
                 </li>
+
                 <li>
+
                     <span class="rule-details">
+
                         <span class="domain-source">turkanime.co</span>
+
                         <span class="arrow">→</span>
+
                         <span class.name="domain-target">turkanime.tv</span>
+
                     </span>
+
                 </li>
+
+                <li>
+
+                    <span class="rule-details">
+
+                        <span class="domain-source">tranimeizle.co</span>
+
+                        <span class="arrow">→</span>
+
+                        <span class.name="domain-target">tranimeizle.io</span>
+
+                    </span>
+
+                </li>
+
+                <li>
+
+                    <span class="rule-details">
+
+                        <span class="domain-source">anizle.com</span>
+
+                        <span class="arrow">→</span>
+
+                        <span class.name="domain-target">anizm.net</span>
+
+                    </span>
+
+                </li>
+
             </ul>
+
         </div>
+
     </div>
+
     <footer>
+
         <span id="version-info"></span>
+
     </footer>
+
     
+
     <!-- DEĞİŞİKLİK: browser-polyfill.js satırı tamamen kaldırıldı -->
+
     <script src="popup.js"></script>
+
 </body>
+
 </html>
