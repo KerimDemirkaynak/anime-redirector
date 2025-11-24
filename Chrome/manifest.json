@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Web Redirector and Blocker",
-  "version": "1.6",
+  "version": "1.7",
   "description": "Redirects specific anime and video sites to their working domains and blocks unwanted chat windows.",
   
   "permissions": [
     "declarativeNetRequest",
     "storage"
   ],
-  "host_permissions": [
+"host_permissions": [
     "*://*.vidmoly.to/*",
     "*://*.chatango.com/*",
     "*://*.anizmnet.chatango.com/*",
@@ -17,8 +17,10 @@
     "*://*.anm.cx/*",
     "*://*.asyaanimeleri.com/*",
     "*://*.hianime.to/*",
-    "*://*.turkanime.co/*"
-  ],
+    "*://*.turkanime.co/*",
+    "*://*.tranimeizle.co/*",
+    "*://*.anizle.com/*"
+],
 
   "icons": {
     "16": "icons/icon16.png",
