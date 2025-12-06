@@ -2,6 +2,7 @@ import json
 import cloudscraper
 from urllib.parse import urlparse
 import time
+import os
 
 # Projenizdeki rules.json dosya yolları
 RULE_FILES = [
@@ -17,8 +18,12 @@ def get_final_url(url):
     """
     scraper = cloudscraper.create_scraper(browser='chrome')
     try:
-        # Tam URL oluştur
-        full_url = f"https://{url}"
+        # Eğer protokol yoksa ekle
+        if not url.startswith("http"):
+            full_url = f"https://{url}"
+        else:
+            full_url = url
+            
         print(f"Kontrol ediliyor: {full_url}")
         
         response = scraper.get(full_url, timeout=15, allow_redirects=True)
@@ -40,6 +45,10 @@ def update_rules():
     
     # Her dosya için işlem yap
     for file_path in RULE_FILES:
+        if not os.path.exists(file_path):
+            print(f"Dosya bulunamadı, atlanıyor: {file_path}")
+            continue
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 rules = json.load(f)
@@ -56,7 +65,7 @@ def update_rules():
                     
                     # Eğer yeni bir adres bulunduysa ve eskisinden farklıysa
                     if new_target and new_target != current_target:
-                        print(f"[{file_path}] DEĞİŞİKLİK TESPİT EDİLDİ: {current_target} -> {new_target}")
+                        print(f"[{file_path}] DEĞİŞİKLİK: {current_target} -> {new_target}")
                         
                         # Kuralı güncelle
                         rule["action"]["redirect"]["transform"]["host"] = new_target
@@ -64,16 +73,16 @@ def update_rules():
                         changes_made = True
                     
                     # Sunucuları yormamak için kısa bir bekleme
-                    time.sleep(1)
+                    time.sleep(2)
             
             # Dosyada değişiklik varsa kaydet
             if file_changed:
                 with open(file_path, 'w', encoding='utf-8') as f:
                     json.dump(rules, f, indent=2, ensure_ascii=False)
-                print(f"Dosya güncellendi: {file_path}")
+                print(f"Dosya kaydedildi: {file_path}")
                 
-        except FileNotFoundError:
-            print(f"Dosya bulunamadı: {file_path}")
+        except Exception as e:
+            print(f"Dosya işlenirken hata oluştu {file_path}: {e}")
             continue
 
     return changes_made
