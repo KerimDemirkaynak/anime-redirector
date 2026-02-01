@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Web Yönlendirici ve Engelleyici",
-  "version": "1.8",
+  "version": "1.9",
   "description": "Belirli web sitelerini yönlendirir ve engeller.",
   "permissions": [
     "declarativeNetRequest"
@@ -18,7 +18,11 @@
     "*://*.turkanime.co/*",
     "*://*.anizle.com/*",
     "*://*.tranimeizle.co/*",
-    "*://*.vidmoly.net/*"
+    "*://*.vidmoly.net/*",
+    "*://*.dizigom103.com/*",
+    "*://*.sezonlukdizi7.com/*",
+    "*://*.webdramaturkey.org/*",
+    "*://*.dizikorea2.com/*"
   ],
   "declarative_net_request": {
     "rule_resources": [
