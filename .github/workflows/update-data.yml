@@ -1,4 +1,4 @@
-name: 1. Veri ve Tarih Güncelleme
+name: Veri Güncelleme
 
 on:
   schedule:
