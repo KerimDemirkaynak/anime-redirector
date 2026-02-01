@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Web Yönlendirici ve Engelleyici",
-  "version": "1.7",
+  "version": "1.8",
   "description": "Belirli web sitelerini yönlendirir ve engeller.",
-  "permissions": ["declarativeNetRequest"],
+  "permissions": [
+    "declarativeNetRequest"
+  ],
   "host_permissions": [
     "*://*.vidmoly.to/*",
     "*://*.chatango.com/*",
@@ -15,7 +17,8 @@
     "*://*.hianime.to/*",
     "*://*.turkanime.co/*",
     "*://*.anizle.com/*",
-    "*://*.tranimeizle.co/*"
+    "*://*.tranimeizle.co/*",
+    "*://*.vidmoly.net/*"
   ],
   "declarative_net_request": {
     "rule_resources": [
