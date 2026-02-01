@@ -1,0 +1,93 @@
+name: 1. Veri ve Tarih Güncelleme
+
+on:
+  schedule:
+    # Haftada bir: Pazar gecesi 01:30'da çalışır
+    - cron: '30 1 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Depoyu Çek
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Tag kontrolü için şart
+
+      - name: Kontrol ve Güncelleme
+        run: |
+          # 1. data.json yoksa oluştur
+          if [ ! -f data.json ]; then echo '{"version": "1.0"}' > data.json; fi
+          
+          # 2. Versiyonu Oku
+          VERSION=$(jq -r .version data.json)
+          echo "İncelenen Sürüm: $VERSION"
+          
+          # 3. BU SÜRÜM ZATEN YAYINDA MI? (Kritik Nokta)
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "🛑 Sürüm v$VERSION zaten yayınlanmış."
+            echo "📅 Tarih güncellenmeyecek (Orijinal çıkış tarihi korunuyor)."
+            echo "no_update=true" >> $GITHUB_ENV
+            exit 0
+          fi
+          
+          # --- Buradan sonrası SADECE YENİ SÜRÜMSE çalışır ---
+          echo "✅ Yeni sürüm tespit edildi. Veriler güncelleniyor..."
+          
+          # 4. BOYUT HESAPLAMA (Geçici Zip ile)
+          cd Chrome
+          zip -r ../Chrome_temp.zip . -x "Simple Version/*" -x "*.git*" > /dev/null
+          cd ..
+          # Boyut hesabı (Örn: 23.1 KB)
+          FILE_SIZE=$(python3 -c "import os; s=os.path.getsize('Chrome_temp.zip'); print(f'{s/1024:.1f} KB' if s < 1024*1024 else f'{s/(1024*1024):.1f} MB')")
+          rm Chrome_temp.zip
+          
+          # 5. TARİHİ "BUGÜN" YAP (Çünkü bugün yayınlıyoruz)
+          DATE_EN=$(date +"%b %Y")
+          FULL_DATE_EN=$(date +"%b %d, %Y")
+          
+          m=$(date +%m); Y=$(date +%Y); d=$(date +%d)
+          case $m in
+            01) M="Ocak";; 02) M="Şubat";; 03) M="Mart";; 04) M="Nisan";; 05) M="Mayıs";; 06) M="Haziran";;
+            07) M="Temmuz";; 08) M="Ağustos";; 09) M="Eylül";; 10) M="Ekim";; 11) M="Kasım";; 12) M="Aralık";;
+          esac
+          DATE_TR="$M $Y"
+          FULL_DATE_TR="$d $M $Y"
+          
+          # 6. ZIP LINKINI AYARLA (CRX'e dokunma)
+          REPO="KerimDemirkaynak/anime-redirector"
+          LINK_ZIP="https://github.com/$REPO/releases/download/v$VERSION/Chrome.zip"
+          
+          # 7. JSON GÜNCELLEME
+          # Dikkat: .downloads.chromeCrx YOK. O satır korunur.
+          jq --arg den "$DATE_EN" \
+             --arg dtr "$DATE_TR" \
+             --arg fden "$FULL_DATE_EN" \
+             --arg fdtr "$FULL_DATE_TR" \
+             --arg czip "$LINK_ZIP" \
+             --arg fsize "$FILE_SIZE" \
+             '.size = $fsize | .updateDate.en = $den | .updateDate.tr = $dtr | .updateDate.fullDateEn = $fden | .updateDate.fullDateTr = $fdtr | .downloads.chromeZip = $czip' \
+             data.json > data.tmp && mv data.tmp data.json
+             
+          echo "💾 data.json güncellendi (Boyut: $FILE_SIZE, Tarih: $FULL_DATE_TR)"
+
+      - name: Değişiklikleri Kaydet (Commit & Push)
+        # Sadece yukarıdaki adımda güncelleme yapıldıysa çalışır
+        if: env.no_update != 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if [[ -n $(git status -s data.json) ]]; then
+            git add data.json
+            git commit -m "🔖 Sürüm v$(jq -r .version data.json) için veriler güncellendi"
+            git push
+            echo "🚀 data.json yüklendi. Şimdi 'publish-release' dosyası devreye girecek."
+          else
+            echo "💤 Değişiklik yok."
+          fi
