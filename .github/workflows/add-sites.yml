@@ -1,0 +1,58 @@
+name: Yeni Site Ekle (Manual)
+
+on:
+  workflow_dispatch: # Bu özellik, Actions sekmesinden manuel butonla çalıştırmayı sağlar
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  add-new-sites:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Depoyu Çek (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          pip install -r requirements.txt
+
+      - name: Yeni Siteleri Ekleme Scriptini Çalıştır
+        # Script çalışacak, kuralları ekleyecek ve versiyonu artıracak
+        run: python add_new_sites.py
+
+      - name: Değişiklikleri Kontrol Et
+        id: check_changes
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            echo "changes_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes_exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull Request Oluştur
+        if: steps.check_changes.outputs.changes_exist == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🚀 Yeni siteler eklendi ve sürüm güncellendi"
+          title: "🚀 Yeni Site Ekleme İsteği"
+          body: |
+            Bu PR, `add_new_sites.py` scripti kullanılarak manuel tetikleme ile oluşturulmuştur.
+            
+            **Yapılan İşlemler:**
+            - `yeni_siteler.txt` dosyasındaki siteler kurallara eklendi.
+            - Manifest izinleri güncellendi.
+            - Popup HTML listesi güncellendi.
+            - Versiyon numarası artırıldı.
+          branch: auto-add-sites
+          delete-branch: true
+          base: main
