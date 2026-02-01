@@ -2,7 +2,7 @@ name: Domain Değişiklik Kontrolü
 
 on:
   schedule:
-    # Haftada bir kez: Pazar günü saat 00:00'da (UTC) çalışır
+    # Haftada bir: Pazar günü saat 00:00'da (UTC) çalışır
     - cron: '0 0 * * 0'
   workflow_dispatch: # İstediğiniz zaman manuel tetiklemek için
 
@@ -32,10 +32,11 @@ jobs:
         run: python check_domains.py
 
       - name: Pull Request Oluştur
+        id: cpr # <--- BU ID ÖNEMLİ: PR numarasını almak için gerekli
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "♻️ Otomatik Domain Güncellemesi"
+          commit-message: "♻️ Otomatik Domain ve Versiyon Güncellemesi"
           title: "♻️ Domain Değişikliği Tespit Edildi"
           body: |
             Bu PR, `check_domains.py` scripti tarafından haftalık kontrol sırasında otomatik oluşturulmuştur.
@@ -43,8 +44,14 @@ jobs:
             **Yapılan Değişiklikler:**
             - Anime/Video sitelerinin güncel adresleri kontrol edildi.
             - Yönlendirme hedefleri güncel domainlerle değiştirildi.
-            
-            Lütfen merge etmeden önce değişen domainleri kontrol ediniz.
+            - Manifest izinleri ve versiyon numarası güncellendi.
           branch: auto-domain-update
           delete-branch: true
           base: main
+
+      - name: PR'ı Otomatik Birleştir
+        # Sadece yeni bir PR oluşturulduysa çalışır
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --merge --delete-branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
