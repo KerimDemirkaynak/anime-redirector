@@ -7,14 +7,28 @@
       "redirect": {
         "transform": {
           "scheme": "https",
-          "host": "vidmoly.net"
+          "host": "vidmoly.biz"
         }
       }
     },
     "condition": {
-      "requestDomains": ["vidmoly.to"],
+      "requestDomains": [
+        "vidmoly.to"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -31,7 +45,19 @@
         "st.chatango.com"
       ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -48,9 +74,24 @@
       }
     },
     "condition": {
-      "requestDomains": ["animecix.net", "anm.cx"],
+      "requestDomains": [
+        "animecix.net",
+        "anm.cx"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -67,9 +108,23 @@
       }
     },
     "condition": {
-      "requestDomains": ["asyaanimeleri.com"],
+      "requestDomains": [
+        "asyaanimeleri.com"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -86,9 +141,23 @@
       }
     },
     "condition": {
-      "requestDomains": ["hianime.to"],
+      "requestDomains": [
+        "hianime.to"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -105,9 +174,23 @@
       }
     },
     "condition": {
-      "requestDomains": ["turkanime.co"],
+      "requestDomains": [
+        "turkanime.co"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -124,9 +207,23 @@
       }
     },
     "condition": {
-      "requestDomains": ["anizle.com"],
+      "requestDomains": [
+        "anizle.com"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   },
@@ -143,9 +240,23 @@
       }
     },
     "condition": {
-      "requestDomains": ["tranimeizle.co"],
+      "requestDomains": [
+        "tranimeizle.co"
+      ],
       "resourceTypes": [
-        "main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "csp_report",
+        "media",
+        "websocket",
+        "other"
       ]
     }
   }

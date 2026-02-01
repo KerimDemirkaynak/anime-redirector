@@ -36,7 +36,7 @@ Bu kurallar, hangi sitelerin engelleneceğini ve hangilerinin yönlendirileceği
 
 | Eski Adresler | Yeni Adres |
 |----------------|------------|
-| `vidmoly.to` | `https://vidmoly.net` |
+| `vidmoly.to` | `https://vidmoly.biz` |
 | `animecix.net`, `anm.cx` | `https://animecix.tv` |
 | `asyaanimeleri.com` | `https://asyaanimeleri.top` |
 | `hianime.to` | `https://hianime.pe` |
