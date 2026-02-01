@@ -1,0 +1,100 @@
+name: Haftalık Sürüm ve Release Kontrolü
+
+on:
+  schedule:
+    # Haftada bir: Pazar gecesi 01:00'da çalışır
+    - cron: '0 1 * * 0'
+  workflow_dispatch: # Manuel tetikleme için buton ekler
+
+permissions:
+  contents: write # Release oluşturmak için yazma izni şart
+
+jobs:
+  check-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Depoyu Çek (Checkout)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Tag kontrolü için geçmişi çekmek önemli
+
+      - name: JSON İşleyicisini (jq) Yükle
+        run: sudo apt-get install -y jq
+
+      - name: Mevcut Versiyonu Oku
+        id: get_version
+        run: |
+          # data.json dosyasından versiyonu okur (Örn: 1.7)
+          # Dosya yoksa hata vermemesi için kontrol ekliyoruz
+          if [ -f data.json ]; then
+            VERSION=$(jq -r .version data.json)
+          else
+            VERSION="1.0" # Varsayılan
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Tespit edilen yerel versiyon: $VERSION"
+
+      - name: GitHub Tag Kontrolü
+        id: check_tag
+        run: |
+          # Git taglerinde bu versiyon var mı bakar (v1.7 formatında)
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "🛑 Bu versiyon (v${{ env.VERSION }}) zaten yayınlanmış. İşlem iptal ediliyor."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Yeni versiyon tespit edildi: v${{ env.VERSION }}. Hazırlık başlıyor..."
+          fi
+
+      - name: Dosyaları Hazırla ve Ziple
+        # Sadece tag yoksa (yani yeni sürümse) çalışır
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          echo "📦 Dosyalar zipleniyor..."
+
+          # NOT: Zip komutu klasörü değil, İÇERİĞİNİ zipler.
+          # Böylece kullanıcı zipi açınca tekrar klasörle uğraşmaz, direkt dosyaları görür.
+
+          # 1. Chrome.zip (Simple Version hariç tutulur, temiz paketleme)
+          cd Chrome
+          zip -r ../Chrome.zip . -x "Simple Version/*" -x "*.git*"
+          cd ..
+          
+          # 2. Firefox.zip
+          cd Firefox
+          zip -r ../Firefox.zip . -x "*.git*"
+          cd ..
+
+          # 3. Simple Version.zip
+          cd "Chrome/Simple Version"
+          zip -r "../../Simple Version.zip" . -x "*.git*"
+          cd ../..
+
+          echo "✅ Zipleme tamamlandı:"
+          ls -lh *.zip
+
+      - name: Release Oluştur ve Yükle
+        # Sadece yeni sürümse çalışır
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: Sürüm ${{ env.VERSION }}
+          body: |
+            📅 **Otomatik Haftalık Sürüm**
+            
+            Bu sürüm, depodaki değişiklikler tespit edilerek otomatik oluşturulmuştur.
+            
+            **İndirme Seçenekleri:**
+            - 🟠 **Chrome & Chromium:** `Chrome.zip` (İndirip klasöre çıkarın ve "Paketlenmemiş öğe yükle" ile yükleyin)
+            - 🦊 **Firefox:** `Firefox.zip`
+            - ⚡ **Hafif Sürüm:** `Simple Version.zip`
+          draft: false
+          prerelease: false
+          files: |
+            Chrome.zip
+            Firefox.zip
+            Simple Version.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
