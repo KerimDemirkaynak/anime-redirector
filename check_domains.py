@@ -4,30 +4,26 @@ from urllib.parse import urlparse
 import time
 import os
 
-# ------------------- DOSYA LİSTELERİ -------------------
+# ------------------- AYARLAR VE DOSYA LİSTELERİ -------------------
 
-# 1. JSON Kurallarının Olduğu Dosyalar
 RULE_FILES = [
     "Chrome/rules.json",
     "Firefox/rules.json",
     "Chrome/Simple Version/rules.json"
 ]
 
-# 2. Domainlerin Metin Olarak Geçtiği Dosyalar (HTML, README vb.)
 OTHER_FILES = [
     "Chrome/popup.html",
     "Firefox/popup.html",
     "README.md"
 ]
 
-# 3. İzinlerin Ekleneceği Manifest Dosyaları
 MANIFEST_FILES = [
     "Chrome/manifest.json",
     "Firefox/manifest.json",
     "Chrome/Simple Version/manifest.json"
 ]
 
-# 4. Versiyonun Güncelleneceği Dosyalar
 VERSION_FILES = [
     "Chrome/manifest.json",
     "Firefox/manifest.json",
@@ -35,10 +31,16 @@ VERSION_FILES = [
     "data.json"
 ]
 
+# Değişiklikleri raporlamak için global liste
+CHANGES_REPORT = []
+
 # ------------------- YARDIMCI FONKSİYONLAR -------------------
 
 def get_final_url(url):
-    """Verilen URL'in son gittiği adresi bulur (Redirect takibi)."""
+    """
+    Verilen URL'in son gittiği adresi bulur (Redirect takibi).
+    Cloudflare korumasını geçmek için cloudscraper kullanılır.
+    """
     scraper = cloudscraper.create_scraper(browser='chrome')
     try:
         if not url.startswith("http"):
@@ -53,7 +55,9 @@ def get_final_url(url):
         # 'www.' ön ekini kaldır ki karşılaştırma hatasız olsun
         if final_domain.startswith("www."):
             final_domain = final_domain[4:]
-        return final_domain
+        
+        # Sondaki slashları temizle
+        return final_domain.rstrip('/')
     except Exception as e:
         print(f"❌ Hata ({url}): {e}")
         return None
@@ -67,19 +71,17 @@ def update_text_files(old_domain, new_domain):
             if old_domain in content:
                 new_content = content.replace(old_domain, new_domain)
                 with open(file_path, 'w', encoding='utf-8') as f: f.write(new_content)
-                print(f"📝 [{file_path}] Metin güncellendi: {old_domain} -> {new_domain}")
+                print(f"📝 [{file_path}] Metin güncellendi.")
         except Exception as e: print(f"Dosya hatası ({file_path}): {e}")
 
 def update_manifest_permissions(domain):
-    """Eski domaini host_permissions'a ekler (Geriye dönük uyumluluk için)."""
-    # Not: Genellikle yeni domaini eklemek istersin ama senin mantığına dokunmadım.
+    """Manifest dosyalarına izin ekler."""
     permission_pattern = f"*://*.{domain}/*"
     for file_path in MANIFEST_FILES:
         if not os.path.exists(file_path): continue
         try:
             with open(file_path, 'r', encoding='utf-8') as f: manifest = json.load(f)
             
-            # Eğer host_permissions yoksa oluştur
             if "host_permissions" not in manifest: manifest["host_permissions"] = []
             
             if permission_pattern not in manifest["host_permissions"]:
@@ -90,7 +92,7 @@ def update_manifest_permissions(domain):
         except Exception as e: print(f"Manifest hatası ({file_path}): {e}")
 
 def increment_version_string(v_str):
-    """Versiyonu artırır (1.7 -> 1.8, 1.9 -> 2.0)."""
+    """Versiyonu artırır (1.9 -> 2.0, 1.2 -> 1.3)."""
     try:
         parts = v_str.split('.')
         if len(parts) >= 2:
@@ -109,7 +111,7 @@ def increment_version_string(v_str):
 
 def update_all_versions():
     """Tüm ilgili dosyalardaki versiyon numarasını artırır."""
-    print("\n--- 🚀 Versiyon Yükseltme İşlemi Başlatılıyor ---")
+    print("\n--- 🚀 Versiyon Yükseltme İşlemi ---")
     if not os.path.exists(VERSION_FILES[0]): return
     
     new_version = None
@@ -132,7 +134,7 @@ def update_all_versions():
         except Exception as e:
             print(f"Versiyon hatası ({file_path}): {e}")
 
-# ------------------- ANA MANTIK (GÜNCELLENDİ) -------------------
+# ------------------- ANA MANTIK -------------------
 
 def update_rules():
     changes_made = False
@@ -148,27 +150,30 @@ def update_rules():
                 if rule.get("action", {}).get("type") == "redirect":
                     current_target = rule["action"]["redirect"]["transform"]["host"]
                     
-                    # 1. Mevcut domain nereye gidiyor?
-                    print(f"\n🔍 Kontrol ediliyor: {current_target}")
+                    # 1. Mevcut domaini kontrol et
                     new_target = get_final_url(current_target)
                     
-                    # Eğer bir değişiklik varsa VE yeni target boş değilse
+                    # Eğer yeni bir adres bulunduysa ve eskisiyle aynı değilse
                     if new_target and new_target != current_target:
-                        
-                        print(f"⚠️  Potansiyel değişim tespit edildi: {current_target} -> {new_target}")
                         
                         # --- KRİTİK KORUMA: DÖNGÜ KONTROLÜ ---
                         # Bulduğumuz "yeni" adres aslında "eski" adrese geri mi dönüyor?
+                        print(f"⚠️  Potansiyel değişim: {current_target} -> {new_target}. Sağlama yapılıyor...")
                         check_back_url = get_final_url(new_target)
                         
                         if check_back_url == current_target:
                             print(f"⛔ SAHTE ALARM: {new_target} adresi tekrar {current_target} adresine yönleniyor.")
-                            print("   Bu bir yönlendirme döngüsü (loop) veya alias. DEĞİŞİKLİK YAPILMAYACAK.")
-                            continue # Bu kuralı atla, değiştirme!
+                            print("   Bu bir yönlendirme döngüsü. DEĞİŞİKLİK YAPILMAYACAK.")
+                            continue # Bu kuralı atla
                         
                         # Eğer buraya geldiysek, gerçek bir göç var demektir.
-                        print(f"✅ ONAYLANDI: {current_target} -> {new_target} değişimi uygulanıyor.")
+                        print(f"✅ ONAYLANDI: {current_target} -> {new_target}")
                         
+                        # Rapor Listesine Ekle (Tekrarları önle)
+                        report_line = f"- `{current_target}` ➡️ `{new_target}`"
+                        if report_line not in CHANGES_REPORT:
+                            CHANGES_REPORT.append(report_line)
+
                         # A. Kural güncelle
                         rule["action"]["redirect"]["transform"]["host"] = new_target
                         file_changed = True
@@ -180,10 +185,7 @@ def update_rules():
                         # C. İzin ekle
                         update_manifest_permissions(current_target)
                     
-                    else:
-                        print(f"🆗 Değişiklik yok: {current_target}")
-
-                    time.sleep(1) # Cloudscraper'ı boğmamak için bekleme
+                    time.sleep(1) # Sunucuları boğmamak için bekleme
             
             if file_changed:
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -201,5 +203,19 @@ if __name__ == "__main__":
     if update_rules():
         print("\n🎉 Domain değişiklikleri uygulandı.")
         update_all_versions()
+        
+        # --- GITHUB ACTIONS ENVIRONMENTS GÜNCELLEME ---
+        # Değişiklikleri GitHub'ın okuyabileceği bir değişkene yazıyoruz
+        if "GITHUB_ENV" in os.environ and CHANGES_REPORT:
+            try:
+                with open(os.environ["GITHUB_ENV"], "a") as env_file:
+                    env_file.write("DOMAIN_CHANGES<<EOF\n")
+                    env_file.write("### 🔗 Tespit Edilen Değişiklikler:\n")
+                    for item in CHANGES_REPORT:
+                        env_file.write(f"{item}\n")
+                    env_file.write("EOF\n")
+                print("📝 Değişiklik raporu GitHub Environment'a yazıldı.")
+            except Exception as e:
+                print(f"GitHub Env yazma hatası: {e}")
     else:
         print("\n💤 Herhangi bir değişiklik gerekmiyor.")
