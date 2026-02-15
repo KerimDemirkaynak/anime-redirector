@@ -26,31 +26,38 @@ jobs:
 
       - name: Kütüphaneleri Yükle
         run: |
-          pip install -r requirements.txt
+          # requirements.txt varsa oradan yükle, yoksa manuel yükle
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # cloudscraper requirements.txt içinde yoksa garanti olsun diye ekle:
+          pip install cloudscraper requests
 
       - name: Domain Kontrol Scriptini Çalıştır
         run: python check_domains.py
 
       - name: Pull Request Oluştur
-        id: cpr # <--- BU ID ÖNEMLİ: PR numarasını almak için gerekli
+        id: cpr
+        # Sadece değişiklik varsa PR oluşturur (create-pull-request kendi içinde kontrol eder)
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "♻️ Otomatik Domain ve Versiyon Güncellemesi"
           title: "♻️ Domain Değişikliği Tespit Edildi"
+          # BURASI ÖNEMLİ: Scriptten gelen listeyi buraya basıyoruz
           body: |
-            Bu PR, `check_domains.py` scripti tarafından haftalık kontrol sırasında otomatik oluşturulmuştur.
+            Bu PR, `check_domains.py` scripti tarafından otomatik oluşturulmuştur.
             
-            **Yapılan Değişiklikler:**
-            - Anime/Video sitelerinin güncel adresleri kontrol edildi.
-            - Yönlendirme hedefleri güncel domainlerle değiştirildi.
-            - Manifest izinleri ve versiyon numarası güncellendi.
+            ${{ env.DOMAIN_CHANGES }}
+            
+            ---
+            **Yapılan Diğer İşlemler:**
+            - `manifest.json` dosyalarına yeni izinler eklendi.
+            - Versiyon numarası otomatik olarak yükseltildi.
+            - HTML ve README dosyalarındaki linkler güncellendi.
           branch: auto-domain-update
           delete-branch: true
           base: main
 
       - name: PR'ı Otomatik Birleştir
-        # Sadece yeni bir PR oluşturulduysa çalışır
         if: steps.cpr.outputs.pull-request-operation == 'created'
         run: gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --merge --delete-branch
         env:
