@@ -310,39 +310,6 @@
     }
   },
   {
-    "id": 10,
-    "priority": 1,
-    "action": {
-      "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "sezonlukdizi.cc"
-        }
-      }
-    },
-    "condition": {
-      "requestDomains": [
-        "sezonlukdizi7.com"
-      ],
-      "resourceTypes": [
-        "main_frame",
-        "sub_frame",
-        "stylesheet",
-        "script",
-        "image",
-        "font",
-        "object",
-        "xmlhttprequest",
-        "ping",
-        "csp_report",
-        "media",
-        "websocket",
-        "other"
-      ]
-    }
-  },
-  {
     "id": 11,
     "priority": 1,
     "action": {
