@@ -1,0 +1,57 @@
+name: Sürüm Güncelle (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_number:
+        description: 'Yeni Sürüm Numarasını Girin (Örn: 2.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Depoyu Çek (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Sürüm Güncelleme Scriptini Çalıştır
+        # GitHub'dan girdiğiniz sürüm numarasını script'e gönderir
+        run: python update_version.py "${{ inputs.version_number }}"
+
+      - name: Değişiklikleri Kontrol Et
+        id: check_changes
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            echo "changes_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes_exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull Request Oluştur
+        if: steps.check_changes.outputs.changes_exist == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🔖 Sürüm ${{ inputs.version_number }} olarak güncellendi"
+          title: "🔖 Manuel Sürüm Güncellemesi (v${{ inputs.version_number }})"
+          body: |
+            Bu PR, GitHub Actions üzerinden manuel olarak tetiklenerek oluşturulmuştur.
+            
+            **Yapılan İşlemler:**
+            - Tüm `manifest.json` dosyalarının versiyonları güncellendi.
+            - `data.json` dosyası ve indirme linkleri güncellendi.
+            - Sitedeki (`index.html`) sabit versiyon metinleri güncellendi.
+          branch: auto-update-version
+          delete-branch: true
+          base: main
