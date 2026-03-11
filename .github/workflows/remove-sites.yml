@@ -1,0 +1,57 @@
+name: Site Kaldır (Manual)
+
+on:
+  workflow_dispatch: # Bu özellik, Actions sekmesinden manuel butonla çalıştırmayı sağlar
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  remove-sites:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Depoyu Çek (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Site Kaldırma Scriptini Çalıştır
+        run: python remove_sites.py
+
+      - name: Değişiklikleri Kontrol Et
+        id: check_changes
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            echo "changes_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes_exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Pull Request Oluştur
+        if: steps.check_changes.outputs.changes_exist == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🗑️ İstenmeyen siteler kaldırıldı ve sürüm güncellendi"
+          title: "🗑️ Site Kaldırma İsteği"
+          body: |
+            Bu PR, `remove_sites.py` scripti kullanılarak manuel tetikleme ile oluşturulmuştur.
+            
+            **Yapılan İşlemler:**
+            - `silinecek_siteler.txt` dosyasındaki siteler kurallardan silindi.
+            - Manifest izinleri güncellendi.
+            - Popup HTML listesinden çıkarıldı.
+            - Versiyon numarası artırıldı.
+          branch: auto-remove-sites
+          delete-branch: true
+          base: main
