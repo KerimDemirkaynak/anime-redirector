@@ -137,41 +137,6 @@
     }
   },
   {
-    "id": 5,
-    "priority": 1,
-    "action": {
-      "type": "redirect",
-      "redirect": {
-        "transform": {
-          "scheme": "https",
-          "host": "hianime.pe"
-        }
-      }
-    },
-    "condition": {
-      "requestDomains": [
-        "hianime.to"
-      ],
-      "resourceTypes": [
-        "main_frame",
-        "sub_frame",
-        "stylesheet",
-        "script",
-        "image",
-        "font",
-        "object",
-        "xmlhttprequest",
-        "ping",
-        "csp_report",
-        "media",
-        "websocket",
-        "webtransport",
-        "webbundle",
-        "other"
-      ]
-    }
-  },
-  {
     "id": 6,
     "priority": 1,
     "action": {

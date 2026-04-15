@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Web Redirector and Blocker",
-  "version": "2.1",
+  "version": "2.2",
   "description": "Redirects specific anime and video sites to their working domains and blocks unwanted chat windows.",
   "permissions": [
     "declarativeNetRequest",
@@ -15,7 +15,6 @@
     "*://*.animecix.net/*",
     "*://*.anm.cx/*",
     "*://*.asyaanimeleri.com/*",
-    "*://*.hianime.to/*",
     "*://*.turkanime.co/*",
     "*://*.tranimeizle.co/*",
     "*://*.anizle.com/*",
