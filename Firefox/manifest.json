@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "2.1",
+  "version": "2.2",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "permissions": [
@@ -16,7 +16,6 @@
     "*://*.animecix.net/*",
     "*://*.anm.cx/*",
     "*://*.asyaanimeleri.com/*",
-    "*://*.hianime.to/*",
     "*://*.anizle.com/*",
     "*://*.tranimeizle.co/*",
     "*://*.turkanime.co/*",
