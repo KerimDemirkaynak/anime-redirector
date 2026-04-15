@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Web Redirector and Blocker",
-  "version": "2.2",
+  "version": "2.3",
   "description": "Redirects specific anime and video sites to their working domains and blocks unwanted chat windows.",
   "permissions": [
     "declarativeNetRequest",
@@ -21,7 +21,8 @@
     "*://*.vidmoly.net/*",
     "*://*.dizigom103.com/*",
     "*://*.webdramaturkey.org/*",
-    "*://*.dizikorea2.com/*"
+    "*://*.dizikorea2.com/*",
+    "*://*.hianime.to/*"
   ],
   "icons": {
     "16": "icons/icon16.png",
