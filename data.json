@@ -1,5 +1,5 @@
 {
-  "version": "2.3",
+  "version": "2.2",
   "updateDate": {
     "tr": "Şubat 2026",
     "en": "Feb 2026",
@@ -8,7 +8,7 @@
   },
   "size": "23.1 KB",
   "downloads": {
-    "chromeZip": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.9/Chrome.zip",
-    "chromeCrx": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v1.7/Chrome.crx"
+    "chromeZip": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.2/Chrome.zip",
+    "chromeCrx": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.2/Chrome.crx"
   }
 }
