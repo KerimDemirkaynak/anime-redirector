@@ -1,4 +1,0 @@
-# Seçenek 1: Sadece eski linki verin (Script yenisini kendi bulur)
-
-# Seçenek 2: İkisini de biliyorsanız elle verin (Eski > Yeni)
-
