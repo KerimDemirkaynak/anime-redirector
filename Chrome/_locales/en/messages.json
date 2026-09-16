@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "Block"
+                    },
+    "buttonAdd":  {
+                      "message":  "Add"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "Extension Active"
+                         },
+    "popupTitle":  {
+                       "message":  "Web Redirector Status"
+                   },
+    "popupStatusActive":  {
+                              "message":  "Extension is active and protecting sites."
+                          },
+    "buttonDelete":  {
+                         "message":  "Delete"
+                     },
+    "extensionName":  {
+                          "message":  "Web Redirector and Blocker"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "Extension is currently disabled."
+                            },
+    "popupHeader":  {
+                        "message":  "Web Redirector"
+                    },
+    "extensionDescription":  {
+                                 "message":  "Redirects specific sites to their working domains and blocks unwanted sites."
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "New Domain (e.g. new.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(Blocked)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "Old Domain (e.g. old.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "Custom Sites"
+                         },
+    "actionRedirect":  {
+                           "message":  "Redirect"
+                       }
+}

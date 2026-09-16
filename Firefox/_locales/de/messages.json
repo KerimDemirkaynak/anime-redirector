@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "Blockieren"
+                    },
+    "buttonAdd":  {
+                      "message":  "Hinzufügen"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "Erweiterung Aktiv"
+                         },
+    "popupTitle":  {
+                       "message":  "Web-Umleitung Status"
+                   },
+    "popupStatusActive":  {
+                              "message":  "Erweiterung ist aktiv und schützt Websites."
+                          },
+    "buttonDelete":  {
+                         "message":  "Löschen"
+                     },
+    "extensionName":  {
+                          "message":  "Web-Umleitung und Blocker"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "Erweiterung ist derzeit deaktiviert."
+                            },
+    "popupHeader":  {
+                        "message":  "Web-Umleitung"
+                    },
+    "extensionDescription":  {
+                                 "message":  "Leitet bestimmte Websites auf ihre funktionierenden Domains um und blockiert unerwünschte Websites."
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "Neue Domain (z.B. neu.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(Blockiert)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "Alte Domain (z.B. alt.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "Benutzerdefinierte Websites"
+                         },
+    "actionRedirect":  {
+                           "message":  "Umleiten"
+                       }
+}

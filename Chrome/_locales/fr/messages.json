@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "Bloquer"
+                    },
+    "buttonAdd":  {
+                      "message":  "Ajouter"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "Extension Active"
+                         },
+    "popupTitle":  {
+                       "message":  "Statut du Redirection Web"
+                   },
+    "popupStatusActive":  {
+                              "message":  "L\u0027extension est active et protège les sites."
+                          },
+    "buttonDelete":  {
+                         "message":  "Supprimer"
+                     },
+    "extensionName":  {
+                          "message":  "Redirection et Bloqueur Web"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "L\u0027extension est actuellement désactivée."
+                            },
+    "popupHeader":  {
+                        "message":  "Redirection Web"
+                    },
+    "extensionDescription":  {
+                                 "message":  "Redirige certains sites vers leurs domaines actifs et bloque les sites indésirables."
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "Nouveau domaine (ex: nouveau.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(Bloqué)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "Ancien domaine (ex: ancien.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "Sites Personnalisés"
+                         },
+    "actionRedirect":  {
+                           "message":  "Rediriger"
+                       }
+}

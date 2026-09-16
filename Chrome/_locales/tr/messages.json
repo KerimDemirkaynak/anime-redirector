@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "Engelle"
+                    },
+    "buttonAdd":  {
+                      "message":  "Ekle"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "Eklenti Etkin"
+                         },
+    "popupTitle":  {
+                       "message":  "Web Yönlendirici Durumu"
+                   },
+    "popupStatusActive":  {
+                              "message":  "Eklenti aktif ve siteleri koruyor."
+                          },
+    "buttonDelete":  {
+                         "message":  "Sil"
+                     },
+    "extensionName":  {
+                          "message":  "Web Yönlendirici ve Engelleyici"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "Eklenti devre dışı bırakıldı."
+                            },
+    "popupHeader":  {
+                        "message":  "Web Yönlendirici"
+                    },
+    "extensionDescription":  {
+                                 "message":  "Belirli siteleri çalışan alan adlarına yönlendirir ve istenmeyen siteleri engeller."
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "Yönlendirilecek Adres (örn: yeni.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(Engellendi)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "Site Adresi (örn: eski.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "Özel Siteler"
+                         },
+    "actionRedirect":  {
+                           "message":  "Yönlendir"
+                       }
+}

@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "ブロック"
+                    },
+    "buttonAdd":  {
+                      "message":  "追加"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "拡張機能がアクティブ"
+                         },
+    "popupTitle":  {
+                       "message":  "Web リダイレクターのステータス"
+                   },
+    "popupStatusActive":  {
+                              "message":  "拡張機能はアクティブで、サイトを保護しています。"
+                          },
+    "buttonDelete":  {
+                         "message":  "削除"
+                     },
+    "extensionName":  {
+                          "message":  "Web リダイレクターとブロッカー"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "拡張機能は現在無効になっています。"
+                            },
+    "popupHeader":  {
+                        "message":  "Web リダイレクター"
+                    },
+    "extensionDescription":  {
+                                 "message":  "特定のサイトを機能するドメインにリダイレクトし、不要なサイトをブロックします。"
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "新しいドメイン (例: new.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(ブロックされました)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "古いドメイン (例: old.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "カスタム サイト"
+                         },
+    "actionRedirect":  {
+                           "message":  "リダイレクト"
+                       }
+}

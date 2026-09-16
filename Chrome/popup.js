@@ -1,70 +1,196 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // DOM elementlerini seç
+﻿document.addEventListener('DOMContentLoaded', () => {
     const toggleSwitch = document.getElementById('toggle-switch');
     const statusText = document.querySelector('.status');
     const rulesContainer = document.querySelector('.rules');
-    
-    const RULESET_ID = "ruleset_1";
+    const rulesList = document.getElementById('rules-list');
+    const addRuleBtn = document.getElementById('add-rule-btn');
+    const oldDomainInput = document.getElementById('old-domain');
+    const newDomainInput = document.getElementById('new-domain');
+    const actionRadios = document.querySelectorAll('input[name="actionType"]');
 
-    // Arayüzü duruma göre güncelleyen fonksiyon
+    let customRules = [];
+
+    function localizeHtmlPage() {
+        document.title = chrome.i18n.getMessage('popupTitle');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+        i18nElements.forEach(element => {
+            const messageKey = element.getAttribute('data-i18n');
+            const message = chrome.i18n.getMessage(messageKey);
+            if (message) {
+                element.textContent = message;
+            }
+        });
+        
+        oldDomainInput.placeholder = chrome.i18n.getMessage('placeholderOldDomain');
+        newDomainInput.placeholder = chrome.i18n.getMessage('placeholderNewDomain');
+    }
+
     function updateUI(isEnabled) {
         if (isEnabled) {
-            statusText.textContent = "Extension is active and protecting sites.";
+            statusText.textContent = chrome.i18n.getMessage('popupStatusActive');
             statusText.classList.remove('inactive');
         } else {
-            statusText.textContent = "Extension is currently disabled.";
+            statusText.textContent = chrome.i18n.getMessage('popupStatusInactive');
             statusText.classList.add('inactive');
         }
-        
         rulesContainer.classList.toggle('disabled', !isEnabled);
         toggleSwitch.checked = isEnabled;
     }
 
-    // Kuralları etkinleştiren/devre dışı bırakan fonksiyon
-    async function setRulesetEnabled(isEnabled) {
+    async function applyRulesToDNR(rules, isEnabled) {
+        const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+        const existingIds = existingRules.map(r => r.id);
+        
+        const removeRuleIds = existingIds;
+        const addRules = [];
+
         if (isEnabled) {
-            // DEĞİŞİKLİK: 'browser' yerine 'chrome' kullanıldı
-            await chrome.declarativeNetRequest.updateEnabledRulesets({
-                enableRulesetIds: [RULESET_ID]
-            });
-        } else {
-            // DEĞİŞİKLİK: 'browser' yerine 'chrome' kullanıldı
-            await chrome.declarativeNetRequest.updateEnabledRulesets({
-                disableRulesetIds: [RULESET_ID]
+            rules.forEach(rule => {
+                let action = { type: 'block' };
+                if (rule.newDomain) {
+                    action = {
+                        type: 'redirect',
+                        redirect: { transform: { scheme: 'https', host: rule.newDomain } }
+                    };
+                }
+                addRules.push({
+                    id: rule.id,
+                    priority: 1,
+                    action: action,
+                    condition: {
+                        requestDomains: [rule.oldDomain],
+                        resourceTypes: ['main_frame', 'sub_frame', 'stylesheet', 'script', 'image', 'font', 'object', 'xmlhttprequest', 'ping', 'csp_report', 'media', 'websocket', 'other']
+                    }
+                });
             });
         }
+
+        await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules });
     }
 
-    // Switch'e tıklandığında çalışacak fonksiyon
+    function renderRulesList() {
+        rulesList.innerHTML = '';
+        customRules.forEach(rule => {
+            const li = document.createElement('li');
+            
+            const details = document.createElement('span');
+            details.className = 'rule-details';
+            
+            const source = document.createElement('span');
+            source.className = 'domain-source';
+            source.textContent = rule.oldDomain;
+            details.appendChild(source);
+            
+            if (rule.newDomain) {
+                const arrow = document.createElement('span');
+                arrow.className = 'arrow';
+                arrow.textContent = ' → ';
+                
+                const target = document.createElement('span');
+                target.className = 'domain-target';
+                target.textContent = rule.newDomain;
+                
+                details.appendChild(arrow);
+                details.appendChild(target);
+            } else {
+                const blocked = document.createElement('span');
+                blocked.className = 'status-blocked';
+                blocked.textContent = chrome.i18n.getMessage('ruleStatusBlocked');
+                blocked.style.marginLeft = '8px';
+                details.appendChild(blocked);
+            }
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = chrome.i18n.getMessage('buttonDelete') || 'Sil';
+            deleteBtn.onclick = () => removeRule(rule.id);
+            
+            li.appendChild(details);
+            li.appendChild(deleteBtn);
+            rulesList.appendChild(li);
+        });
+    }
+
+    actionRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'block') {
+                newDomainInput.style.display = 'none';
+            } else {
+                newDomainInput.style.display = 'block';
+            }
+        });
+    });
+
+    async function addRule() {
+        let oldDomain = oldDomainInput.value.trim().toLowerCase();
+        let newDomain = newDomainInput.value.trim().toLowerCase();
+        const actionType = document.querySelector('input[name="actionType"]:checked').value;
+        
+        if (!oldDomain) return;
+
+        oldDomain = oldDomain.replace(/^https?:\/\//, '').split('/')[0];
+        
+        if (actionType === 'block') {
+            newDomain = '';
+        } else if (newDomain) {
+            newDomain = newDomain.replace(/^https?:\/\//, '').split('/')[0];
+        }
+
+        let newId = 1;
+        if (customRules.length > 0) {
+            newId = Math.max(...customRules.map(r => r.id)) + 1;
+        }
+
+        const rule = { id: newId, oldDomain, newDomain };
+        customRules.push(rule);
+        
+        await saveAndApplyRules();
+        
+        oldDomainInput.value = '';
+        newDomainInput.value = '';
+    }
+
+    async function removeRule(id) {
+        customRules = customRules.filter(r => r.id !== id);
+        await saveAndApplyRules();
+    }
+
+    async function saveAndApplyRules() {
+        await chrome.storage.local.set({ customRules });
+        const result = await chrome.storage.local.get({ extensionEnabled: true });
+        await applyRulesToDNR(customRules, result.extensionEnabled);
+        renderRulesList();
+    }
+
     toggleSwitch.addEventListener('change', async (event) => {
         const isEnabled = event.target.checked;
-        // DEĞİŞİKLİK: 'browser' yerine 'chrome' kullanıldı
         await chrome.storage.local.set({ extensionEnabled: isEnabled });
-        await setRulesetEnabled(isEnabled);
+        await applyRulesToDNR(customRules, isEnabled);
         updateUI(isEnabled);
     });
 
-    // Sayfa yüklendiğinde hafızadaki durumu al ve arayüzü ayarla
+    addRuleBtn.addEventListener('click', addRule);
+
     async function initialize() {
-        // DEĞİŞİKLİK: 'browser' yerine 'chrome' kullanıldı
-        const result = await chrome.storage.local.get({ extensionEnabled: true });
+        const result = await chrome.storage.local.get({ extensionEnabled: true, customRules: [] });
         const isEnabled = result.extensionEnabled;
+        customRules = result.customRules;
         
         updateUI(isEnabled);
-        await setRulesetEnabled(isEnabled);
+        await applyRulesToDNR(customRules, isEnabled);
+        renderRulesList();
     }
 
-    // Sadece versiyon bilgisini gösteren fonksiyon
     function displayVersion() {
-        // DEĞİŞİKLİK: 'browser' yerine 'chrome' kullanıldı
         const manifest = chrome.runtime.getManifest();
         const versionInfo = document.getElementById('version-info');
         if (versionInfo) {
-            versionInfo.textContent = `${manifest.name} v${manifest.version}`;
+            versionInfo.textContent = manifest.name + " v" + manifest.version;
         }
     }
     
-    // Başlangıç fonksiyonlarını çağır
+    localizeHtmlPage();
     displayVersion();
     initialize();
 });
+

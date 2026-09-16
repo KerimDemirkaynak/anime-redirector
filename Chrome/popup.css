@@ -1,5 +1,4 @@
-:root {
-    /* Renk Paleti (Aynı kaldı) */
+﻿:root {
     --bg-color: #202124;
     --primary-text-color: #e8eaed;
     --secondary-text-color: #bdc1c6;
@@ -9,27 +8,39 @@
     --status-text-color: #81c995;
     --list-bg-hover: #303134;
     --footer-bg-color: #292a2d;
-    --blocked-color: #f28b82; /* Engellendi rengi için yeni değişken */
+    --blocked-color: #f28b82;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 14px; /* Genel font boyutunu biraz küçülttük */
+    font-size: 14px;
     margin: 0;
     background-color: var(--bg-color);
     color: var(--primary-text-color);
-    width: 350px; /* Sabit ama ideal bir genişlik verelim */
-    box-sizing: border-box;
+    width: 350px;
+    height: 500px; /* Sabit yükseklik */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Dışarı taşmayı engelle */
 }
 
 .container {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
 }
 
 .header {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .header img {
@@ -39,7 +50,7 @@ body {
 }
 
 .header h1 {
-    font-size: 18px; /* Başlık boyutu ayarlandı */
+    font-size: 18px;
     font-weight: 500;
     margin: 0;
 }
@@ -50,13 +61,17 @@ body {
     color: var(--status-text-color);
     background-color: var(--status-bg-color);
     padding: 10px;
-    margin: 0 0 16px 0; /* Ayarlamalar yapıldı */
+    margin: 0 0 12px 0;
     border-radius: 8px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .rules {
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -72,64 +87,126 @@ body {
     margin: 0 0 10px 0;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 8px;
+    flex-shrink: 0;
 }
 
-.rules ul {
+.add-rule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.action-type {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 4px;
+    color: var(--primary-text-color);
+}
+.action-type label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.add-rule-form input {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    border-radius: 4px;
+    width: 100%;
+}
+.add-rule-form button {
+    padding: 8px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.add-rule-form button:hover {
+    opacity: 0.9;
+}
+
+#rules-list {
     list-style: none;
     padding: 0;
     margin: 0;
     font-size: 13px;
     color: var(--secondary-text-color);
+    overflow-y: auto; /* Kaydırılabilir liste */
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
 }
 
-/* --- YENİ LİSTE STİLLERİ --- */
-
-.rules li {
-    padding: 12px 10px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+#rules-list li {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color); /* Her eleman arasına ince bir çizgi */
+    background-color: var(--bg-color);
 }
 
-.rules li:last-child {
-    border-bottom: none; /* Son elemanın alt çizgisini kaldır */
+#rules-list li:last-child {
+    border-bottom: none;
 }
 
-.rules li:hover {
+#rules-list li:hover {
     background-color: var(--list-bg-hover);
 }
 
 .rule-details {
     display: flex;
     align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 600;
-    white-space: nowrap; /* Satırların kırılmasını engeller */
+    font-family: inherit;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
 }
 
-.domain-source {
-    color: var(--primary-text-color);
+.domain-source, .domain-target {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .arrow {
     margin: 0 8px;
     color: var(--secondary-text-color);
+    flex-shrink: 0;
 }
 
 .domain-target {
-    color: #81c995; /* Yönlendirilen hedefi yeşil yapalım */
+    color: #81c995;
 }
 
 .status-blocked {
     color: var(--blocked-color);
-    font-weight: 600;
+    font-weight: 500;
     font-size: 12px;
+    margin-left: 8px;
+    flex-shrink: 0;
 }
 
-/* --- FOOTER VE AYARLAR BÖLÜMÜ (Değişiklik yok, sadece kopyalandı) --- */
+.delete-btn {
+    background-color: var(--blocked-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
 
 footer {
     padding: 10px 20px;
@@ -138,6 +215,7 @@ footer {
     text-align: center;
     border-top: 1px solid var(--border-color);
     background-color: var(--footer-bg-color);
+    flex-shrink: 0;
 }
 
 .settings-section {
@@ -147,14 +225,15 @@ footer {
     padding: 12px;
     background-color: var(--footer-bg-color);
     border-radius: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 28px;
+    width: 44px;
+    height: 24px;
 }
 
 .toggle-switch input {
@@ -172,14 +251,14 @@ footer {
     bottom: 0;
     background-color: #5f6368;
     transition: .4s;
-    border-radius: 28px;
+    border-radius: 24px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 20px;
-    width: 20px;
+    height: 16px;
+    width: 16px;
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -192,10 +271,12 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(22px);
+    transform: translateX(20px);
 }
 
 .status.inactive {
     color: #ff8a80;
     background-color: #4d2c2a;
 }
+
+

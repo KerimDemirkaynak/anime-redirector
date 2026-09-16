@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "拦截"
+                    },
+    "buttonAdd":  {
+                      "message":  "添加"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "扩展程序已激活"
+                         },
+    "popupTitle":  {
+                       "message":  "网页重定向器状态"
+                   },
+    "popupStatusActive":  {
+                              "message":  "扩展程序处于活动状态并保护网站。"
+                          },
+    "buttonDelete":  {
+                         "message":  "删除"
+                     },
+    "extensionName":  {
+                          "message":  "网页重定向和拦截器"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "扩展程序目前已禁用。"
+                            },
+    "popupHeader":  {
+                        "message":  "网页重定向器"
+                    },
+    "extensionDescription":  {
+                                 "message":  "将特定网站重定向到其工作域名并拦截不需要的网站。"
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "新域名 (例: new.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(已拦截)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "旧域名 (例: old.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "自定义网站"
+                         },
+    "actionRedirect":  {
+                           "message":  "重定向"
+                       }
+}

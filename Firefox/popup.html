@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <!-- Mobil cihazlarda doğru ölçekleme için kritik olan viewport etiketi -->
+    <!-- Mobil cihazlarda doÄŸru Ã¶lÃ§ekleme iÃ§in kritik olan viewport etiketi -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="popup.css">
 </head>
@@ -23,21 +23,19 @@
 
         <p class="status"></p>
 
-        <!-- Kurallar listesi -->
         <div class="rules">
             <h2 data-i18n="popupRulesHeader"></h2>
-            <ul>
-                <li><span class="domain">vidmoly.to ➔ vidmoly.biz</span></li>
-                <li><span class="domain">chatango.com</span> <span class="status-blocked" data-i18n="ruleStatusBlocked"></span></li>
-                <li><span class="domain">animecix.net ➔ animecix.tv</span></li>
-                <li><span class="domain">asyaanimeleri.com ➔ asyaanimeleri.top</span></li>
-                <li><span class="domain">turkanime.co ➔ turkanime.tv</span></li>
-                <li><span class="domain">anizle.com ➔ anizm.net</span></li>
-                <li><span class="domain">tranimeizle.co ➔ tranimeizle.io</span></li>
-                            <li><span class="domain">dizigom103.com ➔ alliance4creativity.com</span></li>
-                            <li><span class="domain">webdramaturkey.org ➔ webdramaturkey2.com</span></li>
-                            <li><span class="domain">dizikorea2.com ➔ dizikorea3.com</span></li>
-                            <li><span class="domain">hianime.to ➔ zanora.lol</span></li>
+            <div class="add-rule-form">
+                <div class="action-type">
+                    <label><input type="radio" name="actionType" value="redirect" checked> <span data-i18n="actionRedirect"></span></label>
+                    <label><input type="radio" name="actionType" value="block"> <span data-i18n="actionBlock"></span></label>
+                </div>
+                <input type="text" id="old-domain" placeholder="Site Adresi (örn: eski.com)" required>
+                <input type="text" id="new-domain" placeholder="Yönlendirilecek Adres (örn: yeni.com)">
+                <button id="add-rule-btn" data-i18n="buttonAdd"></button>
+            </div>
+            <ul id="rules-list">
+                <!-- Rules will be dynamically populated here -->
             </ul>
         </div>
     </div>
@@ -47,3 +45,5 @@
     <script src="popup.js"></script>
 </body>
 </html>
+
+

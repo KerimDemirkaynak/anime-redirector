@@ -1,5 +1,4 @@
-:root {
-    /* Siyah Tema Renk Paleti */
+﻿:root {
     --bg-color: #202124;
     --primary-text-color: #e8eaed;
     --secondary-text-color: #bdc1c6;
@@ -9,28 +8,39 @@
     --status-text-color: #81c995;
     --list-bg-hover: #303134;
     --footer-bg-color: #292a2d;
+    --blocked-color: #f28b82;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     margin: 0;
     background-color: var(--bg-color);
     color: var(--primary-text-color);
-    /* Sabit genişlikler kaldırıldı, böylece her ekrana uyum sağlar */
-    width: 100%;
+    width: 350px;
+    height: 500px; /* Sabit yükseklik */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Dışarı taşmayı engelle */
 }
 
 .container {
-    padding: 20px;
-    /* Padding'in genişlik hesaplamasını bozmamasını sağlar */
-    box-sizing: border-box;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
 }
 
 .header {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .header img {
@@ -40,73 +50,162 @@ body {
 }
 
 .header h1 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     margin: 0;
 }
 
 .status {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--status-text-color);
     background-color: var(--status-bg-color);
-    padding: 12px;
-    margin: 0;
+    padding: 10px;
+    margin: 0 0 12px 0;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
 }
 
 .rules {
-    margin-top: 20px;
-    /* Geçiş efekti eklendi */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Pencerenin küçülmesini engelleyen yeni sınıf */
 .rules.disabled {
     opacity: 0.4;
-    pointer-events: none; /* Tıklanmasını engeller */
+    pointer-events: none;
 }
 
 .rules h2 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--primary-text-color);
     margin: 0 0 10px 0;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 8px;
+    flex-shrink: 0;
 }
 
-.rules ul {
+.add-rule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.action-type {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 4px;
+    color: var(--primary-text-color);
+}
+.action-type label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.add-rule-form input {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    border-radius: 4px;
+    width: 100%;
+}
+.add-rule-form button {
+    padding: 8px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.add-rule-form button:hover {
+    opacity: 0.9;
+}
+
+#rules-list {
     list-style: none;
     padding: 0;
     margin: 0;
     font-size: 13px;
     color: var(--secondary-text-color);
+    overflow-y: auto; /* Kaydırılabilir liste */
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
 }
 
-.rules li {
-    padding: 10px 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+#rules-list li {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--bg-color);
 }
 
-.rules li:hover {
+#rules-list li:last-child {
+    border-bottom: none;
+}
+
+#rules-list li:hover {
     background-color: var(--list-bg-hover);
 }
 
-.rules li .domain {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 600;
+.rule-details {
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
 }
 
-.rules li .status-blocked {
-    color: #f28b82;
-    font-weight: 600;
+.domain-source, .domain-target {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.arrow {
+    margin: 0 8px;
+    color: var(--secondary-text-color);
+    flex-shrink: 0;
+}
+
+.domain-target {
+    color: #81c995;
+}
+
+.status-blocked {
+    color: var(--blocked-color);
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.delete-btn {
+    background-color: var(--blocked-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-left: 10px;
+    flex-shrink: 0;
 }
 
 footer {
@@ -116,6 +215,7 @@ footer {
     text-align: center;
     border-top: 1px solid var(--border-color);
     background-color: var(--footer-bg-color);
+    flex-shrink: 0;
 }
 
 .settings-section {
@@ -125,14 +225,15 @@ footer {
     padding: 12px;
     background-color: var(--footer-bg-color);
     border-radius: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 28px;
+    width: 44px;
+    height: 24px;
 }
 
 .toggle-switch input {
@@ -150,14 +251,14 @@ footer {
     bottom: 0;
     background-color: #5f6368;
     transition: .4s;
-    border-radius: 28px;
+    border-radius: 24px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 20px;
-    width: 20px;
+    height: 16px;
+    width: 16px;
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -170,10 +271,12 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(22px);
+    transform: translateX(20px);
 }
 
 .status.inactive {
     color: #ff8a80;
     background-color: #4d2c2a;
 }
+
+

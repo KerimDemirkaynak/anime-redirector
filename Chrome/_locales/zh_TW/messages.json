@@ -1,0 +1,47 @@
+﻿{
+    "actionBlock":  {
+                        "message":  "攔截"
+                    },
+    "buttonAdd":  {
+                      "message":  "新增"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "擴充功能已啟動"
+                         },
+    "popupTitle":  {
+                       "message":  "網頁重新導向器狀態"
+                   },
+    "popupStatusActive":  {
+                              "message":  "擴充功能處於活動狀態並保護網站。"
+                          },
+    "buttonDelete":  {
+                         "message":  "刪除"
+                     },
+    "extensionName":  {
+                          "message":  "網頁重新導向和攔截器"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "擴充功能目前已停用。"
+                            },
+    "popupHeader":  {
+                        "message":  "網頁重新導向器"
+                    },
+    "extensionDescription":  {
+                                 "message":  "將特定網站重新導向到其工作網域並攔截不需要的網站。"
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "新網域 (例: new.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(已攔截)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "舊網域 (例: old.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "自訂網站"
+                         },
+    "actionRedirect":  {
+                           "message":  "重新導向"
+                       }
+}

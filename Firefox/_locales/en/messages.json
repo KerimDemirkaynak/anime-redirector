@@ -1,38 +1,47 @@
-{
-  "extensionName": {
-    "message": "Web Redirector and Blocker",
-    "description": "Name of the extension."
-  },
-  "extensionDescription": {
-    "message": "Redirects specific anime and video sites to their working domains and blocks unwanted chat windows.",
-    "description": "Description of the extension."
-  },
-  "popupTitle": {
-    "message": "Web Redirector Status",
-    "description": "Title of the popup window."
-  },
-  "popupHeader": {
-    "message": "Web Redirector",
-    "description": "Header text inside the popup."
-  },
-  "popupStatusActive": {
-    "message": "Extension is active and protecting sites.",
-    "description": "Status message indicating the extension is active."
-  },
-  "popupRulesHeader": {
-    "message": "Managed Sites",
-    "description": "Header for the list of rules."
-  },
-  "popupToggleLabel": {
-    "message": "Extension Active",
-    "description": "Label for the master enable/disable switch."
-  },
-  "popupStatusInactive": {
-    "message": "Extension is currently disabled.",
-    "description": "Status message indicating the extension is disabled."
-  },
-  "ruleStatusBlocked": {
-    "message": "(Blocked)",
-    "description": "Status text for a blocked domain in the rules list."
-  }
+﻿{
+    "actionBlock":  {
+                        "message":  "Block"
+                    },
+    "buttonAdd":  {
+                      "message":  "Add"
+                  },
+    "popupToggleLabel":  {
+                             "message":  "Extension Active"
+                         },
+    "popupTitle":  {
+                       "message":  "Web Redirector Status"
+                   },
+    "popupStatusActive":  {
+                              "message":  "Extension is active and protecting sites."
+                          },
+    "buttonDelete":  {
+                         "message":  "Delete"
+                     },
+    "extensionName":  {
+                          "message":  "Web Redirector and Blocker"
+                      },
+    "popupStatusInactive":  {
+                                "message":  "Extension is currently disabled."
+                            },
+    "popupHeader":  {
+                        "message":  "Web Redirector"
+                    },
+    "extensionDescription":  {
+                                 "message":  "Redirects specific sites to their working domains and blocks unwanted sites."
+                             },
+    "placeholderNewDomain":  {
+                                 "message":  "New Domain (e.g. new.com)"
+                             },
+    "ruleStatusBlocked":  {
+                              "message":  "(Blocked)"
+                          },
+    "placeholderOldDomain":  {
+                                 "message":  "Old Domain (e.g. old.com)"
+                             },
+    "popupRulesHeader":  {
+                             "message":  "Custom Sites"
+                         },
+    "actionRedirect":  {
+                           "message":  "Redirect"
+                       }
 }
