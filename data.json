@@ -1,12 +1,12 @@
 {
-  "version": "2.3",
+  "version": "3.0.0",
   "updateDate": {
-    "tr": "Şubat 2026",
-    "en": "Feb 2026",
-    "fullDateTr": "1 Şub 2025",
-    "fullDateEn": "Feb 1, 2025"
+    "tr": "Eylül 2026",
+    "en": "September 2026",
+    "fullDateTr": "16 Eylül 2026",
+    "fullDateEn": "September 16, 2026"
   },
-  "size": "23.1 KB",
+  "size": "28.35 KB",
   "downloads": {
     "chromeZip": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.2/Chrome.zip",
     "chromeCrx": "https://github.com/KerimDemirkaynak/anime-redirector/releases/download/v2.2/Chrome.crx"
